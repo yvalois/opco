@@ -1,0 +1,84 @@
+.retire-container{
+    height: 100%;
+    width: 100%;
+    padding: 30px;
+    background-color: rgb(255, 255, 255);
+    margin: 0 auto;
+    margin-bottom:20px ;
+    border-radius: 10px;
+ 
+}
+
+.top-retire-history{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 0 auto;
+}
+
+.top-retire-history div{
+    width: 95%;
+    text-align: center;
+    padding: 10px 0;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.top-retire-color1{
+    background-color: #FFE161;
+}
+
+.top-retire-color2{
+    background-color: #282828;
+    color: #fff;
+}
+
+.body-retire-history{
+    border: 1px solid rgba(125, 125, 125, 0.662);
+    margin-top: 5px;
+    min-height: 480px;
+    border-radius: 5px;
+}
+
+.bottom-retire-history{
+    border-radius: 10px;
+    min-height: 40px;
+    background: rgb(209, 209, 209);
+    padding: 5px; 
+}
+
+.bottom-retire-history strong{
+    color: #000;
+}
+
+.retire-new-top{
+    text-align: center;
+    padding: 10px 0;
+    background-color: #FFD;
+}
+
+.retire-new-top strong {
+    color: #000;
+}
+
+.retire-new-map{
+    display: flex;
+    width: 95%;
+    margin: 10px auto;
+    border-radius: 5px;
+    padding: 5px;
+    justify-content: space-between;
+    align-items: center;
+    background: rgb(209, 209, 209); 
+}
+
+.retire-new-map strong{
+    color: #000;
+}
+
+.retire-new-map button{
+    border: none;
+    border-radius: 5px;
+    padding: 5px 15px;
+    background-color: #FFE161;
+}

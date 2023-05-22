@@ -1,0 +1,110 @@
+.cid-s48OLK6784 {
+    background-color: #f5f5f5 !important;
+    padding: 0px;
+    margin: 0px;
+    position: fixed;
+    top: 0px;
+    width: 100vw;
+    z-index: 100;
+}
+.cid-s48OLK6784 img{
+    width: 50px;
+}
+
+.cid-s48OLK6784 a{
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+
+
+.cid-s48OLK6784 svg{
+    font-size: 20px;
+}
+
+
+
+.icons-menu{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.connection p{
+    font-size: 14px;
+    display: flex;
+}
+
+.socicon svg{
+    font-size: 25px;
+    color: #ffe161;
+}
+
+
+
+.wsapp{    
+    display: flex;
+    align-items: flex-start;
+    justify-content: start;
+    border-radius: 20px;
+
+   
+    padding: 5px;
+   
+}
+
+.wsapp a{
+    text-decoration: none;
+    
+}
+
+
+.wsapp img{
+    width: 15px!important;
+    margin-right: 5px;
+}
+
+.link{
+    min-width: 60px;
+    padding: 5px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.142);
+    color: rgb(30, 30, 30)!important;
+    min-width: 100px;
+    font-size: 15px!important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-right: 5px;
+}
+
+.accordion-link{
+    border-bottom: 1px solid black;
+    text-align: center;
+    color: #000
+}
+
+.accordion-link a{
+    color: #000;
+    font-size: 15px;
+}
+
+.navbar-movil-links ul{
+    display: none;
+}
+
+@media screen and (max-width: 991px) {
+    .navbar-nav{
+        gap: 10px;
+    }
+
+    .navbar-movil-links ul{
+        display: block;
+    }
+
+   
+    
+}

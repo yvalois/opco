@@ -1,0 +1,102 @@
+.admin-edith-products{
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+}
+
+.edit-product-form{
+    width: 100%;
+    padding: 5px 10px;
+}
+
+.edit-top-products-detail{
+    width: 90%;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    gap: 10px;
+    padding: 5px 20px;
+    flex-wrap: wrap;
+}
+
+.edit-top-products-detail div{
+    width:30%;
+    min-width: 200px;
+    max-width: 400px;
+}
+
+.edit-top-products-detail input{
+    height: 35px;
+}
+
+.edit-category-admin-product{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 85%;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.admin-edit-description{
+    width: 85%;
+    padding: 20px 0;
+    margin: 0 auto;
+}
+
+.edit-body-products-detail{
+    width: 90%;
+    min-width: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-body-products-detail button{
+    padding: 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: black;
+    color: #fff;
+}
+
+.edit-image-select-product img{
+    width: 150px;
+}
+
+.edit-submits-inputs{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 10px 0;
+}
+
+.edit-submits-inputs input{
+    width: 40%;
+   height: 40px;
+   font-weight: 600;
+   cursor: pointer;
+   margin: 0 20px;
+}
+
+.edit-submit-save{
+    background-color: cadetblue;
+    color: #fff;
+}
+
+.edit-submit-save:hover{
+    background-color: rgb(70, 116, 118);
+
+}
+
+.edit-submit-delete{
+    background-color: red;
+    color: #fff;
+}
+

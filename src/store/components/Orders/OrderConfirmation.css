@@ -1,0 +1,27 @@
+.order-confirmation{
+    border: 1px solid rgb(0, 0, 0);
+    padding : 20px;
+    border-radius: 10px;
+    background-color: #ffe161;
+    color: rgb(0, 0, 0);
+}
+
+.confirmation-color1{
+    background-color: #e7c945;
+}
+
+.confirmation-color2{
+    background-color: #000000;
+    color: #fff;
+}
+
+.order-confirmation-footer{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin: 20px auto;
+}
+
+.order-confirmation-footer button{
+    width: 100px;
+}

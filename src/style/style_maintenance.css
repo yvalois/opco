@@ -1,0 +1,22 @@
+.maintenance{
+    background-color: #FFE161;
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid #fff;
+}
+
+.maintenance p{
+    font-size: 16px;
+}
+
+.maintenance-img-div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.maintenance-img-div img{
+    width: 150px;
+    padding: 10px;
+}

@@ -1,0 +1,78 @@
+.adminsite{
+    width: 92vw;
+    margin: 0 auto;
+    display: flex;
+    margin-top: 0px;
+    margin-left: -10px;
+}
+
+.admin-screen{
+    width: 100vw;
+    height: 79vh;
+    margin-bottom: 10px;
+    overflow-y: hidden;
+    background: rgba(255, 255, 255, 0.697);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.sideBar{
+    max-width: 240px;
+    width: 20%;
+    background-color: #171717;
+
+}
+
+.sideBar ul{
+    padding-left: 0;
+}
+
+.not-display{
+    display: none;
+}
+
+.sideBar li{
+    list-style: none;
+    padding: 1rem;
+    border-bottom: 1px solid rgb(255, 255, 255);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.sideBar li:hover{
+    background-color: #272727;
+}
+
+.sideBar a{
+    text-decoration: none;
+    color: rgb(172, 172, 172);
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.active{
+    color: rgb(255, 255, 255)!important;
+}
+
+.admin-icon{
+    font-size: 1.5em;
+    margin-right: 1rem;
+}
+
+.title-adminsite{
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+}
+
+
+@media screen and (max-width: 992px){
+    .adminsite{
+        width: 100vw;
+        margin-left: 0;
+    }
+}

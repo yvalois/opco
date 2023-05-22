@@ -1,0 +1,241 @@
+.links-tittle{
+    font-size: 1.0em;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    
+    width: 100%;
+    background-color: rgb(39, 39, 39);
+    padding: 10px 0;
+
+}
+
+.links-sidebar-menu{
+    background-color: #eccf4c;
+    padding: 0px!important;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    min-height: 65vh;
+    min-width: 160px;
+}
+
+.links-sidebar{
+    width: 100%;
+}
+
+.links-sidebar-tittle{
+    width: 100%;
+    color: #fff;
+    background-color: black;
+    padding: 5px 0;
+   
+    position: relative;
+}
+
+.links-sidebar-tittle h6{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    text-decoration: underline;
+    background-color: #fff;
+    color: #000;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.links-sidebar-menu ul{
+    padding: 0px;
+
+}
+
+.links-sidebar-menu li{
+    width: 100%;
+    list-style: none;
+    padding: 10px;
+    border-bottom: 1px solid rgb(242, 242, 242);
+    cursor: pointer;
+    color: #fff;
+    text-shadow: 1px 1px 1px rgb(0, 0, 0);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    transition: all 0.3s;
+}
+
+.links-sidebar-menu li:hover {
+    background-color: rgb(175, 132, 3);
+}
+
+.links-sidebar-owner-btns{
+    display: flex;
+                                                                                                                                                                                                                                      
+    justify-content: space-between;
+    font-size: 20px;
+}
+
+.links-sidebar-owner-btns svg{
+    margin: 0 5px;
+}
+
+.body-links{
+    background-color: rgba(255, 255, 255, 0.737);
+    width: 100%;
+    height: 100%;
+    padding: 2% 3%;
+    border-radius: 15px;
+}
+
+.crear{
+    background-color: rgba(255, 255, 255, 0.737);
+    width: 100%;
+    height: 100%;
+    padding: 2% 3%;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.crear h2{
+    text-align: center;
+
+}
+
+.edit-category{
+    background-color: #238e17;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.input-edit-mode{
+    width: 85%;
+}
+
+.categoria-nombre{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.link-item{
+    width: 100%;
+    padding: 10px 0;
+    border-bottom: 1px solid rgb(39, 39, 39);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.input-link-category{
+    font-size: 14px;
+    margin : 10px 0 ;
+}
+
+.input-link-category input{
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    margin-right: 8px;
+    padding: 8px;
+}
+
+.input-link-category button{
+   
+    border: none;
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    padding: 5px;
+    border-radius: 8px;
+    height: 40px;
+    width: 70px;
+    cursor: pointer;
+
+}
+
+.link-item a{
+    color: rgb(77, 77, 77);
+    font-size: 1.0em;
+
+
+    cursor: pointer;
+}
+
+.body-links h2{
+    text-align: center;
+}
+
+.input-link{
+    width: 100%;
+    border : 1px solid rgb(39, 39, 39);
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.select-link{
+    width: 100%;
+    padding: 2px 0;
+    border : 1px solid rgb(39, 39, 39);
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.footer-links-buttons{
+    display: flex;
+    justify-content: center;
+
+}
+
+.categoria-info{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.categoria-info input{
+    width: 400px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    margin-right: 8px;
+    padding: 8px;
+}
+
+.categoria-info select{
+    width: 400px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    margin-right: 8px;
+    padding: 8px;
+}
+
+.footer-links-buttons button{
+    border: none;
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    padding: 5px;
+    border-radius: 8px;
+    height: 40px;
+    width: 70px;
+    cursor: pointer;
+}
+
+.footer-links-buttons button:hover{
+    background-color: rgb(11, 11, 11);
+  
+}
+
+.delete-link{
+    background-color: red;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}

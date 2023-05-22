@@ -1,0 +1,67 @@
+.admin-categories{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.admin-categories-option-title{
+    border-top: 1px solid #000;
+    padding: 20px 20px;
+}
+
+.admin-categories-option-title h3{
+    margin: 20px 0 ;
+}
+
+.admin-categories-inside{
+    display: flex;
+    flex-direction: row;
+
+}    
+
+.admin-categories-inside p{
+    margin-right: 10px;
+}
+
+.admin-categories-inside input{
+    width: 30%;
+    height: 30px;
+    min-width: 100px;
+    border: 1px solid rgb(67, 67, 67);
+
+}
+
+.admin-categories-inside  button{
+    background-color: rgb(51, 51, 51);
+    width: 10%;
+    height: 30px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    min-width: 100px;
+}
+
+.admin-categories-exist{
+    border-top: 1px solid #000;
+
+}
+
+.admin-categories-exist h3{
+    margin: 20px 0 ;
+}
+
+.admin-categorie-map{
+    background-color: #fff;
+    padding: 20px 20px;
+    width: 90%;
+    margin: 10px auto;
+    border-radius: 20px;
+}
+
+.admin-categories-bubble{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+

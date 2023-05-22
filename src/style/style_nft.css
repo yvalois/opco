@@ -1,0 +1,238 @@
+
+.minter-container{
+    height: 98vh;
+    width: 83vw;
+    border: 1px solid black;
+    padding-top: 100px;
+    margin-bottom: 20px;
+  }
+  
+  .minter-glass{
+    /* From https://css.glass */
+    height: 100%;
+  background: rgba(255, 255, 255, 0.231);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8.5px);
+  -webkit-backdrop-filter: blur(8.5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .minter-top{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .minter-top img{
+      width: 15%;
+      min-width: 150px;
+      padding: 20px;
+      border-radius: 20px;
+      background: linear-gradient(12deg, rgba(243,244,64,1) 0%, rgba(230,213,22,1) 59%);
+  }
+  
+  .minter-body{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .minter-body button{
+    width: 18%;
+    padding: 10px;
+    min-width: 150px;
+    border-radius: 10px;
+    margin: 20px 0;
+    border: none;
+    cursor: pointer;
+    background-color: rgb(24, 151, 255);
+    color: #fff;
+    font-weight: 700;
+  }
+  
+  .minter-body button:hover{
+    background-color: rgb(9, 127, 223);
+    color: #fff;
+  }
+  
+  .minter-footer{
+    width: 98%;
+    height: 40%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.639);
+    min-height: 200px;
+    margin: 20px auto;
+  }
+  
+  .inventory-space{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow-y: auto;
+  }
+  
+  .nft{
+    width: 250px;
+    height: 340px;
+    border-radius: 10px;
+    margin: 8px 8px;
+    background-color: rgb(216, 216, 216);
+  }
+
+  .nft-image{
+    border-radius: 10px 10px 0px 0px;
+    width: 100%;
+    height: 200px;
+  }
+
+  .nft-image img{
+    border-radius: 10px 10px 0px 0px;
+    width: 100%;
+    height: 200px;
+  }
+
+
+  .nft-info{
+    width: 100%;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    padding: 8px;
+  }
+
+  .nombre{
+    display: flex;
+    flex-direction: column;
+    color: rgb(0, 0, 0);
+  }
+
+  .nombre p{
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .btn-container{
+    width: 100%;
+    display:flex ;
+    justify-content: space-around;
+    padding: 2px 5px;
+    gap:0 6px;
+  }
+
+  .btn-container button{
+    border-radius: 10px;
+    border: none;
+    width: 100px;
+    height: 35px;
+    
+  }
+
+  .star-nft{
+    position: absolute;
+    top: 100;
+    left: 0;
+    color: #fff;
+    z-index: 10;
+  }
+
+  .btn-transfer{
+    background-color: rgb(255, 227, 15);
+    color: rgb(0, 0, 0);
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.671);
+  }
+
+  .btn-transfer:hover{
+    background-color: rgb(243, 216, 14, 0.7);
+    color: rgb(237, 237, 237);
+  }
+
+  .btn-sell{
+    background-color: rgb(255, 227, 15);
+    color: rgb(0, 0, 0);
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.671);
+
+  }
+
+  .btn-sell:hover{
+    background-color: rgb(255, 227, 15, 0.7);
+    color: rgb(255, 255, 255);
+  }
+  
+
+
+  .no-nft{
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .transfer-modal{
+    background-color: rgb(254, 254, 254);
+    width: 60vw;
+    min-width: 200px;
+    height: 50vh;
+    color: rgb(20, 20, 20);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;  
+    border: white 1px solid;
+    border-radius: 20px;
+    font-size: clamp(20px, 1vw, 5vw);
+    padding: 10px;
+}
+
+.transfer-modal input{
+    width: 90%;
+    border-radius: 10px;
+    border: 1px solid rgb(20, 20, 20);
+    padding: 5px;
+    font-size: clamp(20px, 1vw, 5vw);
+    
+}
+
+.transfer-modal button{
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.black-bg-modal{
+  position: absolute; 
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 992px){
+  .minter-container{
+    width: 100vw;
+  }
+}
+
+  @media (max-width: 510px){
+    .minter-container{
+      padding-top: 150px;
+    }
+    
+  }

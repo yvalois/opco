@@ -1,0 +1,149 @@
+.pools-admin{
+    width: 90%;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-around;
+    align-items: center;
+    margin: 30px;
+
+}
+
+
+
+.poolMap-admin{
+    flex-direction: column;
+    text-align: center;
+     padding: 10px;
+     min-width: 300px;
+     width: 300px;
+     height: 520px;
+     display: flex;
+     justify-content: center;
+    align-items: center;
+     border-radius: 20px;
+     font-size: 18px;
+     background-color: rgba(255, 255, 255, 0.691);
+     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+     margin: 10px 0;
+    padding: 15px 0;
+}
+.poolMap-admin input{
+    border-radius: 20px;
+    border: none;
+}
+
+.poolMap-admin img{
+    width: 80px;
+    height: 80px;
+
+}
+
+.poolMap-admin button{
+    width: 200px;
+    height: 35px;
+    margin: 0 5px;
+    border: none; 
+    border-radius: 10px;
+
+}
+
+.footer-text{
+    width: 99.8vw;
+    background-color: rgb(31, 31, 31);
+    color: #fff;
+    text-align: center;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* .grid{
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    border-top: 1px solid rgb(255, 255, 255);
+    border-bottom: 1px solid rgb(255, 255, 255);
+    width: 90vw;
+
+    text-align: center;
+    font-size: 12px;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    background-color: black;
+}
+
+.grid > span{
+    padding: 8px 4px;
+    border-left: 1px solid rgb(255, 255, 255);
+    border-bottom: 1px solid black;
+
+} */
+
+.banSistem{
+    background-color: #fff;
+    width: 80%;
+    min-height: 100px;
+    min-width: 300px;
+    margin-bottom: 50px;
+    margin: 10px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 10px;
+}
+.banSistem button{
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    margin: 0 5px;
+    background-color: red;
+    color: #fff;
+}
+
+.banSistemAddress{
+    background-color: #fff;
+    width: 80%;
+    min-height: 100px;
+    min-width: 300px;
+    margin-bottom: 50px;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 10px;
+}
+
+.banned-wallet-map{
+    border-bottom: rgb(2, 2, 2) solid 1px;
+    width: 100%;
+}
+
+.banned-wallet-map span{
+    font-weight: bold;
+}
+
+strong{
+
+    color: #fff;
+}
+
+@media only screen and (max-width: 570px) {
+    .movilNone{
+        display: none;
+    }
+    /* .grid{
+        grid-template-columns: repeat(8, 1fr);
+    } */
+}

@@ -1,0 +1,9 @@
+@layer components {
+    .nav-link {
+      @apply w-full flex items-center py-2 px-4 rounded text-white hover:bg-gray-700 transition-all duration-300;
+    }
+  
+    .nav-link-active {
+      @apply bg-gray-700;
+    }
+  }

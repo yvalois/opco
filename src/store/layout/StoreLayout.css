@@ -1,0 +1,10 @@
+.contenedor {
+    display: block;
+}   
+
+
+.cuadro {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

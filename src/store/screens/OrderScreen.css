@@ -1,0 +1,38 @@
+.orderscreen{
+    max-width: 1300px;
+    margin: 1rem auto;
+    display: flex;
+    flex-direction: column;
+
+
+}
+
+.Order-tittle{
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.order-card{
+    display: flex;
+    border-radius: 10px;
+    width: 95%;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: rgb(206, 206, 206);
+    margin: 10px 0;
+    border: #000 1px solid;
+}
+
+.order-card button{
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+
+

@@ -1,0 +1,164 @@
+.p2p-market{
+    height: 100%;
+    width: 100%;
+    padding-top: 95px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+}
+
+.menu-p2p{
+    height: 50px;
+    border-bottom: 1px solid rgba(83, 83, 83, 0.559);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.16);
+ 
+}
+
+.p2p-overflow{
+    overflow: auto;
+    min-width: 300px;
+}
+
+.menu-p2p input{
+    width: 80px;
+    height: 24;
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(221, 221, 221);
+    padding: auto;
+
+}
+
+.menu-p2p select{
+    border-radius: 5px;
+    height: 24px;
+    width: 80px;
+    border: none;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(221, 221, 221);
+}
+
+.p2p-inner{
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    overflow: auto;
+}
+
+.p2p-container{
+    background-color: #fff;
+
+}
+
+.border-black{
+    border: 1px solid black;
+}
+
+.p2p-map{
+    width: 100%;
+    display: flex;
+    background-color: rgb(245, 244, 244);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.16);
+    margin: 15px 0;
+    border-radius: 10px;
+    padding: 10px 20px;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+}
+
+
+
+.p2p-map-button{
+    background-color: #ffe161;
+    color: #fff;
+    font-weight: 600;
+    
+    text-shadow: 0px 1px 2px rgb(0, 0, 0);
+}
+
+.p2p-map-button:hover{
+    background-color: #ffc800;
+    color: rgb(215, 215, 215);
+}
+
+.p2p-background-dark{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.667);
+    top: 0vh;
+    left: 0vw;
+    width: 100vw;
+    height: 100vh;
+    z-index: 5;
+}
+
+.p2p-modal-buy{
+    background-color: #fff;
+    padding: 25px 15px;
+    border-radius: 10px;
+    width: 50%;
+   
+    min-width: 300px;
+    max-width: 500px;
+}
+
+.p2p-col1-precio{
+   
+    height: 100%;
+    font-weight: 600;
+}
+
+.p2p-balance{
+    border-top: black 1px solid;
+    border-bottom: black 1px solid;
+}
+
+.p2p-modal-buy input{
+    border-radius: 20px 0 0 20px;
+    border: none;
+    background-color: rgb(221, 221, 221);
+    border: 1px solid rgb(221, 221, 221);
+    text-align: end;
+}
+
+.p2p-modal-buy input:focus{
+    border-radius: 20px 0 0 20px;
+    border: 1px solid rgb(221, 221, 221);
+}
+
+.p2p-onclick{
+    cursor: pointer;
+}
+
+.p2p-not-allowed{
+    cursor: not-allowed!important;
+}
+
+@media screen and (max-width: 992px){
+    .p2p-market{
+        width: 100vw;
+    }
+    .menu-p2p{
+        display: none!important;
+    }
+}
+
+@media screen and (max-width: 767px){
+    .p2p-balance{
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+    }
+}
+
+@media screen and (max-width: 465px){
+    .p2p-market{
+        padding-top: 150px;
+    }
+    .address-map-p2p{
+        display: none;
+    }
+}
+    

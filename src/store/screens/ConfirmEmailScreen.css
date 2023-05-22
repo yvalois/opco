@@ -1,0 +1,36 @@
+.code-screen{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+
+}
+
+.code-screen-inner{
+    border: solid 1px rgb(0, 0, 0);
+    padding: 25px;
+    width: 50%;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFE161;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    border-radius: 10px;
+}
+
+.code-screen-inner input {
+    width: 60%;
+    height: 35px;
+    text-align: center;
+    font-weight: 800;
+}
+
+.new-code{
+    background-color: transparent;
+    border: none;
+    text-decoration: underline;
+}

@@ -1,0 +1,113 @@
+.signinscreen input[type='text'],
+input[type='email'],
+input[type='password'],
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+.signinscreen input[type='submit'] {
+  background-color:rgb(255, 217, 0);
+  color: rgb(25, 25, 25);
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+  border-color: #1d3557;
+  font-weight: 700;
+}
+
+.signinscreen input[type='submit']:hover {
+  background-color:rgba(255, 217, 0, 0.708);
+
+}
+
+.signinscreen .container-login p {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.signinscreen .container-login {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
+.signinscreen .container-login .innerContainer {
+  border-radius: 20px;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 500px;
+  height: fit-content;
+  /* flex-grow: 1; */
+  /* background-color: red; */
+  border: 2px solid #ccc;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.boton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.back-arrow{
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: start;
+  cursor: pointer;
+
+}
+
+.signinscreen .header {
+  width: 100%;
+  padding: 20px;
+}
+.signinscreen .header p {
+  font-weight: bold;
+  font-size: 20px;
+  color: rgb(49, 49, 49);
+}
+
+.signinscreen .container-login .innerContainer span {
+  font-size: 14px;
+}
+
+.innerContainer Link{
+  text-decoration: none;
+}
+
+.link {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.signinscreen {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  /* min-height: 100vh; */
+  /* flex-grow: 1; */
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  /* background-color: red; */
+}

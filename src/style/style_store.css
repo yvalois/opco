@@ -1,0 +1,43 @@
+.store{
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffffff;
+    position: relative;
+    overflow: hidden;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.container-maintenance{
+    position:fixed;
+    top: 50px;
+    left: 35%;
+    border-radius: 15px;
+    border: 1px solid rgb(255, 255, 255);
+    background-color: #e7c73c;
+    z-index: 200;
+    text-align: center;
+    padding: 10px;
+    font-weight: 600;
+}
+
+.container-maintenance svg{
+    width: 40px;
+    font-size: 50px;
+}
+
+@media screen and (max-width: 1080px){
+    .container-maintenance{
+        left:auto;
+    }
+}
+
+@media screen and (max-width: 992px){
+    .container-maintenance{
+        width: 100%;
+        left: 0;
+    }
+}
