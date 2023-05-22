@@ -2,6 +2,9 @@
   "name": "opco",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "16.13.1"
+  },
   "dependencies": {
     "@coinbase/wallet-sdk": "^3.2.0",
     "@emailjs/browser": "^3.7.0",
