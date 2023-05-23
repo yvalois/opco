@@ -75,6 +75,7 @@ const disconnectBlockchain = () => ({
 })
 
 export const fetchBlockchain = () => {
+    const a = "production"
     return async (dispatch) => {
 
         dispatch(loadingBlockchain())
@@ -168,7 +169,7 @@ export const fetchBlockchain = () => {
                     })
                 } else {
                     
-                    if (1 == 1) {
+                    if (a === "production") {
                             try {
                                 await provider.provider.request({
                                     method: 'wallet_switchEthereumChain',

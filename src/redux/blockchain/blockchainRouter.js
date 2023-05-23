@@ -1,6 +1,7 @@
 
 export const contract = () => {
-    if (1 == 2) {
+    const a = "production"
+    if (a !== "production") {
         return (
             {
                 BUSD_ADDRESS: "0x78867BbEeF44f2326bF8DDd1941a4439382EF2A7",
@@ -19,7 +20,7 @@ export const contract = () => {
         )
     }
 
-    if (1 == 1) {
+    if (a === "production") {
         return (
             {
                 BUSD_ADDRESS: "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
