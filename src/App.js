@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import 'stream-browserify';
 import 'stream-http';
 import 'https-browserify';
-
+import "tailwindcss/tailwind.css"
 
 import Layout from "./layout/Layout";
 import "./style/style_main.css";
