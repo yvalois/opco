@@ -168,7 +168,7 @@ export const fetchBlockchain = () => {
                     })
                 } else {
                     
-                    if (true) {
+                    if (1 == 1) {
                             try {
                                 await provider.provider.request({
                                     method: 'wallet_switchEthereumChain',

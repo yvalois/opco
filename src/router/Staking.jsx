@@ -159,9 +159,8 @@ export default function Staking() {
   }, [blockchain]);
 
   useEffect(() => {
-    {/*Descomentar*/ }
-    //stakin
-    if (true) {
+
+    if (stakin) {
       setPools(data.pools);
       setMyStaked(data.accountPools);
       setTokenPrice(data.tokenPrice);
