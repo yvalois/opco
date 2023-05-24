@@ -77,7 +77,7 @@ const Navbar = ({ click }) => {
 
   return (
 
-<nav className="flex flex-wrap items-center justify-start lg:justify-between w-full bg-yellow-300 h-auto lg:h-[66px] z-50">
+<nav className="flex flex-wrap items-center justify-start md:justify-between w-full bg-yellow-300 h-auto lg:h-[66px] z-50">
   {/* Descomentar */}
   {/* <div className="navbar__logo">
     <Link to="/store">
@@ -90,13 +90,13 @@ const Navbar = ({ click }) => {
   <div className="w-full lg:w-auto">
     <Link to="/store">
       <h2 className="text-[#494949] text-lg cursor-pointer ml-4 lg:ml-0 mt-2 lg:mt-0">
-        {!StoreLoaded ? null : 'Loading...'}
+        {StoreLoaded ? null : 'Loading...'}
       </h2>
     </Link>
   </div>
-
-  <ul className="flex flex-wrap justify-center items-center list-none md:m-4">
-    <DropdownCategory />
+<div className='w-full flex justify-center md:justify-end items-center lg:mr-2'>
+<ul className="flex flex-wrap justify-center items-center list-none ">
+  <DropdownCategory />
     {loginSuccess && userDetails.role === "admin" && (
       <li className="pl-4 lg:pl-6">
         <Link
@@ -156,6 +156,9 @@ const Navbar = ({ click }) => {
       </li>
     )}
   </ul>
+</div>
+
+
 </nav>
 
 

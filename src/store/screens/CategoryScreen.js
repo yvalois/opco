@@ -44,16 +44,16 @@ const CategoryScreen = () => {
 
     <div className="w-full h-full m-auto">
      
-      {!categoryOnProductLoaded? 
+      {categoryOnProductLoaded? 
       <h2 className='md:ml-16'>{selectedCategory.name}</h2>: <h2>Loading...</h2>}
 
       <div className="w-full h-full">
-        {categoryOnProductLoaded ? (
+        {!categoryOnProductLoaded ? (
           <h2 className='md:ml-16'>Loading...</h2>
         ) : error ? (
           <h2>{error}</h2>
         ) : (
-          <div className="w-full h-full grid gap-1 xxs:grid-cols-1  sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          <div className="w-full h-auto grid gap-1 xxs:grid-cols-1  sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {selectedCategoryProducts.map(product => (
             <Product
               key={product._id}

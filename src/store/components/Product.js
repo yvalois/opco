@@ -7,7 +7,7 @@ const Product = ({ imageUrl, description, price, name, productId, tokenPrice }) 
   
   
   return (
-    <div className="w-72 p-8 cursor-pointer mx-auto flex flex-col space-y-4 rounded-lg bg-white hover:shadow-2xl hover:z-1 border border-transparent hover:border-gray-700">
+    <div className="w-72  p-8 cursor-pointer mx-auto flex flex-col space-y-4 rounded-lg bg-white hover:shadow-2xl hover:z-1 border border-transparent hover:border-gray-700">
     <div >
     <img src={imageUrl} alt={name} className="w-full lg:h-[170px] object-fill rounded-lg"   />
 
@@ -25,7 +25,7 @@ const Product = ({ imageUrl, description, price, name, productId, tokenPrice }) 
         </div>
         
 
-        <Link to={`/store/product/${productId}`} className=" rounded-lg block no-underline text-center w-full py-2 px-5 text-base bg-yellow-300 hover:yellow-400 transition-all duration-200   text-black cursor-pointer font-bold   hover:scale-110 hover:shadow-lg">
+        <Link to={`/store/product/${productId}`} className=" rounded-lg block no-underline text-center w-full py-2 px-5 text-base bg-yellow-300 hover:yellow-400 transition-all duration-200 text-black cursor-pointer font-bold   hover:scale-110 hover:shadow-lg">
           View
         </Link>
       </div>

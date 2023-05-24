@@ -141,7 +141,6 @@ const HomeScreen = () => {
 
     <div className="w-full h-full m-auto">
 
-
       <div className='mt-[30px] mb-[30px] flex justify-center'>
         <input
           type="text"
@@ -160,7 +159,7 @@ const HomeScreen = () => {
       ) : error ? (
         <h2>{error}</h2>
       ) : (
-        <div className="w-full h-full grid gap-1 xxs:grid-cols-1  sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+        <div className="w-full grid gap-3 xxs:grid-cols-1  sm:grid-cols-2 xl:grid-cols-3  2xl:grid-cols-4 3xl:grid-cols-5">
 
           {loadedProducts.map((product, index) => (
             <Product

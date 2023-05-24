@@ -14,35 +14,13 @@ function DropdownCategory() {
 
   return (
     <DropdownButton variant='dark' id="dropdown-secondary-button" title="Categorias">
-        {/* {categoriesLoaded && categories.map(category => (
+        {categoriesLoaded && categories.map(category => (
             <Dropdown.Item key={category._id}
                 onClick={() => handleNavigate(category._id)} 
             >
-
               {category.name}
-  
             </Dropdown.Item>
-        ))} */}
-
-        <Dropdown.Item
-                onClick={() => handleNavigate(1)} 
-            >
-              1
-            </Dropdown.Item>
-            <Dropdown.Item
-                onClick={() => handleNavigate(1)} 
-            >
-              2
-            </Dropdown.Item>        <Dropdown.Item
-                onClick={() => handleNavigate(1)} 
-            >
-              3
-            </Dropdown.Item>        <Dropdown.Item
-                onClick={() => handleNavigate(1)} 
-            >
-              4
-            </Dropdown.Item>
-
+        ))} 
 
     </DropdownButton>
   );

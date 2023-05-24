@@ -24,10 +24,10 @@ const NavLinkComponent = ({ to, icon: Icon, label, ...props }) => (
   <NavLink
     to={to}
     {...props}
-    className="w-full flex justify-center items-end p-3 mb-2 rounded  text-white hover:bg-gray-700 no-underline  hover:no-underline"
+    className="w-full flex justify-center items-end p-3 md:mb-2 rounded  text-white hover:bg-gray-700 no-underline  hover:no-underline"
     activeClassName="w-full flex justify-center bg-gray-900 text-yellow-500 bg-yellow-300"
   >
-    <Icon className="w-6 h-6 mr-3" />
+    <Icon className=" w-6 h-6 mr-3" />
     <span className="hover:text-yellow-500">{label}</span>
   </NavLink>
 );
@@ -104,10 +104,10 @@ export default function SideBar({ setIsOpen }) {
 
   return (
 
-    <div className="h-screen w-full  md:w-64 bg-gray-900 p-4 flex flex-col justify-start items-center  md:items-start space-y-2 lg:h-full">
+    <div className="h-full w-full  md:w-64 bg-gray-900 md:p-4 flex flex-col  md:items-start md:space-y-2 ">
 
         {routes.map((route, index) => (
-          <div key={index} className="w-full flex justify-start">
+          <div key={index} className="w-full flex ">
             {route}
           </div>
         ))}
