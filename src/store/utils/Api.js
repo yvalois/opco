@@ -2,7 +2,7 @@ import axios from 'axios';
 import {getToken, setToken} from './localstorage'
 
 
-const API = "http://urchin-app-qlv7z.ondigitalocean.app/api"
+const API = "https://urchin-app-qlv7z.ondigitalocean.app/api"
 export const STORE_ID = "62f8d7884c3b4800136678c8"
 
 export const TOKEN_NAME = 'OPCO';
