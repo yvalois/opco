@@ -25,6 +25,10 @@ const errorUser = payload => ({
   payload: payload,
 });
 
+export const noErrorUser = payload => ({
+  type: "NO_ERROR_USER_DETAILS",
+});
+
 const logOutUser = () => ({
   type: "LOG_OUT_USER",
 });
@@ -72,9 +76,11 @@ export const fetchSignUp = (fullName, email, password) => async dispatch => {
     dispatch(receiveUser({
       userDetails: data.user,
     }));
+
   }
   catch (error) {
-    dispatch(errorUser(error));
+    dispatch(errorUser(error.response.data.message));
+
   }
 }
 

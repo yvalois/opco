@@ -33,6 +33,13 @@ const userReducer = (state = USER_INITIAL_STATE, action) => {
         error: true,
         errorMsg: action.payload,
       }
+      case 'NO_ERROR_USER_DETAILS':
+        return {
+          ...state,
+          loading: false,
+          error: false,
+          errorMsg: "",
+        }
     case 'LOG_OUT_USER':
       return {
         ...state,

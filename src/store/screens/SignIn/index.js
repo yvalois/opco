@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './signIn.css';
-import { fetchSignIn } from '../../../redux/store/actions/userAction';
+import { fetchSignIn, noErrorUser } from '../../../redux/store/actions/userAction';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
@@ -42,6 +42,8 @@ function Index() {
         confirmButtonColor: '#3085d6',
         confirmButtonText: 'OK',
       })
+      dispatch(noErrorUser())
+
     }
   }, [error, errorMsg])
 

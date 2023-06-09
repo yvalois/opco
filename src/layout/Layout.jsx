@@ -19,25 +19,27 @@ export default function Layout() {
 
 
   return (
-<div className="h-screen flex flex-col">
-  <div className="bg-green-500 fixed w-full top-0 left-0 z-50">
+<div className="w-full h-screen flex flex-col">
+  <div className="bg-green-500 fixed w-full top-0 left-0 z-10">
     <Navbar isOpen={isOpen} setIsOpen={setIsOpen} />
   </div>
-  <div className="h-full flex flex-grow mt-16 z-10">
+  <div className="flex-grow mt-16 zf-2 flex">
     <div className={`w-full md:w-64 h-full fixed top-16 left-0 transform transition-transform duration-200 ease-in-out ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}>
       <SideBar isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
-    <div className="z-[-10] w-full lg:w-[calc(100%-236px)] lg:ml-[236px] "
-    // eslint-disable-next-line react/style-prop-object
-    style={{backgroundImage:"linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url(https://culturacafeina.com/wp-content/uploads/2020/06/D%C3%B3nde-comprar-buen-caf%C3%A9.jpg)",
-    backgroundRepeat:"no-repeat",
-   backgroundPosition:"center",
-   backgroundSize:"cover"}}>
 
-          <Outlet />   
-        </div>
+    <div className="flex-grow lg:w-[calc(100%-236px)] lg:ml-[236px]"
+      style={{
+        backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url(https://culturacafeina.com/wp-content/uploads/2020/06/D%C3%B3nde-comprar-buen-caf%C3%A9.jpg)",
+        backgroundRepeat: "repeat",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+      }}>
+      <Outlet />
+    </div>
   </div>
 </div>
+
 
   );
 }

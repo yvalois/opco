@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import './signup.css'
-import { fetchSignUp } from '../../../redux/store/actions/userAction';
+import { fetchSignUp, noErrorUser } from '../../../redux/store/actions/userAction';
 import Swal from 'sweetalert2';
 
 function Index() {
@@ -20,7 +20,7 @@ function Index() {
 
 
   const user = useSelector(state => state.user);
-  const { userDetails, loginSuccess, loading } = user;
+  const { userDetails, loginSuccess, loading, errorMsg } = user;
 
   useEffect(() => {
     setFullName(name + ' ' + surname);
@@ -59,12 +59,26 @@ function Index() {
     }
   }, [loginSuccess, navigate])
 
+  useEffect(() => {
+    if(errorMsg === "User already exist"){
+      Swal.fire({
+        icon: 'Error',
+        title: 'Oops...',
+        text: errorMsg,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK'
+      })
+      dispatch(noErrorUser())
+    }
+  }, [errorMsg])
+  
+
 
   if (loading) return <h1>Loading...</h1>
   return (
 <div className="w-full flex items-center justify-center h-full mt-8">
   <div className="w-full max-w-md">
-    <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={_handleSubmit}>
+    <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" >
       <div className="flex items-center justify-between">
         <button onClick={() => navigate('/store')} className="text-3xl text-gray-700">
           <i className="fas fa-arrow-circle-left"></i>
@@ -149,7 +163,7 @@ function Index() {
         <div className="flex items-center justify-between">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
+            onClick={() => _handleSubmit()}
           >
             Sign Up
           </button>

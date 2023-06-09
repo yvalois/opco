@@ -124,7 +124,7 @@ export default function NftOpco() {
     return (
 
 
-        <div className="bg-transparent shadow-lg overflow-hidden   rounded-b-xl flex flex-row justify-center w-full h-full">
+        <div className="bg-transparent shadow-lg overflow-hidden  rounded-b-xl flex flex-row justify-center w-full h-full">
             <div className="w-full h-full flex justify-center items-center overflow-hidden">
 
                 <SellModal

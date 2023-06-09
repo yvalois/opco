@@ -75,9 +75,8 @@ const disconnectBlockchain = () => ({
 })
 
 export const fetchBlockchain = () => {
-    const a = "production"
     return async (dispatch) => {
-
+        const a = "production"
         dispatch(loadingBlockchain())
         try {
             const instance = await web3Modal.connect(providerOptions);
@@ -85,12 +84,11 @@ export const fetchBlockchain = () => {
             const signer = provider.getSigner();
 
             try {
-
                 const accounts = await provider.listAccounts();
-
                 const networkID = await provider.getNetwork();
 
-                if (networkID.chainId === 56 ) {
+                if ((a === 'production' && networkID.chainId === 56) ||
+                    (a === 'development' && networkID.chainId === 97)) {
                     const tokenContract = new ethers.Contract(AOEX_ADDRESS, coffeeAbi, signer)
                     const busdContract = new ethers.Contract(BUSD_ADDRESS, abiToken, signer)
                     const usdtContract = new ethers.Contract(USDT_ADDRESS, abiToken, signer)
@@ -169,7 +167,7 @@ export const fetchBlockchain = () => {
                     })
                 } else {
                     
-                    if (a === "production") {
+                    if (a === 'production') {
                             try {
                                 await provider.provider.request({
                                     method: 'wallet_switchEthereumChain',
@@ -203,7 +201,7 @@ export const fetchBlockchain = () => {
                                     }
                                 }
                             }
-                    }else if(false){
+                    }else if(a === 'development'){
                         try {
                             await provider.provider.request({
                                 method: 'wallet_switchEthereumChain',
@@ -222,6 +220,7 @@ export const fetchBlockchain = () => {
                 console.log(error)
             }
         } catch (error) {
+            alert(error)
             web3Modal.clearCachedProvider();
             dispatch(loadingBlockchainFailure({
                 errorMsg: 'Error de conneccion',

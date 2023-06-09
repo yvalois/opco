@@ -115,6 +115,7 @@ export default function ConfirmEmailScreen() {
 
                         <h3>Please enter code received in your email</h3><br />
                         <input type="text"
+                        className='text-black'
                             value={code}
                             onChange={e => setCode(e.target.value)}
                         />
