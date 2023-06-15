@@ -90,13 +90,13 @@ function Index() {
             onChange={e => setPassword(e.target.value)}
         />
         <div className='flex justify-center'> 
-            <button 
+            <input 
                 className="bg-yellow-300 text-gray-700 px-5 py-3 w-full border-none rounded-md cursor-pointer mt-5 border-blue-700 font-bold hover:bg-yellow-200 focus:outline-none" 
                 type="submit"
-                onClick={() => _handleSubmit()} 
-            >
-                Sign in
-            </button>
+                value="Sign in"
+                onClick={_handleSubmit} 
+            />
+                
         </div>
     </form>
 

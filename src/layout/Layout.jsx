@@ -23,8 +23,8 @@ export default function Layout() {
   <div className="bg-green-500 fixed w-full top-0 left-0 z-10">
     <Navbar isOpen={isOpen} setIsOpen={setIsOpen} />
   </div>
-  <div className="flex-grow mt-16 zf-2 flex">
-    <div className={`w-full md:w-64 h-full fixed top-16 left-0 transform transition-transform duration-200 ease-in-out ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}>
+  <div className="flex-grow mt-16  flex">
+    <div className={`z-10 w-full md:w-64 h-full fixed top-16 left-0 transform transition-transform duration-200 ease-in-out ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}>
       <SideBar isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
 

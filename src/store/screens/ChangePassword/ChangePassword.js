@@ -25,7 +25,7 @@ export const ChangePassword = () => {
     return (
         <>
         {!emailSended ? (
-        <div className="home-screen">
+        <div className="w-full h-full">
             <div className="signinscreen">
             <br/>
                 <div className="container-login">

@@ -66,9 +66,9 @@ const OrderScreen = () => {
       <h2 className="text-3xl font-bold text-gray-800">Mis Órdenes</h2>
     </div>
     <div className="flex flex-col items-center md:items-stretch space-y-4">
-      {!orderLoaded ? (
-        orders2.length > 0 ? (
-          orders2.map((order, index) => (
+      {orderLoaded ? (
+        orders.length > 0 ? (
+          orders.map((order, index) => (
             <div
               className="md:ml-12 w-11/12 rounded-md bg-gray-100 border border-gray-300 shadow-md p-4 text-center md:text-left"
               key={index}
@@ -101,7 +101,7 @@ const OrderScreen = () => {
           <p className="text-gray-700">No tienes órdenes</p>
         )
       ) : (
-        <p className="text-gray-700">Cargando...</p>
+        <p className="text-black font-bold text-3xl">Cargando...</p>
       )}
     </div>
   </div>

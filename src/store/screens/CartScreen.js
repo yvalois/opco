@@ -52,13 +52,16 @@ const CartScreen = () => {
   }
 // name, imageUrl.url, product, option, price
 
-  if (cartLoaded) return(
-  <div className="home-screen">
-  <h2>Loading.....</h2>
+  if (!cartLoaded) return(
+  <div className="w-full h-full">
+  <div className='w-full flex justify-center mt-12'>
+  <h2 className='font-bold'>Loading.....</h2>
+
+  </div>
   </div>
   ) 
 
-  else if (!cartLoaded)
+  else if (cartLoaded)
     return (
       <>
 <div className="w-full h-full">

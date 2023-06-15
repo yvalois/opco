@@ -161,12 +161,11 @@ function Index() {
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <button
+        <input type="submit" value="Sign up" 
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            onClick={() => _handleSubmit()}
-          >
-            Sign Up
-          </button>
+            onClick={ _handleSubmit}
+          />
+
           <Link to="/store/signin" className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
             Already have an account ?
           </Link>
