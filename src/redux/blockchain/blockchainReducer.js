@@ -8,6 +8,7 @@ const initialState = {
     bnbBalance: null,
     usdtBalance: null,
     usdtContract: null,
+    opcoContract: null,
     tokenBalance: null,
     accountAddress: null,  
     exchangeContract: null,  

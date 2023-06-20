@@ -43,18 +43,25 @@ export default function ExchangeLoading(props) {
                                 <BsCheckCircle className="exchange-loader-icon" />
                                 <p>transacción exitosa</p>
                             </>
-                            :
+                            :null
+                        }                            
                             <>
                                 {props.error ?
                                     <>
                                         <BiErrorAlt className="exchange-loader-icon" /><p>error de transacción</p>
                                     </>
-                                    :
-                                    <>
-                                        <FadeLoader color="#ffffff" speedMultiplier={1} size={100} /> <p>efectuando transacción</p>
-                                    </>
+                                    :null
                                 }
+
+
                             </>
+
+
+                        {
+                            props.loader?
+                            <>
+                                        <FadeLoader color="#ffffff" speedMultiplier={1} size={100} /> <p>efectuando transacción</p>
+                                    </>:null
                         }
 
                     </motion.div>

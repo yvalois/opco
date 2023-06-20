@@ -30,7 +30,7 @@ export const contract = () => {
                 STAKING_ADDRESS: "0xE3E8A74193f31185DaE554B2e201158DdACf0F12",
                 NFT_ADDRESS: "0xEa83B555e2d032ABFb7DC80977Dac0b1E1d94a71",
                 OPCO_ADDRESS: "0xff9f2DEa9F7C838DF4f9d3e5eCFabe1D4CB6b259",
-                RPC_URL: 'https://bsc-dataseed.binance.org/',
+                RPC_URL: ' https://bsc-dataseed1.ninicoin.io',
                 MARKET: '0x3c9bf556F040D9D7E5690D90362A03Ac498693F4',
                 USTD_ADDRESS: "0x55d398326f99059fF775485246999027B3197955",
                 P2P_ADDRESS: "0xD9D3CD756eFb0Cb839a72A7d1c20432d010BDAF1",

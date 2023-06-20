@@ -44,6 +44,8 @@ export default function Exchange() {
   const [yoAreOwner, setYoAreOwner] = useState(false);
   const [referalCount, setReferalCount] = useState(0);
 
+  
+
   const referalRef = useRef();
 
   const [loginError, setLoginError] = useState('');
@@ -231,25 +233,24 @@ export default function Exchange() {
   }
 
   const buyAOEX = async () => {
-    setError(false);
-    setSuccess(false);
-    setLoader(true);
-    try {
-      const addressBUSD = blockchain.busdContract.address;
-      const tx = await blockchain.exchangeContract.buyToken(ethers.utils.parseEther(busdPrice.toString()), addressBUSD);
-      blockchain.exchangeContract.on('buy', (address, amount) => {
+     setError(false);
+     setSuccess(false);
+     setLoader(true);
+     try {
+       const addressBUSD = blockchain.busdContract.address;
+       const tx = await blockchain.exchangeContract.buyToken(ethers.utils.parseEther(busdPrice.toString()), addressBUSD);
+       await tx.wait();
+         setSuccess(true);
+         dispatch(fetchBalance());
+         setBusdPrice(0);
+         setAoexPrice(0);
+         setBusdCost(0);
+         setAoexCost(0);
+     } catch (e) {
+       console.log(e);
+       setError(true);
+     }
 
-        setSuccess(true);
-        dispatch(fetchBalance());
-        setBusdPrice(0);
-        setAoexPrice(0);
-        setBusdCost(0);
-        setAoexCost(0);
-      })
-    } catch (e) {
-      console.log(e);
-      setError(true);
-    }
   }
 
   const sellAOEX = async () => {
@@ -269,17 +270,26 @@ export default function Exchange() {
         if (result.isConfirmed) {
           const adrressBUSD = blockchain.busdContract.address;
           const _amount = (aoexPrice * 10 ** 8).toFixed(0);
+          try {
           const tx = await blockchain.exchangeContract.sellToken((_amount.toString()), adrressBUSD);
-          blockchain.exchangeContract.on('sell', (address, amount) => {
-            emailjs.sendForm('service_j64cqnu', 'template_hqb8sqc', busdCost, 'yegWJG5FgzVo6x7Mv')
-            setSuccess(true);
-            dispatch(fetchBlockchain())
-            setBusdPrice(0);
-            setAoexPrice(0);
-            setAoexCost(0);
-            setBusdCost(0);
-            setLoader(false);
-          })
+          await tx.wait()
+          emailjs.sendForm('service_j64cqnu', 'template_hqb8sqc', busdCost, 'yegWJG5FgzVo6x7Mv')
+          setSuccess(true);
+          dispatch(fetchBlockchain())
+          setBusdPrice(0);
+          setAoexPrice(0);
+          setAoexCost(0);
+          setBusdCost(0);
+          setLoader(false);
+          } catch (err) {
+          setLoader(false);
+            Swal.fire({
+              title: 'failed',
+              text: err.reason,
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          }
         } else {
           Swal.fire(
             'Cancelado'
@@ -301,13 +311,13 @@ export default function Exchange() {
     setLoader(true);
     try {
       const tx = await blockchain.busdContract.approve(blockchain.exchangeContract.address, ethers.utils.parseEther('999999999999'));
-      blockchain.busdContract.on('Approval', (owner, spender, value) => {
-        setSuccess(true);
-        dispatch(fetchBlockchain())
-      }
-      )
-    } catch (e) {
-      console.log(e);
+      await tx.wait()
+      setSuccess(true);
+      dispatch(fetchBlockchain())
+      
+      
+    } catch (err) {
+      console.log(err.reason);
       setError(true);
     }
   }
@@ -316,15 +326,16 @@ export default function Exchange() {
     setError(false);
     setSuccess(false);
     setLoader(true);
+
     try {
       const tx = await blockchain.tokenContract.approve(blockchain.exchangeContract.address, ethers.utils.parseEther('999999999999'));
-      blockchain.tokenContract.on('Approval', (owner, spender, value) => {
-        setSuccess(true);
-        dispatch(fetchBlockchain())
-      }
-      )
-    } catch (e) {
-      console.log(e);
+      await tx.wait();
+      setSuccess(true);
+      dispatch(fetchBlockchain())
+      
+      
+    } catch (err) {
+      console.log(err.reason);
       setError(true);
     }
   }
@@ -419,7 +430,7 @@ export default function Exchange() {
 
 
 
-           
+
 
 
           <div className='w-full flex flex-col p-4 bg-white shadow-blue-500/50 '>
@@ -552,7 +563,7 @@ export default function Exchange() {
                 <button className='mt-5 text-md font-semibold bg-black text-white w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
                  hover:text-black'
                   onClick={() => dispatch(fetchBlockchain())}
-                >Connect</button>
+                >Connect</button> 
                 :
                 <>
                   {aoexToBusd ?
@@ -560,17 +571,21 @@ export default function Exchange() {
                       {blockchain.tokenBalance >= aoexPrice ?
                         <>
                           {loader ?
-                            <button style={{ background: 'grey', cursor: 'not-allowed', fontSize: 'clamp(15px, 1.8vw, 5vw)' }}>loading...</button>
+                            <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
+                           hover:text-white '>loading...</button>
                             :
-                            aoexAllowance >= aoexPrice ?
-                              <button onClick={sellAOEX}>Exchange</button>
+                            aoexAllowance <= aoexPrice ?
+                              <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
+                           hover:text-white ' onClick={sellAOEX}>Exchange</button>
                               :
-                              <button onClick={approveAoex}>Aprobar</button>
+                              <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
+                           hover:text-white ' onClick={approveAoex}>Aprobar</button>
                           }
                         </>
 
                         :
-                        <button style={{ background: 'grey', cursor: 'not-allowed', fontSize: 'clamp(15px, 1.8vw, 5vw)' }}>insufficient funds</button>
+                        <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
+                           hover:text-white '>insufficient funds</button>
                       }
                     </>
                     :
@@ -578,17 +593,20 @@ export default function Exchange() {
                       {blockchain.busdBalance >= busdPrice ?
                         <>
                           {loader ?
-                            <button style={{ background: 'grey', cursor: 'not-allowed', fontSize: 'clamp(15px, 1.8vw, 5vw)' }}>loading...</button>
+                            <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
+                           hover:text-white '>loading...</button>
                             :
                             busdAllowance >= busdPrice ?
-                              <button onClick={buyAOEX}>Exchange</button>
+                              <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
+                           hover:text-white '  onClick={buyAOEX}>Exchange</button>
                               :
-                              <button onClick={approveBusd}>Aprobar</button>
+                              <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
+                           hover:text-white ' onClick={approveBusd}>Aprobar</button>
                           }
                         </>
-
                         :
-                        <button style={{ background: 'grey', cursor: 'not-allowed', fontSize: 'clamp(15px, 1.8vw, 5vw)' }}>insufficient funds</button>
+                        <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
+                         hover:text-white '>insufficient funds</button>
                       }
                     </>
                   }

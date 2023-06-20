@@ -126,12 +126,12 @@ export default function Navbar({isOpen,setIsOpen}) {
                   <div className="connection flex items-center space-x-2">+
                     <div>
                       <p
-                        className="text-black text-sm pb-0 mb-0"
+                        className="text-white text-sm pb-0 mb-0"
                       >
                         {accountAddress}
                       </p>
                       <p
-                        className="text-black text-sm pb-0 mb-0"
+                        className="text-white text-sm pb-0 mb-0"
                       >
                         OPCO:{blockchain?.tokenBalance?.toFixed(2)}
                       </p>

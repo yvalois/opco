@@ -46,6 +46,7 @@ import { fetchCart } from "./redux/store/actions/cartActions";
 import { getUserDetails } from "./redux/store/actions/userAction";
 import Nftmarket from "./router/Nftmarket";
 import NftDetail from "./components/marketNft/NftDetail";
+import StakingDetail from "./components/StakingNft/detailsStaking";
 import ConfirmEmailScreen from "./store/screens/ConfirmEmailScreen";
 import Subcategory from "./store/components/adminSite/Subcategory";
 import { ChangePassword } from "./store/screens/ChangePassword/ChangePassword";
@@ -59,6 +60,10 @@ import NewPool from "./components/administrador/stakingoptions/NewPool";
 import ExistingPool from "./components/administrador/stakingoptions/ExistingPool"
 import Data from "./components/administrador/stakingoptions/Data"
 import Maintenance from "./router/Maintenance";
+import Venta from "./router/Venta";
+import Inventario from "./router/Inventario";
+
+
 
 function App() {
   const [sideToggle, setSideToggle] = useState(false);
@@ -85,7 +90,6 @@ function App() {
             {/* <Route path="/staking" element={<Maintenance/>}/> */}
             <Route path="/stakin-admin" element={<StakingAdmin />} />
             <Route path="/wallet" element={<Wallet />} />
-
             <Route path="/tienda-fiat" element={<Tienda />} />
             <Route path="/nft" element={<NftOpco />} />
             <Route path="/nft/:password" element={<NftOpco />} />
@@ -95,6 +99,9 @@ function App() {
             <Route path="nft-detail/:id" element={<NftDetail />} />
             <Route path="/token-market" element={<P2p />} />
             <Route path="/retire" element={<Retire />} />
+            <Route path="/venta" element={<Venta />} />
+            <Route path="/ventaDetails/id" element={<StakingDetail />} />
+            <Route path="/inventarioInversiones" element={<Inventario />} />
             <Route path="/administrador" element={<Administrador/>}>
                 <Route index element={<AdminExchange/>}/>
                 <Route path="/administrador/admin-exchange" element={<AdminExchange/>}/>
@@ -106,7 +113,6 @@ function App() {
                 </Route>
                 <Route path="/administrador/admin-store" element={<AdminStore/>}/>
             </Route>
-       
             <Route path="/store" element={<StoreLayout/>}>
               <Route index element={<HomeScreen />}/>
               <Route path="/store/product/:id" element={<ProductScreen />} />
