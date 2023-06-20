@@ -105,9 +105,8 @@ export default function Exchange() {
 
         const getOwner = await blockchain.priceSetterContract.owner();
         setOwner(getOwner);
-
-        setBusdAllowance(parseFloat(ethers.utils.formatEther(busdAllowance)));
-        setAoexAllowance(parseFloat(ethers.utils.formatEther(aoexAllowance)));
+        setBusdAllowance(parseFloat(ethers.utils.formatUnits(busdAllowance, 8)));
+        setAoexAllowance(parseFloat(ethers.utils.formatUnits(aoexAllowance, 8)));
       }
 
       fetchGoldPrice();
@@ -284,7 +283,7 @@ export default function Exchange() {
           } catch (err) {
           setLoader(false);
             Swal.fire({
-              title: 'failed',
+              title: 'failed_',
               text: err.reason,
               icon: 'error',
               confirmButtonText: 'OK'
@@ -568,21 +567,23 @@ export default function Exchange() {
                 <>
                   {aoexToBusd ?
                     <>
-                      {blockchain.tokenBalance >= aoexPrice ?
+                      {blockchain.tokenBalance > aoexPrice ?
                         <>
-                          {loader ?
+                        {loader ?
                             <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
                            hover:text-white '>loading...</button>
-                            :
-                            aoexAllowance <= aoexPrice ?
+                            : 
+                            aoexAllowance >= aoexPrice && aoexPrice > 0 ?
                               <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
                            hover:text-white ' onClick={sellAOEX}>Exchange</button>
-                              :
-                              <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
+                            : aoexPrice > 0 ?
+                            <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
                            hover:text-white ' onClick={approveAoex}>Aprobar</button>
+                           : 
+                           <button className='mt-5 text-md font-semibold bg-gray-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
+                           hover:text-white '>Ingresar valor</button>
                           }
                         </>
-
                         :
                         <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
                            hover:text-white '>insufficient funds</button>
@@ -590,19 +591,23 @@ export default function Exchange() {
                     </>
                     :
                     <>
-                      {blockchain.busdBalance >= busdPrice ?
+                      {blockchain.busdBalance > busdPrice ?
                         <>
                           {loader ?
                             <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
                            hover:text-white '>loading...</button>
                             :
-                            busdAllowance >= busdPrice ?
+                            busdAllowance >= busdPrice && busdPrice > 0 ?
                               <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
                            hover:text-white '  onClick={buyAOEX}>Exchange</button>
-                              :
+                              : busdPrice > 0 ?
                               <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
                            hover:text-white ' onClick={approveBusd}>Aprobar</button>
-                          }
+                          
+                          : 
+                          <button className='mt-5 text-md font-semibold bg-gray-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
+                           hover:text-white '>Ingresar valor</button>
+                           }
                         </>
                         :
                         <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
