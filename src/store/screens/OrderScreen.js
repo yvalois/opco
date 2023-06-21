@@ -65,9 +65,11 @@ const ordenes = orders.reverse();
 
   
   return (
-<div className="w-full h-full text-lg">
-  <div className="w-full md:ml-12 flex flex-col">
-    <div className="w-full text-center py-5">
+    <div className="w-full h-full">
+
+      <div className="w-full lg:ml-12 flex flex-col">
+
+        <div className="w-full flex-col justify-center items-center mx-auto my-4">
       <h2 className="text-3xl font-bold text-white">Mis Órdenes</h2>
     </div>
     <div className="flex flex-col items-center md:items-stretch space-y-4">
