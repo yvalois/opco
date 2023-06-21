@@ -56,7 +56,7 @@ const OrderDetails = () => {
 
         <div className="w-full flex-col justify-center items-center mx-auto my-4">
           <div className="order-detail-title mb-4 text-center">
-            <h2 className="text-3xl font-bold">Order Details</h2>
+            <h2 className="text-3xl font-bold text-white">Order Details</h2>
           </div>
           {loading ? (
             <h2>Loading...</h2>
