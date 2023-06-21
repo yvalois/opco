@@ -58,17 +58,22 @@ const OrderScreen = () => {
   },
 
 ]
+
+const ordenes = orders.reverse();
+
+
+
   
   return (
 <div className="w-full h-full text-lg">
   <div className="w-full md:ml-12 flex flex-col">
     <div className="w-full text-center py-5">
-      <h2 className="text-3xl font-bold text-gray-800">Mis Órdenes</h2>
+      <h2 className="text-3xl font-bold text-white">Mis Órdenes</h2>
     </div>
     <div className="flex flex-col items-center md:items-stretch space-y-4">
       {orderLoaded ? (
-        orders.length > 0 ? (
-          orders.map((order, index) => (
+        ordenes.length > 0 ? (
+          ordenes.reverse().map((order, index) => (
             <div
               className="md:ml-12 w-11/12 rounded-md bg-gray-100 border border-gray-300 shadow-md p-4 text-center md:text-left"
               key={index}

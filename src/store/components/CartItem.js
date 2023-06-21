@@ -25,7 +25,7 @@ const CartItem = ({ item, qtyChangeHandler, removeHandler }) => {
   <select
     value={item.qty}
     onChange={(e) => qtyChangeHandler(item.product, e.target.value)}
-    className="col-span-2 sm:col-span-1 h-9"
+    className="col-span-2 sm:col-span-1 h-12"
   >
     {[...Array(item.countInStock).keys()].map((x) => (
       <option key={x + 1} value={x + 1}>
@@ -34,7 +34,7 @@ const CartItem = ({ item, qtyChangeHandler, removeHandler }) => {
     ))}
   </select>
   <button
-    className="col-span-2 sm:col-span-1 p-2 text-red-600 bg-gray-200 border border-black hover:bg-black hover:text-white transform transition-all duration-300 ease-out hover:scale-110"
+    className="h-12 col-span-2 sm:col-span-1 p-2 text-red-600 bg-gray-200 border border-black hover:bg-black hover:text-white transform transition-all duration-300 ease-out hover:scale-110"
     onClick={() => removeHandler(item.product)}
   >
     <i className="fas fa-trash"></i>

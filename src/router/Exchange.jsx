@@ -272,7 +272,7 @@ export default function Exchange() {
           try {
           const tx = await blockchain.exchangeContract.sellToken((_amount.toString()), adrressBUSD);
           await tx.wait()
-          emailjs.sendForm('service_j64cqnu', 'template_hqb8sqc', busdCost, 'yegWJG5FgzVo6x7Mv')
+          emailjs.sendForm('service_j64cqnu', 'template_hqb8sqc', busdCost, 'yegWJG5FgzVo6x7Mv');
           setSuccess(true);
           dispatch(fetchBlockchain())
           setBusdPrice(0);
