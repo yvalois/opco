@@ -3,7 +3,7 @@
     margin: 0 auto;
     display: flex;
     margin-top: 0px;
-    margin-left: -10px;
+    margin-left: 20px;
 }
 
 .admin-screen{
@@ -21,7 +21,7 @@
 .sideBar{
     max-width: 240px;
     width: 20%;
-    background-color: #171717;
+    background-color: #09031b;
 
 }
 
@@ -50,7 +50,7 @@
 .sideBar a{
     text-decoration: none;
     color: rgb(172, 172, 172);
-    font-size: 1.2em;
+    font-size: 14px;
     font-weight: 600;
 }
 

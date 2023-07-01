@@ -7,8 +7,12 @@ const initialState = {
     busdBalance: null,
     bnbBalance: null,
     usdtBalance: null,
+    inversionesBalance: [],
+    inversionesStakingBalance: [],
     usdtContract: null,
     opcoContract: null,
+    inversionesContract:null,
+    inversioneStakingContract:null,
     tokenBalance: null,
     accountAddress: null,  
     exchangeContract: null,  
@@ -22,6 +26,8 @@ const initialState = {
     marketContract: null,
     p2pContract: null,
     isOwner: false,
+    inversionesContractProvider:null,
+
 }
 
 const blockchainReducer = (state = initialState, action) => {
@@ -45,7 +51,12 @@ const blockchainReducer = (state = initialState, action) => {
                 tokenBalance: action.payload.tokenBalance,
                 busdBalance: action.payload.busdBalance,
                 usdtBalance: action.payload.usdtBalance,
+                inversionesBalance: action.payload.inversionesBalance,
+                inversionesStakingBalance: action.payload.inversionesStakingBalance,
                 usdtContract: action.payload.usdtContract,
+                opcoContract: action.payload.opcoContract,
+                inversionesContract: action.payload.inversionesContract,
+                inversioneStakingContract: action.payload.inversioneStakingContract,
                 accountAddress: action.payload.accountAddress,
                 exchangeContract: action.payload.exchangeContract,
                 priceSetterContract: action.payload.priceSetterContract,
@@ -86,6 +97,21 @@ const blockchainReducer = (state = initialState, action) => {
                 bnbBalance: action.payload.bnbBalance,
                 usdtBalance: action.payload.usdtBalance,
             }
+            case 'UPDATE_BALANCE_STAKING':
+                return {
+                    ...state,
+                    inversionesStakingBalance: action.payload.tokens,
+                }
+            case 'UPDATE_BALANCE_INVERSIONES':
+                return {
+                    ...state,
+                    inversionesBalance: action.payload.tokens,
+                }
+            case 'UPDATE_INVERSIONES_PROVIDER':
+                return{
+                    ...state,
+                    inversionesContractProvider: action.payload.inversionesContract
+                }
         case 'DISCONNECT_BLOCKCHAIN':
             return {
                 ...state,
@@ -110,7 +136,6 @@ const blockchainReducer = (state = initialState, action) => {
                 stakingContract: null,
                 priceSetterContract: null,
                 usdtContract: null,
-
             }
 
         default:

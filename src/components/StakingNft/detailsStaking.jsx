@@ -10,46 +10,219 @@ import { getMarket } from "../../redux/market/marketAction";
 import { fetchMinter } from "../../redux/blockchain/minterAction";
 import { contract } from '../../redux/blockchain/blockchainRouter';
 import LoaderFullScreen from "../loaderFullScreen";
+import Swal from 'sweetalert2';
+import { ethers } from 'ethers';
 
 
+const Inversiones = [
+    {
+        nombre: "Inversion #1",
+        tipo: 1,
+        price: 0,
+        image: "https://guapacho.com/wp-content/uploads/2022/08/boredape_nft-1024x577.jpg"
+    },
+    {
+        nombre: "Inversion #2",
+        tipo: 2,
+        price: 0,
+        image: "https://guapacho.com/wp-content/uploads/2022/08/boredape_nft-1024x577.jpg"
+    },
+    {
+        nombre: "Inversion #3",
+        tipo: 3,
+        price: 0,
+        image: "https://guapacho.com/wp-content/uploads/2022/08/boredape_nft-1024x577.jpg"
+    },
+    {
+        nombre: "Inversion #4",
+        tipo: 4,
+        price: 0,
+        image: "https://guapacho.com/wp-content/uploads/2022/08/boredape_nft-1024x577.jpg"
+    },
+    {
+        nombre: "Inversion #5",
+        tipo: 5,
+        price: 0,
+        image: "https://guapacho.com/wp-content/uploads/2022/08/boredape_nft-1024x577.jpg"
+    },
+    {
+        nombre: "Inversion #6",
+        tipo: 6,
+        price: 0,
+        image: "https://guapacho.com/wp-content/uploads/2022/08/boredape_nft-1024x577.jpg"
+    },
+
+]
 
 export default function StakingDetail() {
+    const { inversionesContract, usdtContract, opcoContract, accountAddress } = useSelector((state) => state.blockchain)
+    const [opcoP, setOpco] = useState(0);
+    const [precio, setPrecio] = useState(0);
+    const [allowance, setAllowance] = useState(0);
+    const [allowanceO, setAllowanceO] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const [isRefer, setIsRefer] = useState(false);
+    const [refer, setRefer] = useState(accountAddress);
+
+    const UsdtToOpco = async () => {
+        setLoading(true)
+        const valor = ethers.utils.parseUnits(precio.toString(), 18)
+        const opco = await inversionesContract.usdtToOpco(valor)
+        const precioO = parseFloat(ethers.utils.formatUnits(opco, 18)).toFixed(2);
+        setOpco(precioO)
+        setLoading(false)
+    }
+
+    const returnPrice = async (tipo) => {
+        setLoading(true)
+        const precio = await inversionesContract.prices_Per_Type(tipo);
+        const parsePrice = parseFloat(ethers.utils.formatUnits(precio, 18)).toFixed(2);
+        setPrecio(parsePrice)
+        setLoading(false)
+
+    }
+
+    const getAllowance = async () => {
+        setLoading(true)
+        const allowance = await usdtContract.allowance(accountAddress, inversionesContract.address);
+        const parseAllowance = parseFloat(ethers.utils.formatUnits(allowance, 18)).toFixed(2);
+        console.log(parseAllowance > precio);
+        setAllowance(parseAllowance)
+        setLoading(false)
+
+    }
+
+    const getAllowanceO = async () => {
+        setLoading(true)
+        const allowance = await opcoContract.allowance(accountAddress, inversionesContract.address);
+        const parseAllowance = parseFloat(ethers.utils.formatUnits(allowance, 18)).toFixed(2);
+        setAllowanceO(parseAllowance)
+        setLoading(false)
+
+    }
+
+    const Approve = async () => {
+        try {
+            setLoading(true);
+            const cant = precio.toString()
+            const tx = await usdtContract.approve(inversionesContract.address, ethers.utils.parseUnits(cant, 18));
+            //const tx = await opcoContract.mint(accountAddress, ethers.utils.parseUnits("10000", 18));
+            await tx.wait();
+            getAllowance();
+            setLoading(false);
+            Swal.fire({
+                title: 'Success',
+                text: 'Aprovado correctamente',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        } catch (err) {
+            setLoading(false);
+            Swal.fire({
+                title: 'tokens no fueron aprovados correctamente',
+                text: err.reason,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+
+
+    }
+
+    const ApproveO = async () => {
+        try {
+            setLoading(true);
+            const cant = opcoP.toString();
+            const tx = await opcoContract.approve(inversionesContract.address, ethers.utils.parseUnits(cant, 18));
+            await tx.wait();
+            getAllowanceO();
+            setLoading(false);
+            Swal.fire({
+                title: 'Success',
+                text: 'Aprovado correctamente',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        } catch (err) {
+            setLoading(false);
+            Swal.fire({
+                title: 'tokens no fueron aprovados correctamente',
+                text: err.reason,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            })
+        }
+    }
+
+    const buy = async () => {
+        try {
+            setLoading(true);
+            const tx = await inversionesContract.buyToken(id, usdtContract.address, "HOlaUwu", isRefer, refer, false);
+            await tx.wait();
+            setLoading(false);
+            Swal.fire({
+                title: 'Success',
+                text: 'Comprado correctamente',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        } catch (err) {
+            setLoading(false);
+            Swal.fire({
+                title: 'Hubo un error en la transacion',
+                text: err.reason,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            })
+        }
+    }
+
+    const buyOpco = async () => {
+        try {
+            setLoading(true);
+            const tx = await inversionesContract.buyToken(id, opcoContract.address, "HOlaUwu", isRefer, refer, true);
+            await tx.wait();
+            setLoading(false);
+            Swal.fire({
+                title: 'Success',
+                text: 'Comprado correctamente',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        } catch (err) {
+            setLoading(false);
+            Swal.fire({
+                title: 'Hubo un error en la transacion',
+                text: err.reason,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            })
+        }
+    }
+
+
+    useEffect(() => {
+        returnPrice(id)
+        getAllowance()
+        getAllowanceO()
+    }, [])
+
+    useEffect(() => {
+        UsdtToOpco()
+    }, [precio])
+
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    // const { market, marketloaded, tokenPrice, discount } = useSelector(state => state.market);
-    // const { marketContract, accountAddress } = useSelector(state => state.blockchain);
 
-    const router = contract();
+    const { id } = useParams();
 
-    // const { id } = useParams();
-
-    // const [detailLoaded, setDetailLoaded] = useState(false);
     const [nftDetail, setNftDetail] = useState({
         nombre: "Inversion #1",
         tipo: 1,
         price: 100,
         image: "https://guapacho.com/wp-content/uploads/2022/08/boredape_nft-1024x577.jpg"
     });
-    // const [isOwner, setIsOwner] = useState(false);
-    // const [loading, setLoading] = useState(false);
 
-    // useEffect(() => {
-    //     if (marketloaded) {
-    //         //filter by id
 
-    //         const nft = market.find(nft => nft.token_id === parseInt(id));
-    //         setNftDetail(nft);
-    //         setDetailLoaded(true);
-    //     }
-    // }, [marketloaded, id, market]);
-
-    // useEffect(() => {
-    //     if (accountAddress && marketloaded && detailLoaded) {
-    //         if (accountAddress.toLowerCase() === nftDetail.owner.toLowerCase()) {
-    //             setIsOwner(true);
-    //         }
-    //     }
-    // }, [accountAddress, nftDetail, marketloaded, detailLoaded]);
 
     const repeatStar = (number) => {
         let stars = [];
@@ -59,53 +232,10 @@ export default function StakingDetail() {
         return stars;
     }
 
-    // const priceDivTokenXdiscount = (nftDetail.dollarPrice / tokenPrice) * (1 - discount);
+    useEffect(() => {
+        setNftDetail(Inversiones[id - 1])
+    }, [id])
 
-    // const buyHandler = async (listId, token) => {
-    //     if (accountAddress) {
-    //         try {
-    //             setLoading(true);
-    //             const buy = await marketContract.buy(listId, token);
-    //             marketContract.on('buyed', (address, token, dollarPrice) => {
-
-    //                 dispatch(getMarket());
-    //                 dispatch(fetchMinter());
-    //                 setLoading(false);
-    //                 setTimeout(() => {
-    //                     navigate('/market');
-    //                 }, 1000);
-    //             });
-    //         } catch (err) {
-    //             console.log(err);
-    //             setLoading(false);
-    //         }
-    //     } else {
-    //         alert('Please connect to your wallet');
-    //     }
-    // }
-
-    // const cancelHandler = async (listId) => {
-    //     if (accountAddress) {
-    //         try {
-    //             setLoading(true);
-    //             const cancel = await marketContract.removeListing(listId);
-    //             marketContract.on('ListingRemoved', (id) => {
-
-    //                 dispatch(getMarket());
-    //                 dispatch(fetchMinter());
-    //                 setLoading(false);
-    //                 setTimeout(() => {
-    //                     navigate('/market');
-    //                 }, 1000);
-    //             });
-    //         } catch (err) {
-    //             console.log(err);
-    //             setLoading(false);
-    //         }
-    //     } else {
-    //         alert('Please connect to your wallet');
-    //     }
-    // }
 
 
     return (
@@ -121,8 +251,8 @@ export default function StakingDetail() {
                                 alt={nftDetail.nombre}
                             />
                             <h2 className="mt-5 text-4xl font-bold">{nftDetail.nombre}</h2>
-                            <h3 className="w-auto flex items-center ml-2 mt-3 text-2xl">Rareza: <div className="ml-[4px]">{repeatStar(parseInt(nftDetail.tipo))}</div></h3>
-                            <h6 className="mt-2 text-lg">Dueño: 0x1d12...836718d</h6>
+                            <h3 className="w-auto flex items-center ml-2 mt-3 text-2xl">Rareza: <div className="ml-[4px] flex">{repeatStar(parseInt(nftDetail.tipo))}</div></h3>
+                            <h6 className="mt-2 text-lg">Dueño: {inversionesContract.address.slice(0, 6) + "......" + inversionesContract.address.slice(inversionesContract.address.length - 6)}</h6>
                             {/* <h6 className="mt-2 text-sm bg-white text-black p-2 rounded">Adn: {nftDetail.dna}</h6> */}
                         </div>
 
@@ -139,18 +269,55 @@ export default function StakingDetail() {
                             </div>
 
                             <div className="w-full flex flex-col  justify-around mt-3">
-                                <button
-                                    onClick={() => console.log("Llamando funcion")}
-                                    className='w-full sm:w-auto bg-yellow-300 p-3 rounded my-1 sm:my-0'>
-                                    <img src={busd} alt="busd" className="h-6 w-6 mr-2 inline" />
-                                    ${(parseFloat(nftDetail.dollarPrice)).toFixed(2)}
-                                </button>
-                                <button
-                                    onClick={() => console.log("Llamando funcion")}
-                                    className='w-full sm:w-auto bg-black text-white p-3 rounded my-1 sm:my-0'>
-                                    <img src={opco} alt="opco" className="h-6 w-6 mr-2 inline" />
-                                    ${(parseFloat(nftDetail.price)).toFixed(2)}
-                                </button>
+
+
+
+                                {allowance < parseInt(precio) && !loading ?
+                                    (<button
+                                        onClick={Approve}
+                                        className='w-full sm:w-auto bg-yellow-300 p-3 rounded my-1 sm:my-0'>
+                                        <img src={busd} alt="busd" className="h-6 w-6 mr-2 inline" />
+                                        Aprobar
+                                    </button>)
+                                    : !loading ?
+                                        (<button
+                                            onClick={buy}
+                                            className='w-full sm:w-auto bg-yellow-300 p-3 rounded my-1 sm:my-0'>
+                                            <img src={busd} alt="busd" className="h-6 w-6 mr-2 inline" />
+                                            {precio}
+                                        </button>) :
+
+                                        <button
+                                            className='w-full sm:w-auto bg-yellow-300 p-3 rounded my-1 sm:my-0'>
+                                            <img src={busd} alt="busd" className="h-6 w-6 mr-2 inline" />
+                                            Loading...
+                                        </button>
+                                }
+
+                                {allowanceO < parseInt(opcoP) && !loading ?
+                                    (<button
+                                        onClick={ApproveO}
+                                        className='w-full sm:w-auto bg-black text-white p-3 rounded my-1 sm:my-0'>
+                                        <img src={opco} alt="opco" className="h-6 w-6 mr-2 inline" />
+                                        {opcoP}
+                                    </button>)
+                                    : !loading ?
+                                        (<button
+                                            onClick={buyOpco}
+                                            className='w-full sm:w-auto bg-black text-white p-3 rounded my-1 sm:my-0'>
+                                            <img src={opco} alt="opco" className="h-6 w-6 mr-2 inline" />
+                                            {opcoP}
+                                        </button>) :
+
+                                        (<button
+                                            className='w-full sm:w-auto bg-black text-white p-3 rounded my-1 sm:my-0'>
+                                            <img src={opco} alt="opco" className="h-6 w-6 mr-2 inline" />
+                                            Loading...
+                                        </button>)
+                                }
+
+
+
                             </div>
 
                             {/* {isOwner ?

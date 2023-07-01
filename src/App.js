@@ -100,7 +100,7 @@ function App() {
             <Route path="/token-market" element={<P2p />} />
             <Route path="/retire" element={<Retire />} />
             <Route path="/venta" element={<Venta />} />
-            <Route path="/ventaDetails/id" element={<StakingDetail />} />
+            <Route path="/ventaDetails/:id" element={<StakingDetail />} />
             <Route path="/inventarioInversiones" element={<Inventario />} />
             <Route path="/administrador" element={<Administrador/>}>
                 <Route index element={<AdminExchange/>}/>

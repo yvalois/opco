@@ -106,7 +106,7 @@ const Dashboard = () => {
 
   return (
 
-    <div className="dashboard-container">
+    <div className="w-full h-full">
       <Loader isLoading={loading} />
       <div className="title-adminsite">
         <h2>Options</h2>

@@ -1,22 +1,23 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { CgArrowsExchangeAlt } from 'react-icons/cg';
 import { RiHandCoinLine } from 'react-icons/ri';
 import { BsWallet } from 'react-icons/bs';
 import { AiOutlineShopping } from 'react-icons/ai';
 import { FaBitcoin } from 'react-icons/fa';
-import { Link, NavLink, BrowserRouter,Route } from 'react-router-dom';
+import { Link, NavLink, BrowserRouter, Route } from 'react-router-dom';
 import { GiCoffeeBeans } from 'react-icons/gi';
 import { FaWindowRestore } from 'react-icons/fa';
 import { BsBook } from 'react-icons/bs';
 import { BsBank } from 'react-icons/bs';
 import { RiBitCoinLine } from 'react-icons/ri';
 import { BsWhatsapp } from 'react-icons/bs';
-import { GrDocumentText } from 'react-icons/gr';
+import {GoBriefcase} from 'react-icons/go'
+import { GrDocumentText} from 'react-icons/gr';
 import logo from '../images/logo/logo.png';
 import whatsapp from "../images/logo/whatsapp-logo.png"
 import { FaTwitter, FaFacebookF, FaYoutube, FaWhatsapp } from "react-icons/fa";
 import { FiInstagram } from "react-icons/fi";
-
+import {PiVaultBold} from 'react-icons/pi'
 // import '../style/style_sideBar.css';
 import { useSelector } from 'react-redux';
 
@@ -27,7 +28,7 @@ const NavLinkComponent = ({ to, icon: Icon, label, ...props }) => (
     className="w-full flex justify-center items-end p-3 md:mb-2 rounded  text-white hover:bg-gray-700 no-underline  hover:no-underline"
     activeClassName="w-full flex justify-center bg-gray-900 text-yellow-500 bg-yellow-300"
   >
-    <Icon className=" w-6 h-6 mr-3" />
+    <Icon className=" w-6 h-6 mr-3 text-white" />
     <span className="hover:text-yellow-500">{label}</span>
   </NavLink>
 );
@@ -37,6 +38,7 @@ const NavLinkComponent = ({ to, icon: Icon, label, ...props }) => (
 export default function SideBar({ setIsOpen }) {
   const { isOwner } = useSelector(state => state.blockchain);
 
+  
   const routes = [
     <NavLinkComponent
       to="/"
@@ -99,6 +101,16 @@ export default function SideBar({ setIsOpen }) {
       target="_blank"
       rel="noopener noreferrer"
     />,
+    <NavLinkComponent
+      to="/venta"
+      icon={GoBriefcase}
+      label="Inversiones"
+    />,
+    <NavLinkComponent
+      to="/inventarioInversiones"
+      icon={PiVaultBold}
+      label="Staking"
+    />,
   ];
 
 
@@ -106,11 +118,11 @@ export default function SideBar({ setIsOpen }) {
 
     <div className="h-full w-full  md:w-64 bg-gray-900 md:p-4 flex flex-col  md:items-start md:space-y-2 ">
 
-        {routes.map((route, index) => (
-          <div key={index} className="w-full flex ">
-            {route}
-          </div>
-        ))}
+      {routes.map((route, index) => (
+        <div key={index} className="w-full flex ">
+          {route}
+        </div>
+      ))}
 
 
       <div className="w-full flex justify-center items-center space-x-2">

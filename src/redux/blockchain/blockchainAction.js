@@ -113,8 +113,47 @@ const disconnectBlockchain = () => ({
 //             inversionesContract
 //         }))
 //     }
-
 // }
+
+export const updateInversionTokens = (inversionesContract, accountAddress) => async(dispatch)=>{
+    let inversionesBalance = [];
+    let inversionesBalances = await inversionesContract.getMyInventory(accountAddress);
+
+    for(let i = 0;inversionesBalances.length > i; i++){
+        const tipo = await inversionesContract.getTipo(parseInt(inversionesBalances[i]));
+        const name = `Inversiones ${tipo}`
+        let info = {
+            nombre: name,
+            id: parseInt(inversionesBalances[i]),
+            tipo: parseInt(tipo),
+            image: "https://guapacho.com/wp-content/uploads/2022/08/boredape_nft-1024x577.jpg"
+        }
+        inversionesBalance.push(info)
+    }
+
+    console.log(inversionesBalance)
+    dispatch(updateTokenI(inversionesBalance))
+}
+
+export const updateStakingTokens = (inversioneStakingContract, accountAddress) => async(dispatch)=>{
+    let inversionesStakingBalance = [];
+    let inversionesStakingBalances = await inversioneStakingContract.getNfts(accountAddress);
+
+    for(let i = 0;inversionesStakingBalances.length > i; i++){
+        const restTime = await inversioneStakingContract.getRestTime(parseInt(inversionesStakingBalances[i]));
+        const  reward = await inversioneStakingContract.rewardPerToken(parseInt(inversionesStakingBalances[i]), accountAddress);
+        const valorConvertido = ethers.utils.formatUnits(reward, 18);
+        let info = {
+            id: parseInt(inversionesStakingBalances[i]),
+            Tiempo: parseInt(restTime),
+            currentReward: valorConvertido
+        }
+        console.log(info)
+        inversionesStakingBalance.push(info)
+    }
+    dispatch(updateTokenS(inversionesStakingBalance))
+}
+
 
 export const fetchBlockchain = () => {
     return async (dispatch) => {
@@ -129,134 +168,297 @@ export const fetchBlockchain = () => {
                 const accounts = await provider.listAccounts();
                 const networkID = await provider.getNetwork();
 
-
-
-                 if ((a === 'production' && networkID.chainId === 56) ||
-                     (a === 'development' && networkID.chainId === 97)) {
-                     const tokenContract = new ethers.Contract(AOEX_ADDRESS, coffeeAbi, signer)
-                     const busdContract = new ethers.Contract(BUSD_ADDRESS, abiToken, signer)
-                     const usdtContract = new ethers.Contract(USDT_ADDRESS, abiToken, signer)
-                     const exchangeContract = new ethers.Contract(EXCHANGE_ADDRESS, exchangeAbi, signer)
-                     const stakingContract = new ethers.Contract(STAKING_ADDRESS, stakingAbi, signer)
-                     const priceSetterContract = new ethers.Contract(router.PRICE_SETTER_ADDRESS, priceSetterAbi, signer);
-                     const opcoStoreContract = new ethers.Contract(router.OPCO_ADDRESS, storeAbi, signer);
-                     const marketContract = new ethers.Contract(router.MARKET, marketAbi, signer);
-                     const p2pContract = new ethers.Contract(P2P_ADDRESS, p2pAbi, signer);
-
-                     const tokenBalance = await tokenContract.balanceOf(accounts[0])
-                     const exchangeBalance = await tokenContract.balanceOf(EXCHANGE_ADDRESS);
-                     const bnbBalance = await provider.getBalance(accounts[0])
-                     const busdBalance = await busdContract.balanceOf(accounts[0])
-                     const usdtBalance = await usdtContract.balanceOf(accounts[0])
-                     const accountAddress = accounts[0]
-                     //8 decimals token
-                     const tokenBalanceFormatted = parseFloat(tokenBalance) / 10 ** 8
-                     const exchangeBalanceFormatted = parseFloat(exchangeBalance) / 10 ** 8
-                     const busdBalanceFormatted = parseFloat(ethers.utils.formatEther(busdBalance))
-                     const usdtBalanceFormatted = parseFloat(ethers.utils.formatEther(usdtBalance))
-                     const bnbBalanceFormatted = parseFloat(ethers.utils.formatEther(bnbBalance));
-                     const tokenPriceWeth = await exchangeContract.fetchPrice();
-                     const tokenPrice = parseFloat(ethers.utils.formatEther(tokenPriceWeth))
-
-                     const exchangeOwner = await exchangeContract.owner();
-                     const isOwner = accountAddress.toLowerCase() === exchangeOwner.toLowerCase();
-
-                     dispatch(loadingBlockchainSuccess({
-                         tokenContract,
-                         busdContract,
-                         usdtContract,
-                         tokenBalance: tokenBalanceFormatted,
-                         bnbBalance: bnbBalanceFormatted,
-                         busdBalance: busdBalanceFormatted,
-                         usdtBalance: usdtBalanceFormatted,
-                         accountAddress,
-                         exchangeContract,
-                         priceSetterContract,
-                         stakingContract,
-                         networkID: networkID.chainId,
-                         exchangeBalance: exchangeBalanceFormatted,
-                         signer,
-                         opcoStoreContract,
-                         tokenPrice,
-                         marketContract,
-                         p2pContract,
-                         isOwner
-                     }))
-
-                     instance.on("accountsChanged", async (accounts) => {
-                     
-                         const tokenBalance = await tokenContract.balanceOf(accounts[0]);
-                         const exchangeBalance = await tokenContract.balanceOf(EXCHANGE_ADDRESS);
-                         const bnbBalance = await provider.getBalance(accounts[0]);
-                         const busdBalance = await busdContract.balanceOf(accounts[0]);
-                         const usdtBalance = await usdtContract.balanceOf(accounts[0]);
-                         const accountAddress = accounts[0];
-                         const tokenBalanceFormatted = parseFloat(tokenBalance) / 10 ** 8;
-                         const exchangeBalanceFormatted = parseFloat(exchangeBalance) / 10 ** 8;
-                         const busdBalanceFormatted = parseFloat(ethers.utils.formatEther(busdBalance));
-                         const usdtBalanceFormatted = parseFloat(ethers.utils.formatEther(usdtBalance));
-                         const bnbBalanceFormatted = parseFloat(ethers.utils.formatEther(bnbBalance));
-                         const exchangeOwner = await exchangeContract.owner();
-                         const isOwner = accountAddress.toLowerCase() === exchangeOwner.toLowerCase();
-                         dispatch(updateAccount({
-                             tokenBalance: tokenBalanceFormatted,
-                             bnbBalance: bnbBalanceFormatted,
-                             busdBalance: busdBalanceFormatted,
-                             accountAddress,
-                             exchangeBalance: exchangeBalanceFormatted,
-                             usdtBalance: usdtBalanceFormatted,
-                             isOwner
-                         }))
-
-                     })
-                 } else {
                     
-                     if (a === 'production') {
-                             try {
-                                 await provider.provider.request({
-                                     method: 'wallet_switchEthereumChain',
-                                     params: [{ chainId: `0x${Number(56).toString(16)}`}],
-                                  })
+                //Cambiar
+                // if (a === 'production')  {
+                //     const tokenContract = new ethers.Contract(AOEX_ADDRESS, coffeeAbi, signer)
+                //     const busdContract = new ethers.Contract(BUSD_ADDRESS, abiToken, signer)
+                //     const usdtContract = new ethers.Contract(USDT_ADDRESS, abiToken, signer)
+                //     const exchangeContract = new ethers.Contract(EXCHANGE_ADDRESS, exchangeAbi, signer)
+                //     const stakingContract = new ethers.Contract(STAKING_ADDRESS, stakingAbi, signer)
+                //     const priceSetterContract = new ethers.Contract(router.PRICE_SETTER_ADDRESS, priceSetterAbi, signer);
+                //     const opcoStoreContract = new ethers.Contract(router.OPCO_ADDRESS, storeAbi, signer);
+                //     const marketContract = new ethers.Contract(router.MARKET, marketAbi, signer);
+                //     const p2pContract = new ethers.Contract(P2P_ADDRESS, p2pAbi, signer);
+                //     const fUsdtContract = new ethers.Contract(USDT__ADDRESS,usdtAbi, signer);
+                //     const fOpcoContract = new ethers.Contract(OPCO__ADDRESS, opcoAbi, signer);
+                //     const inversionesContract = new ethers.Contract(INVERSIONES_ADDRESS, inversionesAbi, signer);
+                //     const inversioneStakingContract = new ethers.Contract(STAKING__ADDRESS, InverStakingAbi, signer);
+                    
+
+                //     const tokenBalance = 0;
+                //     const exchangeBalance = 0;
+                //     const bnbBalance = 0;
+                //     const busdBalance = 0;
+                //     const usdtBalance = 0;
+                //     const accountAddress = accounts[0];
+                //     //8 decimals token
+                //     const tokenBalanceFormatted = parseFloat(tokenBalance) / 10 ** 8;
+                //     const exchangeBalanceFormatted = parseFloat(exchangeBalance) / 10 ** 8;
+                //     const busdBalanceFormatted = parseFloat(ethers.utils.formatEther(busdBalance));
+                //     const usdtBalanceFormatted = parseFloat(ethers.utils.formatEther(usdtBalance));
+                //     const bnbBalanceFormatted = parseFloat(ethers.utils.formatEther(bnbBalance));
+                //     const tokenPriceWeth = 0;
+                //     const tokenPrice = parseFloat(ethers.utils.formatEther(tokenPriceWeth));
+                //     const exchangeOwner = "0xb029ac7caf182421dbb72ac6645fbbb499020bfc";
+                //     const isOwner = accountAddress.toLowerCase() === exchangeOwner.toLowerCase();
+                //     let inversionesBalance = [];
+                //     let inversionesStakingBalance = [];
+
+                //     let inversionesBalances = await inversionesContract.getMyInventory(accountAddress);
+                //     let inversionesStakingBalances = await inversioneStakingContract.getNfts(accountAddress);
+
+                //     for(let i = 0;inversionesBalances.length > i; i++){
+                //         const tipo = await inversionesContract.getTipo(parseInt(inversionesBalances[i]));
+                //         const name = `Inversiones ${tipo}`
+                //         let info = {
+                //             nombre: name,
+                //             id: parseInt(inversionesBalances[i]),
+                //             tipo: parseInt(tipo),
+                //             image: "https://guapacho.com/wp-content/uploads/2022/08/boredape_nft-1024x577.jpg"
+                //         }
+                //         inversionesBalance.push(info)
+                //     }
+                    
+                //     for(let i = 0;inversionesStakingBalances.length > i; i++){
+                //         const restTime = await inversioneStakingContract.getRestTime(parseInt(inversionesStakingBalances[i]));
+                //         const  reward = await inversioneStakingContract.rewardPerToken(parseInt(inversionesStakingBalances[i]), accountAddress);
+                //         const valorConvertido = ethers.utils.formatUnits(reward, 18);
+                //         let info = {
+                //             id: parseInt(inversionesStakingBalances[i]),
+                //             Tiempo: parseInt(restTime),
+                //             currentReward: valorConvertido
+                //         }
+                //         inversionesStakingBalance.push(info)
+                //     }
+
+                //     dispatch(loadingBlockchainSuccess({
+                //         tokenContract,
+                //         busdContract,
+                //         usdtContract: fUsdtContract,
+                //         opcoContract:fOpcoContract,
+                //         inversionesContract,
+                //         inversioneStakingContract,
+                //         tokenBalance: tokenBalanceFormatted,
+                //         bnbBalance: bnbBalanceFormatted,
+                //         busdBalance: busdBalanceFormatted,
+                //         usdtBalance: usdtBalanceFormatted,
+                //         inversionesBalance,
+                //         inversionesStakingBalance,
+                //         accountAddress,
+                //         exchangeContract,
+                //         priceSetterContract,
+                //         stakingContract,
+                //         networkID: networkID.chainId,
+                //         exchangeBalance: exchangeBalanceFormatted,
+                //         signer,
+                //         opcoStoreContract,
+                //         tokenPrice,
+                //         marketContract,
+                //         p2pContract,
+                //         isOwner
+                //     }))
+
+                //     // instance.on("accountsChanged", async (accounts) => {
+                     
+                //     //     const tokenBalance = await tokenContract.balanceOf(accounts[0]);
+                //     //     const exchangeBalance = await tokenContract.balanceOf(EXCHANGE_ADDRESS);
+                //     //     const bnbBalance = await provider.getBalance(accounts[0]);
+                //     //     const busdBalance = await busdContract.balanceOf(accounts[0]);
+                //     //     const usdtBalance = await usdtContract.balanceOf(accounts[0]);
+                //     //     const accountAddress = accounts[0];
+                //     //     const tokenBalanceFormatted = parseFloat(tokenBalance) / 10 ** 8;
+                //     //     const exchangeBalanceFormatted = parseFloat(exchangeBalance) / 10 ** 8;
+                //     //     const busdBalanceFormatted = parseFloat(ethers.utils.formatEther(busdBalance));
+                //     //     const usdtBalanceFormatted = parseFloat(ethers.utils.formatEther(usdtBalance));
+                //     //     const bnbBalanceFormatted = parseFloat(ethers.utils.formatEther(bnbBalance));
+                //     //     const exchangeOwner = await exchangeContract.owner();
+                //     //     const isOwner = accountAddress.toLowerCase() === exchangeOwner.toLowerCase();
+                //     //     dispatch(updateAccount({
+                //     //         tokenBalance: tokenBalanceFormatted,
+                //     //         bnbBalance: bnbBalanceFormatted,
+                //     //         busdBalance: busdBalanceFormatted,
+                //     //         accountAddress,
+                //     //         exchangeBalance: exchangeBalanceFormatted,
+                //     //         usdtBalance: usdtBalanceFormatted,
+                //     //         isOwner
+                //     //     }))
+
+                //     // })
+                // } else {
+                //     if (a === 'production') {
+                //             try {
+                //                 await provider.provider.request({
+                //                     method: 'wallet_switchEthereumChain',
+                //                     params: [{ chainId: `0x${Number(56).toString(16)}`}],
+                //                  })
                                  
-                             } catch (switchError) {
-                                 if (switchError.code === 4902) {
-                                     try {
-                                         await provider.provider.request({
-                                             method: 'wallet_addEthereumChain',
-                                             params: [{
-                                                 chainId: `0x${Number(56).toString(16)}`,
-                                                 chainName: "Binance Smart Chain ",
-                                                 nativeCurrency: {
-                                                     name: "Binance Chain Native Token",
-                                                     symbol: "BNB",
-                                                     decimals: 18,
-                                                 },
-                                                 rpcUrls: [
-                                                     "https:bsc-dataseed.binance.org",
-                                                 ],
-                                                 blockExplorerUrls: [
-                                                     "https:bscscan.com",
-                                                 ],
-                                             }],
-                                         })
-                                     } catch (addError) {
-                                         console.log(addError)
-                                         dispatch(loadingBlockchainFailure(addError))
-                                     }
-                                 }
-                             }
-                     }else if(a === 'development'){
-                         try {
-                             await provider.provider.request({
-                                 method: 'wallet_switchEthereumChain',
-                                 params: [{ chainId: `0x${Number(97).toString(16)}` }],
-                             })
+                //             } catch (switchError) {
+                //                 if (switchError.code === 4902) {
+                //                     try {
+                //                         await provider.provider.request({
+                //                             method: 'wallet_addEthereumChain',
+                //                             params: [{
+                //                                 chainId: `0x${Number(56).toString(16)}`,
+                //                                 chainName: "Binance Smart Chain ",
+                //                                 nativeCurrency: {
+                //                                     name: "Binance Chain Native Token",
+                //                                     symbol: "BNB",
+                //                                     decimals: 18,
+                //                                 },
+                //                                 rpcUrls: [
+                //                                     "https://bsc-dataseed.binance.org",
+                //                                 ],
+                //                                 blockExplorerUrls: [
+                //                                     "https://bscscan.com",
+                //                                 ],
+                //                             }],
+                //                         })
+                //                     } catch (addError) {
+                //                         console.log(addError)
+                //                         dispatch(loadingBlockchainFailure(addError))
+                //                     }
+                //                 }
+                //             }
+                //     }else if(a === 'development'){
+                //         try {
+                //             await provider.provider.request({
+                //                 method: 'wallet_switchEthereumChain',
+                //                 params: [{ chainId: `0x${Number(97).toString(16)}` }],
+                //             })
                            
-                         } catch (error) {
-                             console.log(error)
-                         }
-                     }
-                 }
+                //         } catch (error) {
+                //             console.log(error)
+                //         }
+                //     }
+                // }
+
+                  if ((a === 'production' && networkID.chainId === 56) ||
+                      (a === 'development' && networkID.chainId === 97)) {
+                      const tokenContract = new ethers.Contract(AOEX_ADDRESS, coffeeAbi, signer)
+                      const busdContract = new ethers.Contract(BUSD_ADDRESS, abiToken, signer)
+                      const usdtContract = new ethers.Contract(USDT_ADDRESS, abiToken, signer)
+                      const exchangeContract = new ethers.Contract(EXCHANGE_ADDRESS, exchangeAbi, signer)
+                      const stakingContract = new ethers.Contract(STAKING_ADDRESS, stakingAbi, signer)
+                      const priceSetterContract = new ethers.Contract(router.PRICE_SETTER_ADDRESS, priceSetterAbi, signer);
+                      const opcoStoreContract = new ethers.Contract(router.OPCO_ADDRESS, storeAbi, signer);
+                      const marketContract = new ethers.Contract(router.MARKET, marketAbi, signer);
+                      const p2pContract = new ethers.Contract(P2P_ADDRESS, p2pAbi, signer);
+
+                      const tokenBalance = await tokenContract.balanceOf(accounts[0])
+                      const exchangeBalance = await tokenContract.balanceOf(EXCHANGE_ADDRESS);
+                      const bnbBalance = await provider.getBalance(accounts[0])
+                      const busdBalance = await busdContract.balanceOf(accounts[0])
+                      const usdtBalance = await usdtContract.balanceOf(accounts[0])
+                      const accountAddress = accounts[0]
+                      //8 decimals token
+                      const tokenBalanceFormatted = parseFloat(tokenBalance) / 10 ** 8
+                      const exchangeBalanceFormatted = parseFloat(exchangeBalance) / 10 ** 8
+                      const busdBalanceFormatted = parseFloat(ethers.utils.formatEther(busdBalance))
+                      const usdtBalanceFormatted = parseFloat(ethers.utils.formatEther(usdtBalance))
+                      const bnbBalanceFormatted = parseFloat(ethers.utils.formatEther(bnbBalance));
+                      const tokenPriceWeth = await exchangeContract.fetchPrice();
+                      const tokenPrice = parseFloat(ethers.utils.formatEther(tokenPriceWeth))
+
+                      const exchangeOwner = await exchangeContract.owner();
+                      const isOwner = accountAddress.toLowerCase() === exchangeOwner.toLowerCase();
+
+                      dispatch(loadingBlockchainSuccess({
+                          tokenContract,
+                          busdContract,
+                          usdtContract,
+                          tokenBalance: tokenBalanceFormatted,
+                          bnbBalance: bnbBalanceFormatted,
+                          busdBalance: busdBalanceFormatted,
+                          usdtBalance: usdtBalanceFormatted,
+                          accountAddress,
+                          exchangeContract,
+                          priceSetterContract,
+                          stakingContract,
+                          networkID: networkID.chainId,
+                          exchangeBalance: exchangeBalanceFormatted,
+                          signer,
+                          opcoStoreContract,
+                          tokenPrice,
+                          marketContract,
+                          p2pContract,
+                          isOwner
+                      }))
+
+                      instance.on("accountsChanged", async (accounts) => {
+                     
+                          const tokenBalance = await tokenContract.balanceOf(accounts[0]);
+                          const exchangeBalance = await tokenContract.balanceOf(EXCHANGE_ADDRESS);
+                          const bnbBalance = await provider.getBalance(accounts[0]);
+                          const busdBalance = await busdContract.balanceOf(accounts[0]);
+                          const usdtBalance = await usdtContract.balanceOf(accounts[0]);
+                          const accountAddress = accounts[0];
+                          const tokenBalanceFormatted = parseFloat(tokenBalance) / 10 ** 8;
+                          const exchangeBalanceFormatted = parseFloat(exchangeBalance) / 10 ** 8;
+                          const busdBalanceFormatted = parseFloat(ethers.utils.formatEther(busdBalance));
+                          const usdtBalanceFormatted = parseFloat(ethers.utils.formatEther(usdtBalance));
+                          const bnbBalanceFormatted = parseFloat(ethers.utils.formatEther(bnbBalance));
+                          const exchangeOwner = await exchangeContract.owner();
+                          const isOwner = accountAddress.toLowerCase() === exchangeOwner.toLowerCase();
+                          dispatch(updateAccount({
+                              tokenBalance: tokenBalanceFormatted,
+                              bnbBalance: bnbBalanceFormatted,
+                              busdBalance: busdBalanceFormatted,
+                              accountAddress,
+                              exchangeBalance: exchangeBalanceFormatted,
+                              usdtBalance: usdtBalanceFormatted,
+                              isOwner
+                          }))
+
+                      })
+                  } else {
+                    
+                      if (a === 'production') {
+                              try {
+                                  await provider.provider.request({
+                                      method: 'wallet_switchEthereumChain',
+                                      params: [{ chainId: `0x${Number(56).toString(16)}`}],
+                                   })
+                                 
+                              } catch (switchError) {
+                                  if (switchError.code === 4902) {
+                                      try {
+                                          await provider.provider.request({
+                                              method: 'wallet_addEthereumChain',
+                                              params: [{
+                                                  chainId: `0x${Number(56).toString(16)}`,
+                                                  chainName: "Binance Smart Chain ",
+                                                  nativeCurrency: {
+                                                      name: "Binance Chain Native Token",
+                                                      symbol: "BNB",
+                                                      decimals: 18,
+                                                  },
+                                                  rpcUrls: [
+                                                      "https:bsc-dataseed.binance.org",
+                                                  ],
+                                                  blockExplorerUrls: [
+                                                      "https:bscscan.com",
+                                                  ],
+                                              }],
+                                          })
+                                      } catch (addError) {
+                                          console.log(addError)
+                                          dispatch(loadingBlockchainFailure(addError))
+                                      }
+                                  }
+                              }
+                      }else if(a === 'development'){
+                          try {
+                              await provider.provider.request({
+                                  method: 'wallet_switchEthereumChain',
+                                  params: [{ chainId: `0x${Number(97).toString(16)}` }],
+                              })
+                           
+                          } catch (error) {
+                              console.log(error)
+                          }
+                      }
+                  }
             } catch (error) {
                 dispatch(loadingBlockchainFailure({
                     errorMsg: 'Error de transaccion',

@@ -1,14 +1,14 @@
-import React,{useEffect} from 'react'
+import React, { useEffect } from 'react'
 import StakingCard from '../components/StakingNft/stakingCard';
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ethers } from 'ethers';
+import { fetchBlockchain } from '../redux/blockchain/blockchainAction';
 
 export default function Venta() {
     const dispatch = useDispatch();
 
-    const {inversionesContract} = useSelector((state)=> state.blockchain)
+    const { inversionesContract, accountAddress } = useSelector((state) => state.blockchain)
     let prices = []
-
     const Inversiones = [
         {
             nombre: "Inversion #1",
@@ -61,10 +61,10 @@ export default function Venta() {
     //       return precio; 
     //   }
 
-    
 
-    return (
-        <div className='w-full h-full  overflow-hidden'>
+
+    return (<>
+        {accountAddress ? (<div className='w-full h-full  overflow-hidden'>
             <div className="w-full h-full  flex justify-center items-center ">
                 <div className="w-full h-full flex flex-col items-center justify-center  ">
 
@@ -75,7 +75,7 @@ export default function Venta() {
                     </div>
 
                     <div className='w-full h-full flex justify-center overflow-auto'>
-                        <div className='grid grid-cols-2 xs:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-3 gap-x-20 justify-start mt-4'>
+                        <div className='grid grid-cols-2  xl:grid-cols-3 2xl:grid-cols-4 gap-y-6 gap-x-6 md:gap-x-20 justify-start mt-4 '>
                             {
                                 Inversiones.map((token, index) => (
                                     <div>
@@ -85,6 +85,7 @@ export default function Venta() {
                                             id={token.tipo}
                                             name={token.nombre}
                                             rarity={token.tipo}
+                                            inventory={false}
                                             key={index}
                                         />
                                     </div>
@@ -94,9 +95,17 @@ export default function Venta() {
                     </div>
 
                 </div>
-                </div>
+            </div>
 
-        </div>
+        </div>) :
+            <div className='w-full h-full flex justify-center items-center'>
+                <button
+                    onClick={() => dispatch(fetchBlockchain())}
+                    className=" w-[200px] h-auto text-lg px-4 py-2 text-white bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full hover:from-orange-500 hover:to-yellow-400 transition-all duration-200 flex items-center justify-center space-x-2"
+                >Conectar</button>
+            </div>}
+
+    </>
     )
 }
 
