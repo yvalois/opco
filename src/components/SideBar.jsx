@@ -93,24 +93,25 @@ export default function SideBar({ setIsOpen }) {
         label="Administrador"
       />
     ),
-    <NavLinkComponent
+    !isOwner && (<NavLinkComponent
       as="a"
       href="https://wa.me/+573212414237?text=Me%20interesa%20preguntar%20sobre%20Oppen%20Coffee"
       icon={BsWhatsapp}
       label="Whatsapp"
       target="_blank"
       rel="noopener noreferrer"
-    />,
-    <NavLinkComponent
-      to="/venta"
-      icon={GoBriefcase}
-      label="Inversiones"
-    />,
-    <NavLinkComponent
-      to="/inventarioInversiones"
-      icon={PiVaultBold}
-      label="Staking"
-    />,
+    />),
+    // <NavLinkComponent
+    //   to="/venta"
+    //   icon={GoBriefcase}
+    //   label="Inversiones"
+    // />,
+
+    // <NavLinkComponent
+    //   to="/inventarioInversiones"
+    //   icon={PiVaultBold}
+    //   label="Staking"
+    // />,
   ];
 
 
