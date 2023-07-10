@@ -407,8 +407,14 @@ export const fetchBlockchain = () => {
                           const busdBalanceFormatted = parseFloat(ethers.utils.formatEther(busdBalance));
                           const usdtBalanceFormatted = parseFloat(ethers.utils.formatEther(usdtBalance));
                           const bnbBalanceFormatted = parseFloat(ethers.utils.formatEther(bnbBalance));
-                          const exchangeOwner = await exchangeContract.owner();
-                          const isOwner = accountAddress.toLowerCase() === "0xe7af6af6a4cbe41270d9ac7cdf5fedd76dbce35a";
+                          let isOwner // *TODO: Buscar una mejor solucion.
+                      
+
+                          if(accountAddress.toLowerCase() === exchangeOwner.toLowerCase()){
+                              isOwner = true;
+                          }else{
+                              isOwner = false;
+                          }
                           dispatch(updateAccount({
                               tokenBalance: tokenBalanceFormatted,
                               bnbBalance: bnbBalanceFormatted,
