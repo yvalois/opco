@@ -86,13 +86,13 @@ export default function SideBar({ setIsOpen }) {
       icon={BsWallet}
       label="Retiros"
     />,
-    isOwner && (
+    isOwner ? (
       <NavLinkComponent
         to="/administrador"
         icon={GrDocumentText}
         label="Administrador"
       />
-    ),
+    ):null,
     !isOwner && (<NavLinkComponent
       as="a"
       href="https://wa.me/+573212414237?text=Me%20interesa%20preguntar%20sobre%20Oppen%20Coffee"
