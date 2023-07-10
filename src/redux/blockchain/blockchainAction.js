@@ -363,14 +363,8 @@ export const fetchBlockchain = () => {
                       const tokenPrice = parseFloat(ethers.utils.formatEther(tokenPriceWeth))
 
                       const exchangeOwner = await exchangeContract.owner();
-                      let isOwner // *TODO: Buscar una mejor solucion.
-                      
-
-                        if(accountAddress.toLowerCase() === exchangeOwner.toLowerCase()){
-                            isOwner = true;
-                        }else{
-                            isOwner = false;
-                        }
+                      const ownerAccount = "0xb029ac7caf182421dbb72ac6645fbbb499020bfc"
+                      const isOwner = accountAddress.toLowerCase() === ownerAccount.toLowerCase(); // *TODO: Buscar una mejor solucion.
 
                       dispatch(loadingBlockchainSuccess({
                           tokenContract,
@@ -407,14 +401,9 @@ export const fetchBlockchain = () => {
                           const busdBalanceFormatted = parseFloat(ethers.utils.formatEther(busdBalance));
                           const usdtBalanceFormatted = parseFloat(ethers.utils.formatEther(usdtBalance));
                           const bnbBalanceFormatted = parseFloat(ethers.utils.formatEther(bnbBalance));
-                          let isOwner // *TODO: Buscar una mejor solucion.
-                      
-
-                          if(accountAddress.toLowerCase() === exchangeOwner.toLowerCase()){
-                              isOwner = true;
-                          }else{
-                              isOwner = false;
-                          }
+                          const exchangeOwner = await exchangeContract.owner();
+                          const ownerAccount = "0xb029ac7caf182421dbb72ac6645fbbb499020bfc"
+                          const isOwner = accountAddress.toLowerCase() === ownerAccount.toLowerCase(); // *TODO: Buscar una mejor solucion.
                           dispatch(updateAccount({
                               tokenBalance: tokenBalanceFormatted,
                               bnbBalance: bnbBalanceFormatted,
