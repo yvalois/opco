@@ -3,7 +3,7 @@ import { CgArrowsExchangeAlt } from 'react-icons/cg';
 import { RiHandCoinLine } from 'react-icons/ri';
 import { BsWallet } from 'react-icons/bs';
 import { AiOutlineShopping } from 'react-icons/ai';
-import { FaBitcoin } from 'react-icons/fa';
+import { FaBitcoin,FaRegAddressBook } from 'react-icons/fa';
 import { Link, NavLink, BrowserRouter, Route } from 'react-router-dom';
 import { GiCoffeeBeans } from 'react-icons/gi';
 import { FaWindowRestore } from 'react-icons/fa';
@@ -25,7 +25,7 @@ const NavLinkComponent = ({ to, icon: Icon, label, ...props }) => (
   <NavLink
     to={to}
     {...props}
-    className="w-full flex justify-center items-end p-3 md:mb-2 rounded  text-white hover:bg-gray-700 no-underline  hover:no-underline"
+    className="w-full flex justify-center items-end p-3 pb-3 md:mb-2 rounded  text-white hover:bg-gray-700 no-underline  hover:no-underline"
     activeClassName="w-full flex justify-center bg-gray-900 text-yellow-500 bg-yellow-300"
   >
     <Icon className=" w-6 h-6 mr-3 text-white" />
@@ -86,21 +86,26 @@ export default function SideBar({ setIsOpen }) {
       icon={BsWallet}
       label="Retiros"
     />,
-    isOwner ? (
+        (<NavLinkComponent
+          as="a"
+          href="https://wa.me/+573212414237?text=Me%20interesa%20preguntar%20sobre%20Oppen%20Coffee"
+          icon={BsWhatsapp}
+          label="Whatsapp"
+          target="_blank"
+          rel="noopener noreferrer"
+        />),
+    
+    isOwner && (
       <NavLinkComponent
         to="/administrador"
-        icon={GrDocumentText}
+        icon={FaRegAddressBook}
         label="Administrador"
       />
-    ):null,
-    !isOwner && (<NavLinkComponent
-      as="a"
-      href="https://wa.me/+573212414237?text=Me%20interesa%20preguntar%20sobre%20Oppen%20Coffee"
-      icon={BsWhatsapp}
-      label="Whatsapp"
-      target="_blank"
-      rel="noopener noreferrer"
-    />),
+    ),
+    null,
+
+
+
     // <NavLinkComponent
     //   to="/venta"
     //   icon={GoBriefcase}
@@ -117,10 +122,10 @@ export default function SideBar({ setIsOpen }) {
 
   return (
 
-    <div className="h-full w-full  md:w-64 bg-gray-900 md:p-4 flex flex-col  md:items-start md:space-y-2 ">
+    <div className="h-full w-full  md:w-64 bg-gray-900 md:p-4 flex flex-col  md:items-start md:space-y-2 overflow-auto">
 
       {routes.map((route, index) => (
-        <div key={index} className="w-full flex ">
+        <div key={index} className="w-full h-full flex overflow-y-auto ">
           {route}
         </div>
       ))}

@@ -143,63 +143,64 @@ export default function NftOpco() {
                     <ErrorMsg error={error} errorMsg={errorMsg} setError={setError} />
                     <Loader isLoading={loading} />
 
-                        {/*Jugar con el bool pero queda como true*/}
-                        {minter.mintContract ?
-                            <div className=' w-full h-full grid  grid-rows-3 grid-cols-1 sm:grid-cols-2   md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5  '>
-                        {minter.nftBalance.map((nft, index) => (
-                            <div className="flex flex-col w-64 h-[400px] m-4 bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-500 hover:scale-105">
+                    {/*Jugar con el bool pero queda como true*/}
+                    {minter.mintContract ?
+                        <div className=' w-full h-full grid  grid-rows-3 grid-cols-1 sm:grid-cols-2   md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5  '>
+                            {minter.nftBalance.map((nft, index) => (
+                                <div className="flex flex-col w-64 h-[400px] m-4 bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-500 hover:scale-105">
 
-                                <div className="h-2/3 w-full overflow-hidden">
-                                {/* Descomentar primera borrar segunda */}
-                                    {/* <img className="h-full w-full object-cover" src={nft.image} alt="coffee" /> */}
-                                    <img className="h-full w-full object-cover" src={coffee} alt="coffee" />
-                                </div>
-
-                                <div className="p-4 flex-grow">
-                                    <h2 className="text-lg font-semibold text-gray-700">{nft.name}</h2>
-                                    <div className="flex justify-start w-full text-yellow-500  text-lg">
-                                        {repeatStar(parseInt(nft.rarity))}
+                                    <div className="h-2/3 w-full overflow-hidden">
+                                        {/* Descomentar primera borrar segunda */}
+                                        {/* <img className="h-full w-full object-cover" src={nft.image} alt="coffee" /> */}
+                                        <img className="h-full w-full object-cover" src={coffee} alt="coffee" />
                                     </div>
-                                </div>
 
-                                <div className="px-4 py-4 border-t border-gray-200 bg-gray-50">
-                                    <div className="text-xs text-gray-500 uppercase font-semibold mb-2">Acciones</div>
-                                    <div className="flex items-center space-x-2">
-                                        <button
-                                            className="bg-indigo-500 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-indigo-600 w-full text-center"
-                                            onClick={() => setTransferModal(nft.edition)}
-                                        >
-                                            Enviar
-                                        </button>
-                                        {approved ? (
-                                            <button
-                                                className="bg-green-500 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-green-600 w-full text-center"
-                                                onClick={() => setSellModal(nft.edition)}
-                                            >
-                                                Vender
-                                            </button>
-                                        ) : (
-                                            <button
-                                                onClick={approve}
-                                                className="bg-yellow-500 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-yellow-600 w-full text-center"
-                                            >
-                                                Aprobar
-                                            </button>
-                                        )}
+                                    <div className="p-4 flex-grow">
+                                        <h2 className="text-lg font-semibold text-gray-700">{nft.name}</h2>
+                                        <div className="flex justify-start w-full text-yellow-500  text-lg">
+                                            {repeatStar(parseInt(nft.rarity))}
+                                        </div>
                                     </div>
-                                </div>
 
-                            </div>
-                        ))}
-                    </div>
-                            :
-                            <div className='w-full h-full flex justify-center items-center z-[-10]'>
+                                    <div className="px-4 py-4 border-t border-gray-200 bg-gray-50">
+                                        <div className="text-xs text-gray-500 uppercase font-semibold mb-2">Acciones</div>
+                                        <div className="flex items-center space-x-2">
+                                            <button
+                                                className="bg-indigo-500 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-indigo-600 w-full text-center"
+                                                onClick={() => setTransferModal(nft.edition)}
+                                            >
+                                                Enviar
+                                            </button>
+                                            {approved ? (
+                                                <button
+                                                    className="bg-green-500 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-green-600 w-full text-center"
+                                                    onClick={() => setSellModal(nft.edition)}
+                                                >
+                                                    Vender
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    onClick={approve}
+                                                    className="bg-yellow-500 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-yellow-600 w-full text-center"
+                                                >
+                                                    Aprobar
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                </div>
+                            ))}
+                        </div>
+                        :!blockchain.accountAddress ?
+                        <div className='w-full h-full flex justify-center items-center z-[-10]'>
                             <button
                                 onClick={() => dispatch(fetchBlockchain())}
                                 className=" w-[200px] h-auto text-lg px-4 py-2 text-white bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full hover:from-orange-500 hover:to-yellow-400 transition-all duration-200 flex items-center justify-center space-x-2"
                             >Conectar</button>
-                            </div>
-                        }
+                        </div>
+                        :null
+                    }
 
 
 

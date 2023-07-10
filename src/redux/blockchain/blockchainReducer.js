@@ -27,6 +27,7 @@ const initialState = {
     p2pContract: null,
     isOwner: false,
     inversionesContractProvider:null,
+    isConnect: false
 
 }
 
@@ -69,6 +70,7 @@ const blockchainReducer = (state = initialState, action) => {
                 marketContract: action.payload.marketContract,
                 p2pContract: action.payload.p2pContract,
                 isOwner: action.payload.isOwner,
+                isConnect: true
         }
         case 'LOADING_BLOCKCHAIN_FAILURE':
             return {
@@ -88,6 +90,7 @@ const blockchainReducer = (state = initialState, action) => {
                 exchangeBalance: action.payload.exchangeBalance,
                 tokenPrice: action.payload.tokenPrice,
                 isOwner: action.payload.isOwner,
+                isConnect: true
             }
         case 'UPDATE_BALANCE':
             return {
@@ -96,6 +99,7 @@ const blockchainReducer = (state = initialState, action) => {
                 busdBalance: action.payload.busdBalance,
                 bnbBalance: action.payload.bnbBalance,
                 usdtBalance: action.payload.usdtBalance,
+                
             }
             case 'UPDATE_BALANCE_STAKING':
                 return {
@@ -136,6 +140,7 @@ const blockchainReducer = (state = initialState, action) => {
                 stakingContract: null,
                 priceSetterContract: null,
                 usdtContract: null,
+                isConnect: false
             }
 
         default:

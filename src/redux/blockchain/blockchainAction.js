@@ -363,8 +363,7 @@ export const fetchBlockchain = () => {
                       const tokenPrice = parseFloat(ethers.utils.formatEther(tokenPriceWeth))
 
                       const exchangeOwner = await exchangeContract.owner();
-                      const ownerAccount = "0xb029ac7caf182421dbb72ac6645fbbb499020bfc"
-                      const isOwner = accountAddress.toLowerCase() === ownerAccount.toLowerCase(); // *TODO: Buscar una mejor solucion.
+                      const isOwner = accountAddress.toLowerCase() === exchangeOwner.toLowerCase(); // *TODO: Buscar una mejor solucion.
 
                       dispatch(loadingBlockchainSuccess({
                           tokenContract,
@@ -402,8 +401,7 @@ export const fetchBlockchain = () => {
                           const usdtBalanceFormatted = parseFloat(ethers.utils.formatEther(usdtBalance));
                           const bnbBalanceFormatted = parseFloat(ethers.utils.formatEther(bnbBalance));
                           const exchangeOwner = await exchangeContract.owner();
-                          const ownerAccount = "0xb029ac7caf182421dbb72ac6645fbbb499020bfc"
-                          const isOwner = accountAddress.toLowerCase() === ownerAccount.toLowerCase(); // *TODO: Buscar una mejor solucion.
+                          const isOwner = accountAddress.toLowerCase() === exchangeOwner.toLowerCase(); // *TODO: Buscar una mejor solucion.
                           dispatch(updateAccount({
                               tokenBalance: tokenBalanceFormatted,
                               bnbBalance: bnbBalanceFormatted,

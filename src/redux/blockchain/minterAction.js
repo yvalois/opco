@@ -35,7 +35,6 @@ const disconnectMinter = () => ({
 
 export const fetchMinter = () => {
     return async (dispatch, getState) => {
-
         dispatch(loadingMinter())
 
         try {
@@ -54,11 +53,13 @@ export const fetchMinter = () => {
                 verifyOwnerResult = true;
             }
 
-
+            
             for (let i = 1; i <= totalSupply; i++) {
                 const owned = await minter.ownerOf(i);
+
                 if(owned.toLowerCase() === accountAddress.toLowerCase()) {
                 const number = i;
+
                 const nft = await axios.get(`${URI}${number}.json`);
                 minterBalanceArray.push({
                     ...nft.data,
@@ -66,6 +67,7 @@ export const fetchMinter = () => {
                 })
             }
             }
+
             
             dispatch(loadingMinterSuccess({
                 mintContract: minter,
@@ -101,7 +103,7 @@ export const fetchMinterAction = () => {
             }
             
             for (let i = 1; i <= totalSupply.length; i++) {
-                const owned = await minter.ownerOf(i);
+                const owned = await minter.ownerOf(i);  
                 if(owned.toLowerCase() === accountAddress.toLowerCase()) {
                 const number = i;
                 const nft = await axios.get(`${URI}${number}.json`);
