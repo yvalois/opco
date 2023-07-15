@@ -164,10 +164,7 @@ export const fetchBlockchain = (signer, provider, address) => {
 
             try {
                 const networkID = 56;
-                alert(address)
-                alert(address)
-
-                    
+           
                 // *TODO: Cambiar
                  /*if (a === 'production')  {
                      const tokenContract = new ethers.Contract(AOEX_ADDRESS, coffeeAbi, signer)

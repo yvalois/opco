@@ -56,12 +56,8 @@ export default function Navbar({isOpen,setIsOpen}) {
   const provider = usePublicClient()
   const { data: signer } = useWalletClient()
   useEffect(() => {
-    if(accountAddress.length === 0) {
       dispatch(fetchBlockchain(provider, signer, address));
-    }else{
-      disconnectBlockchain();
-    }
-  }, [address])
+  }, [address, dispatch, provider, signer])
   
   return (
 
