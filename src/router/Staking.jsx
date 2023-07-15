@@ -33,8 +33,11 @@ export default function Staking() {
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [cartLoading, setCartLoading] = useState(false);
 
-
+  const changeLoadingCard = (is)=>{
+      setCartLoading(is);
+  }
 
   const stake = async (poolId, amount) => {
     setIsLoading(true);

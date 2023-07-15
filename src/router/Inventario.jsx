@@ -5,8 +5,10 @@ import ModalW from '../components/StakingNft/modalWithdraw';
 import ModalS from '../components/StakingNft/modalStaking';
 import ModalT from '../components/StakingNft/modalTransfer';
 import { fetchBlockchain } from '../redux/blockchain/blockchainAction';
-
+import { Copy } from '../components/icons/copy';
+import { Check } from '../components/icons/check';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useNavigate } from "react-router-dom";
 
 
 
@@ -19,7 +21,9 @@ export default function Inventario() {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenS, setIsOpenS] = useState(false);
   const [isOpenT, setIsOpenT] = useState(false);
-
+  const { address } = useParams();
+  const [link, setLink] = useState('');
+  let [copyButtonStatus, setCopyButtonStatus] = useState(false);
 
   const [id, setId] = useState()
   
@@ -41,6 +45,19 @@ export default function Inventario() {
     } else
       setIsOpenT(!isOpenT)
   }
+
+  const copiar = () => {
+    const aux = window.location.href;
+    const a = aux.split('inventarioInversiones/nn');
+    const e = a[0];
+    setLink(e);
+    navigator.clipboard.writeText(`${e}venta/${accountAddress}`);
+
+    setCopyButtonStatus(true);
+    setTimeout(() => {
+        setCopyButtonStatus(copyButtonStatus);
+    }, 2500);
+};
   
 
   return (<>
@@ -64,13 +81,36 @@ export default function Inventario() {
 
           {!staking ? (<>
             <div className='w-full flex justify-center'>
-              <h1 className='text-white font-bold mt-[-30px]'>
+              <h1 className='text-white font-bold md:mt-[-30px]'>
                 Inventario
               </h1>
             </div>
             <div>
 
             </div>
+
+            
+            <div className='w-full flex justify-center md:justify-start md:ml-[670px]'>
+                        <div className="flex justify-start h-9 items-center rounded-full bg-white shadow-card dark:bg-light-dark xl:mt-6">
+                            <div className="inline-flex h-full shrink-0 grow-0 items-center rounded-full bg-gray-900 px-4 text-xs text-white sm:text-sm">
+                                Link Referido
+                            </div>
+                            <div className="text w-28 grow-0 truncate text-ellipsis bg-center text-xs text-gray-500 ltr:pl-4 rtl:pr-4 dark:text-gray-300 sm:w-32 sm:text-sm">
+                                {`${link}/${accountAddress}`}
+                            </div>
+                            <div
+                                className="flex cursor-pointer items-center px-4 text-gray-500 transition hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                                title="Copy Address"
+                                onClick={copiar}
+                            >
+                                {copyButtonStatus ? (
+                                    <Check className="h-auto w-3.5 text-green-500" />
+                                ) : (
+                                    <Copy className="h-auto w-3.5" />
+                                )}
+                            </div>
+                        </div>
+                    </div>
 
             <div className='w-full h-full flex justify-center overflow-auto'>
               <div className='grid grid-cols-2  xl:grid-cols-3 2xl:grid-cols-4 gap-y-6 gap-x-6  md:gap-x-20 justify-start mt-4 '>

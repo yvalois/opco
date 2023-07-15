@@ -5,6 +5,10 @@ import 'stream-browserify';
 import 'stream-http';
 import 'https-browserify';
 import "tailwindcss/tailwind.css"
+import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
+import { Web3Modal } from '@web3modal/react'
+import { configureChains, createConfig, WagmiConfig } from 'wagmi'
+import { arbitrum, mainnet, polygon,bsc } from 'wagmi/chains'
 
 import Layout from "./layout/Layout";
 import "./style/style_main.css";
@@ -63,7 +67,16 @@ import Maintenance from "./router/Maintenance";
 import Venta from "./router/Venta";
 import Inventario from "./router/Inventario";
 
+const chains = [bsc]
+const projectId = '1550c9dc2fbedff21b49981400c69490'
 
+const { publicClient } = configureChains(chains, [w3mProvider({ projectId })])
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors: w3mConnectors({ projectId, chains }),
+  publicClient
+})
+const ethereumClient = new EthereumClient(wagmiConfig, chains)
 
 function App() {
   const [sideToggle, setSideToggle] = useState(false);
@@ -79,7 +92,8 @@ function App() {
     }
   }, [dispatch]);
 
-  return (
+  return (<>
+    <WagmiConfig config={wagmiConfig}>
     <HashRouter>
       <div className="w-100 h-100">
         <Routes>
@@ -99,9 +113,9 @@ function App() {
             <Route path="nft-detail/:id" element={<NftDetail />} />
             <Route path="/token-market" element={<P2p />} />
             <Route path="/retire" element={<Retire />} />
-            <Route path="/venta" element={<Venta />} />
+            <Route path="/venta/:address" element={<Venta />} />
             <Route path="/ventaDetails/:id" element={<StakingDetail />} />
-            <Route path="/inventarioInversiones" element={<Inventario />} />
+            <Route path="/inventarioInversiones/:address" element={<Inventario />} />
             <Route path="/administrador" element={<Administrador/>}>
                 <Route index element={<AdminExchange/>}/>
                 <Route path="/administrador/admin-exchange" element={<AdminExchange/>}/>
@@ -143,6 +157,9 @@ function App() {
       </div>
 
     </HashRouter>
+    </WagmiConfig>
+     <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+     </>
   );
 }
 

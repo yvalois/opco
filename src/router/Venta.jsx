@@ -1,14 +1,21 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import StakingCard from '../components/StakingNft/stakingCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { ethers } from 'ethers';
 import { fetchBlockchain } from '../redux/blockchain/blockchainAction';
+import { Copy } from '../components/icons/copy';
+import { Check } from '../components/icons/check';
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function Venta() {
     const dispatch = useDispatch();
 
     const { inversionesContract, accountAddress } = useSelector((state) => state.blockchain)
     let prices = []
+    const [link, setLink] = useState('');
+    let [copyButtonStatus, setCopyButtonStatus] = useState(false);
+    const { address } = useParams();
+    
     const Inversiones = [
         {
             nombre: "Inversion #1",
@@ -40,26 +47,31 @@ export default function Venta() {
             price: 0,
             image: "https://guapacho.com/wp-content/uploads/2022/08/boredape_nft-1024x577.jpg"
         },
-        {
-            nombre: "Inversion #6",
-            tipo: 6,
-            price: 0,
-            image: "https://guapacho.com/wp-content/uploads/2022/08/boredape_nft-1024x577.jpg"
-        },
 
     ]
+    const [cartLoading, setCartLoading] = useState(false);
 
-    // const UsdtToOpco =async()=>{
-    //     const valor = ethers.utils.parseUnits(price.toString(), 18)
-    //       const opco = await inversionesContract.usdtToOpco(valor)
-    //       const precio = parseFloat(ethers.utils.formatUnits(opco, 18)).toFixed(2);
-    //       return precio; 
-    //   }
+    const changeLoadingCard = (is)=>{
+        setCartLoading(is);
+    }
+  
 
-    //   const returnPrice =async(tipo)=>{
-    //       const precio = await inversionesContract.prices_Per_Type(tipo)
-    //       return precio; 
-    //   }
+
+
+    
+    const copiar = () => {
+        const aux = window.location.href;
+        const a = aux.split('nn');
+        const e = a[0];
+        setLink(e);
+        navigator.clipboard.writeText(`${e}${accountAddress}`);
+
+        setCopyButtonStatus(true);
+        setTimeout(() => {
+            setCopyButtonStatus(copyButtonStatus);
+        }, 2500);
+    };
+
 
 
 
@@ -74,8 +86,31 @@ export default function Venta() {
                         </h1>
                     </div>
 
+                    <div className='w-full flex justify-center md:justify-start md:ml-[670px]'>
+                        <div className="flex justify-start h-9 items-center rounded-full bg-white shadow-card dark:bg-light-dark xl:mt-6">
+                            <div className="inline-flex h-full shrink-0 grow-0 items-center rounded-full bg-gray-900 px-4 text-xs text-white sm:text-sm">
+                                Link Referido
+                            </div>
+                            <div className="text w-28 grow-0 truncate text-ellipsis bg-center text-xs text-gray-500 ltr:pl-4 rtl:pr-4 dark:text-gray-300 sm:w-32 sm:text-sm">
+                                {`${link}/${accountAddress}`}
+                            </div>
+                            <div
+                                className="flex cursor-pointer items-center px-4 text-gray-500 transition hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                                title="Copy Address"
+                                onClick={copiar}
+                            >
+                                {copyButtonStatus ? (
+                                    <Check className="h-auto w-3.5 text-green-500" />
+                                ) : (
+                                    <Copy className="h-auto w-3.5" />
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
                     <div className='w-full h-full flex justify-center overflow-auto'>
-                        <div className='grid grid-cols-2  xl:grid-cols-3 2xl:grid-cols-4 gap-y-6 gap-x-6 md:gap-x-20 justify-start mt-4 '>
+                    
+                        <div className='grid grid-cols-2  xl:grid-cols-3 2xl:grid-cols-3 gap-y-6 gap-x-6 md:gap-x-20 justify-start mt-4 '>
                             {
                                 Inversiones.map((token, index) => (
                                     <div>
@@ -86,6 +121,9 @@ export default function Venta() {
                                             name={token.nombre}
                                             rarity={token.tipo}
                                             inventory={false}
+                                            addr={address}
+                                            cartLoading={cartLoading}
+                                            setCartLoading={changeLoadingCard}
                                             key={index}
                                         />
                                     </div>

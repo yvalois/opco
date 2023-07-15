@@ -12,6 +12,7 @@ import opcoAbi from '../../abis/OpcoP.json';
 import inversionesAbi from '../../abis/Inversiones.json';
 import InverStakingAbi from '../../abis/inversionesStaking.json';
 import usdtAbi from '../../abis/Usdt.json';
+import {useProvider, useSigner, useAccount } from 'wagmi';
 
 
 
@@ -155,22 +156,20 @@ export const updateStakingTokens = (inversioneStakingContract, accountAddress) =
 }
 
 
-export const fetchBlockchain = () => {
+export const fetchBlockchain = (signer, provider, address) => {
     return async (dispatch) => {
         const a = "production"
         dispatch(loadingBlockchain())
         try {
-            const instance = await web3Modal.connect(providerOptions);
-            const provider = new ethers.providers.Web3Provider(instance);
-            const signer = provider.getSigner();
-            
+
             try {
-                const accounts = await provider.listAccounts();
-                const networkID = await provider.getNetwork();
+                const networkID = 56;
+                alert(address)
+                alert(address)
 
                     
                 // *TODO: Cambiar
-                 /*if (a === 'production')  {
+                 if (a === 'production')  {
                      const tokenContract = new ethers.Contract(AOEX_ADDRESS, coffeeAbi, signer)
                      const busdContract = new ethers.Contract(BUSD_ADDRESS, abiToken, signer)
                      const usdtContract = new ethers.Contract(USDT_ADDRESS, abiToken, signer)
@@ -191,7 +190,7 @@ export const fetchBlockchain = () => {
                      const bnbBalance = 0;
                      const busdBalance = 0;
                      const usdtBalance = 0;
-                     const accountAddress = accounts[0];
+                     const accountAddress = address;
                      //8 decimals token
                      const tokenBalanceFormatted = parseFloat(tokenBalance) / 10 ** 8;
                      const exchangeBalanceFormatted = parseFloat(exchangeBalance) / 10 ** 8;
@@ -261,12 +260,12 @@ export const fetchBlockchain = () => {
 
                      // instance.on("accountsChanged", async (accounts) => {
                      
-                     //     const tokenBalance = await tokenContract.balanceOf(accounts[0]);
+                     //     const tokenBalance = await tokenContract.balanceOf(address);
                      //     const exchangeBalance = await tokenContract.balanceOf(EXCHANGE_ADDRESS);
-                     //     const bnbBalance = await provider.getBalance(accounts[0]);
-                     //     const busdBalance = await busdContract.balanceOf(accounts[0]);
-                     //     const usdtBalance = await usdtContract.balanceOf(accounts[0]);
-                     //     const accountAddress = accounts[0];
+                     //     const bnbBalance = await provider.getBalance(address);
+                     //     const busdBalance = await busdContract.balanceOf(address);
+                     //     const usdtBalance = await usdtContract.balanceOf(address);
+                     //     const accountAddress = address;
                      //     const tokenBalanceFormatted = parseFloat(tokenBalance) / 10 ** 8;
                      //     const exchangeBalanceFormatted = parseFloat(exchangeBalance) / 10 ** 8;
                      //     const busdBalanceFormatted = parseFloat(ethers.utils.formatEther(busdBalance));
@@ -331,9 +330,9 @@ export const fetchBlockchain = () => {
                              console.log(error)
                          }
                      }
-                 }*/
+                 }
 
-                  if ((a === 'production' && networkID.chainId === 56) ||
+                  /*if ((a === 'production' && networkID.chainId === 56) ||
                       (a === 'development' && networkID.chainId === 97)) {
                       const tokenContract = new ethers.Contract(AOEX_ADDRESS, coffeeAbi, signer)
                       const busdContract = new ethers.Contract(BUSD_ADDRESS, abiToken, signer)
@@ -345,12 +344,12 @@ export const fetchBlockchain = () => {
                       const marketContract = new ethers.Contract(router.MARKET, marketAbi, signer);
                       const p2pContract = new ethers.Contract(P2P_ADDRESS, p2pAbi, signer);
 
-                      const tokenBalance = await tokenContract.balanceOf(accounts[0])
+                      const tokenBalance = await tokenContract.balanceOf(address)
                       const exchangeBalance = await tokenContract.balanceOf(EXCHANGE_ADDRESS);
-                      const bnbBalance = await provider.getBalance(accounts[0])
-                      const busdBalance = await busdContract.balanceOf(accounts[0])
-                      const usdtBalance = await usdtContract.balanceOf(accounts[0])
-                      const accountAddress = accounts[0];
+                      const bnbBalance = await provider.getBalance(address)
+                      const busdBalance = await busdContract.balanceOf(address)
+                      const usdtBalance = await usdtContract.balanceOf(address)
+                      const accountAddress = address;
 
 
                       //8 decimals token
@@ -389,12 +388,12 @@ export const fetchBlockchain = () => {
 
                       instance.on("accountsChanged", async (accounts) => {
                      
-                          const tokenBalance = await tokenContract.balanceOf(accounts[0]);
+                          const tokenBalance = await tokenContract.balanceOf(address);
                           const exchangeBalance = await tokenContract.balanceOf(EXCHANGE_ADDRESS);
-                          const bnbBalance = await provider.getBalance(accounts[0]);
-                          const busdBalance = await busdContract.balanceOf(accounts[0]);
-                          const usdtBalance = await usdtContract.balanceOf(accounts[0]);
-                          const accountAddress = accounts[0];
+                          const bnbBalance = await provider.getBalance(address);
+                          const busdBalance = await busdContract.balanceOf(address);
+                          const usdtBalance = await usdtContract.balanceOf(address);
+                          const accountAddress = address;
                           const tokenBalanceFormatted = parseFloat(tokenBalance) / 10 ** 8;
                           const exchangeBalanceFormatted = parseFloat(exchangeBalance) / 10 ** 8;
                           const busdBalanceFormatted = parseFloat(ethers.utils.formatEther(busdBalance));
@@ -460,7 +459,7 @@ export const fetchBlockchain = () => {
                               console.log(error)
                           }
                       }
-                  }
+                  }*/
             } catch (error) {
                 dispatch(loadingBlockchainFailure({
                     errorMsg: 'Error de transaccion',
