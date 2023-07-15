@@ -169,7 +169,7 @@ export const fetchBlockchain = (signer, provider, address) => {
 
                     
                 // *TODO: Cambiar
-                 if (a === 'production')  {
+                 /*if (a === 'production')  {
                      const tokenContract = new ethers.Contract(AOEX_ADDRESS, coffeeAbi, signer)
                      const busdContract = new ethers.Contract(BUSD_ADDRESS, abiToken, signer)
                      const usdtContract = new ethers.Contract(USDT_ADDRESS, abiToken, signer)
@@ -330,9 +330,9 @@ export const fetchBlockchain = (signer, provider, address) => {
                              console.log(error)
                          }
                      }
-                 }
+                 }*/
 
-                  /*if ((a === 'production' && networkID.chainId === 56) ||
+                  if ((a === 'production' && networkID.chainId === 56) ||
                       (a === 'development' && networkID.chainId === 97)) {
                       const tokenContract = new ethers.Contract(AOEX_ADDRESS, coffeeAbi, signer)
                       const busdContract = new ethers.Contract(BUSD_ADDRESS, abiToken, signer)
@@ -459,7 +459,7 @@ export const fetchBlockchain = (signer, provider, address) => {
                               console.log(error)
                           }
                       }
-                  }*/
+                  }
             } catch (error) {
                 dispatch(loadingBlockchainFailure({
                     errorMsg: 'Error de transaccion',
