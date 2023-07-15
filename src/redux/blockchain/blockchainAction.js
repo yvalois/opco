@@ -386,32 +386,32 @@ export const fetchBlockchain = (signer, provider, address) => {
                           isOwner
                       }))
 
-                      instance.on("accountsChanged", async (accounts) => {
+                    //   instance.on("accountsChanged", async (accounts) => {
                      
-                          const tokenBalance = await tokenContract.balanceOf(address);
-                          const exchangeBalance = await tokenContract.balanceOf(EXCHANGE_ADDRESS);
-                          const bnbBalance = await provider.getBalance(address);
-                          const busdBalance = await busdContract.balanceOf(address);
-                          const usdtBalance = await usdtContract.balanceOf(address);
-                          const accountAddress = address;
-                          const tokenBalanceFormatted = parseFloat(tokenBalance) / 10 ** 8;
-                          const exchangeBalanceFormatted = parseFloat(exchangeBalance) / 10 ** 8;
-                          const busdBalanceFormatted = parseFloat(ethers.utils.formatEther(busdBalance));
-                          const usdtBalanceFormatted = parseFloat(ethers.utils.formatEther(usdtBalance));
-                          const bnbBalanceFormatted = parseFloat(ethers.utils.formatEther(bnbBalance));
-                          const exchangeOwner = await exchangeContract.owner();
-                          const isOwner = accountAddress.toLowerCase() === exchangeOwner.toLowerCase(); // *TODO: Buscar una mejor solucion.
-                          dispatch(updateAccount({
-                              tokenBalance: tokenBalanceFormatted,
-                              bnbBalance: bnbBalanceFormatted,
-                              busdBalance: busdBalanceFormatted,
-                              accountAddress,
-                              exchangeBalance: exchangeBalanceFormatted,
-                              usdtBalance: usdtBalanceFormatted,
-                              isOwner
-                          }))
+                    //       const tokenBalance = await tokenContract.balanceOf(address);
+                    //       const exchangeBalance = await tokenContract.balanceOf(EXCHANGE_ADDRESS);
+                    //       const bnbBalance = await provider.getBalance(address);
+                    //       const busdBalance = await busdContract.balanceOf(address);
+                    //       const usdtBalance = await usdtContract.balanceOf(address);
+                    //       const accountAddress = address;
+                    //       const tokenBalanceFormatted = parseFloat(tokenBalance) / 10 ** 8;
+                    //       const exchangeBalanceFormatted = parseFloat(exchangeBalance) / 10 ** 8;
+                    //       const busdBalanceFormatted = parseFloat(ethers.utils.formatEther(busdBalance));
+                    //       const usdtBalanceFormatted = parseFloat(ethers.utils.formatEther(usdtBalance));
+                    //       const bnbBalanceFormatted = parseFloat(ethers.utils.formatEther(bnbBalance));
+                    //       const exchangeOwner = await exchangeContract.owner();
+                    //       const isOwner = accountAddress.toLowerCase() === exchangeOwner.toLowerCase(); // *TODO: Buscar una mejor solucion.
+                    //       dispatch(updateAccount({
+                    //           tokenBalance: tokenBalanceFormatted,
+                    //           bnbBalance: bnbBalanceFormatted,
+                    //           busdBalance: busdBalanceFormatted,
+                    //           accountAddress,
+                    //           exchangeBalance: exchangeBalanceFormatted,
+                    //           usdtBalance: usdtBalanceFormatted,
+                    //           isOwner
+                    //       }))
 
-                      })
+                    //   })
                   } else {
                     
                       if (a === 'production') {
