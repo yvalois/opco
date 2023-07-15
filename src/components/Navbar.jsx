@@ -17,18 +17,16 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { getMarket } from "../redux/market/marketAction";
 import { getBanned } from "../redux/bannedAccounts/bannedActions";
 import NavbarAcordion from "./navbar/NavbarAcordion";
-import { Web3Button } from '@web3modal/react'
-import { useWeb3Modal } from '@web3modal/react'
 //import DropdownButton from 'react-bootstrap/DropdownButton';
-import { useAccount} from 'wagmi'
-import { usePublicClient, useWalletClient } from 'wagmi'
+
+
 
 export default function Navbar({isOpen,setIsOpen}) {
 
   const blockchain = useSelector(state => state.blockchain);
   const { market, marketloaded } = useSelector(state => state.market);
-  const { open, close } = useWeb3Modal()  
-  const { address } = useAccount();
+
+
   const dispatch = useDispatch();
   const [accountAddress, setAccountAddress] = useState("");
 
@@ -53,12 +51,9 @@ export default function Navbar({isOpen,setIsOpen}) {
     dispatch(logOutAction());
     dispatch(disconnectMinterAction());
   }
-  const provider = usePublicClient()
-  const { data: signer } = useWalletClient()
-  useEffect(() => {
-      dispatch(fetchBlockchain(provider, signer, address));
-  }, [address, dispatch, provider, signer])
-  
+
+
+
   return (
 
     <section className="bg-gray-200 p-0 m-0 fixed top-0 w-screen z-10">
@@ -122,7 +117,7 @@ export default function Navbar({isOpen,setIsOpen}) {
               {blockchain.accountAddress === null ? (
                 <button
                   className="text-black text-sm flex items-center justify-center rounded-lg py-1 px-3 cursor-pointer  border-black bg-yellow-300 min-w-60  shadow-text"
-                  onClick={() => open()}
+                  onClick={() => dispatch(fetchBlockchain())}
                 >
                   Conectar
                 </button>

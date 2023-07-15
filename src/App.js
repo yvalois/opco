@@ -93,7 +93,7 @@ function App() {
   }, [dispatch]);
 
   return (<>
-    <WagmiConfig config={wagmiConfig}>
+
     <HashRouter>
       <div className="w-100 h-100">
         <Routes>
@@ -157,8 +157,7 @@ function App() {
       </div>
 
     </HashRouter>
-    </WagmiConfig>
-     <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+
      </>
   );
 }
