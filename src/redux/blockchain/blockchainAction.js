@@ -14,6 +14,7 @@ import InverStakingAbi from '../../abis/inversionesStaking.json';
 import usdtAbi from '../../abis/Usdt.json';
 import {useProvider, useSigner, useAccount } from 'wagmi';
 import {EthereumProvider} from '@walletconnect/ethereum-provider'
+import WalletConnectProvider from "@walletconnect/web3-provider";
 
 import CoinbaseWalletSDK from '@coinbase/wallet-sdk';
 import { contract } from './blockchainRouter';
@@ -32,39 +33,41 @@ const INVERSIONES_ADDRESS = router.INVERSIONES_ADDRESS;
 const STAKING__ADDRESS = router.STAKING__ADDRESS;
 
 
+/*   
 const providerOptions = await EthereumProvider.init({
     projectId: "1550c9dc2fbedff21b49981400c69490", // REQUIRED your projectId
     chains: [56], // REQUIRED chain ids
-    showQrModal: true, // REQUIRED set to "true" to use @walletconnect/modal,
+    showQrModal: true,
+    qrModalOptions:undefined
   });
-
   await providerOptions.connect({
-    chains:[56], // OPTIONAL chain ids
-    rpcMap: {
-            31337: "http://localhost:8545", // Agrega el RPC de tu red local de Hardhat
-            56: "https://bsc-dataseed.binance.org/",
-            97: "https://data-seed-prebsc-1-s1.binance.org:8545/"
-    },
-  });
 
-// const providerOptions = {
-//     walletconnect: {
-//       package: WalletConnectProvider,
-//       options: {
-//         rpc: {
-//         31337: "http://localhost:8545", // Agrega el RPC de tu red local de Hardhat
-//           56: "https://bsc-dataseed.binance.org/",
-//           97: "https://data-seed-prebsc-1-s1.binance.org:8545/"
-//         }
-//       }
-//     }
-//   };
+     chains:[56], // OPTIONAL chain ids
+     rpcMap: {
+             31337: "http://localhost:8545", // Agrega el RPC de tu red local de Hardhat/             
+             56: "https://bsc-dataseed.binance.org/",
+     },
+   });
+   */
+
+ const providerOptions = {
+     walletconnect: {
+       package: WalletConnectProvider,
+       options: {
+         rpc: {
+         31337: "http://localhost:8545", // Agrega el RPC de tu red local de Hardhat
+           56: "https://bsc-dataseed.binance.org/",
+           97: "https://data-seed-prebsc-1-s1.binance.org:8545/"
+         }
+       }
+     }
+   };
   
-// const web3Modal = new Web3Modal({
-//     disableInjectedProvider: false,
-//     cacheProvider: true,
-//     providerOptions // required
-// });
+ const web3Modal = new Web3Modal({
+     disableInjectedProvider: false,
+     cacheProvider: true,
+     providerOptions // required
+ });
 
 
 const loadingBlockchain = () => ({
@@ -168,20 +171,20 @@ export const updateStakingTokens = (inversioneStakingContract, accountAddress) =
     dispatch(updateTokenS(inversionesStakingBalance))
 }
 
-
 export const fetchBlockchain = () => {
     return async (dispatch) => {
         const a = "production"
         dispatch(loadingBlockchain())
         try {
-            const instance = await providerOptions.connect();
+            const instance = await web3Modal.connect(providerOptions);
             const provider = new ethers.providers.Web3Provider(instance);
             const signer = provider.getSigner();
             
             try {
                 const accounts = await provider.listAccounts();
                 const networkID = await provider.getNetwork();
-           
+
+                    
                 // *TODO: Cambiar
                  /*if (a === 'production')  {
                      const tokenContract = new ethers.Contract(AOEX_ADDRESS, coffeeAbi, signer)
@@ -400,32 +403,32 @@ export const fetchBlockchain = () => {
                           isOwner
                       }))
 
-                       instance.on("accountsChanged", async (accounts) => {
+                      instance.on("accountsChanged", async (accounts) => {
                      
-                           const tokenBalance = await tokenContract.balanceOf(accounts[0]);
-                           const exchangeBalance = await tokenContract.balanceOf(EXCHANGE_ADDRESS);
-                           const bnbBalance = await provider.getBalance(accounts[0]);
-                           const busdBalance = await busdContract.balanceOf(accounts[0]);
-                           const usdtBalance = await usdtContract.balanceOf(accounts[0]);
-                           const accountAddress = accounts[0];
-                           const tokenBalanceFormatted = parseFloat(tokenBalance) / 10 ** 8;
-                           const exchangeBalanceFormatted = parseFloat(exchangeBalance) / 10 ** 8;
-                           const busdBalanceFormatted = parseFloat(ethers.utils.formatEther(busdBalance));
-                           const usdtBalanceFormatted = parseFloat(ethers.utils.formatEther(usdtBalance));
-                           const bnbBalanceFormatted = parseFloat(ethers.utils.formatEther(bnbBalance));
-                           const exchangeOwner = await exchangeContract.owner();
-                           const isOwner = accountAddress.toLowerCase() === exchangeOwner.toLowerCase();  //*TODO: Buscar una mejor solucion.
-                           dispatch(updateAccount({
-                               tokenBalance: tokenBalanceFormatted,
-                               bnbBalance: bnbBalanceFormatted,
-                               busdBalance: busdBalanceFormatted,
-                               accountAddress,
-                               exchangeBalance: exchangeBalanceFormatted,
-                               usdtBalance: usdtBalanceFormatted,
-                               isOwner
-                           }))
+                          const tokenBalance = await tokenContract.balanceOf(accounts[0]);
+                          const exchangeBalance = await tokenContract.balanceOf(EXCHANGE_ADDRESS);
+                          const bnbBalance = await provider.getBalance(accounts[0]);
+                          const busdBalance = await busdContract.balanceOf(accounts[0]);
+                          const usdtBalance = await usdtContract.balanceOf(accounts[0]);
+                          const accountAddress = accounts[0];
+                          const tokenBalanceFormatted = parseFloat(tokenBalance) / 10 ** 8;
+                          const exchangeBalanceFormatted = parseFloat(exchangeBalance) / 10 ** 8;
+                          const busdBalanceFormatted = parseFloat(ethers.utils.formatEther(busdBalance));
+                          const usdtBalanceFormatted = parseFloat(ethers.utils.formatEther(usdtBalance));
+                          const bnbBalanceFormatted = parseFloat(ethers.utils.formatEther(bnbBalance));
+                          const exchangeOwner = await exchangeContract.owner();
+                          const isOwner = accountAddress.toLowerCase() === exchangeOwner.toLowerCase(); // *TODO: Buscar una mejor solucion.
+                          dispatch(updateAccount({
+                              tokenBalance: tokenBalanceFormatted,
+                              bnbBalance: bnbBalanceFormatted,
+                              busdBalance: busdBalanceFormatted,
+                              accountAddress,
+                              exchangeBalance: exchangeBalanceFormatted,
+                              usdtBalance: usdtBalanceFormatted,
+                              isOwner
+                          }))
 
-                       })
+                      })
                   } else {
                     
                       if (a === 'production') {
@@ -495,6 +498,7 @@ export const fetchBlockchain = () => {
 
 
 
+
 export const fetchBalance = () => {
     return async (dispatch, getState) => {
         const { tokenContract, busdContract, usdtContract  ,accountAddress, exchangeContract } = getState().blockchain
@@ -510,7 +514,7 @@ export const fetchBalance = () => {
 
 export const disconnectBlockchainAction = () => {
     return async (dispatch) => {
-        web3Modal.clearCachedProvider();
+        //providerOptions.clearCachedProvider();
         dispatch(disconnectBlockchain())
 
 

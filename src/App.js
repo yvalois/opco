@@ -67,16 +67,7 @@ import Maintenance from "./router/Maintenance";
 import Venta from "./router/Venta";
 import Inventario from "./router/Inventario";
 
-const chains = [bsc]
-const projectId = '1550c9dc2fbedff21b49981400c69490'
 
-const { publicClient } = configureChains(chains, [w3mProvider({ projectId })])
-const wagmiConfig = createConfig({
-  autoConnect: true,
-  connectors: w3mConnectors({ projectId, chains }),
-  publicClient
-})
-const ethereumClient = new EthereumClient(wagmiConfig, chains)
 
 function App() {
   const [sideToggle, setSideToggle] = useState(false);
@@ -155,7 +146,6 @@ function App() {
           </Route>
         </Routes>
       </div>
-
     </HashRouter>
 
      </>

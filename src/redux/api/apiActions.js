@@ -25,6 +25,7 @@ export const getLinks = (address) => async (dispatch) => {
         links: data.links,
         categories: data.categories,
         vipAccess: data.vipAccess,
+        linksLoaded: true
     }));
     } catch(error) {
         dispatch(loadingApiFailure({

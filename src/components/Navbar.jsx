@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import "../style/style_navbar.css";
-import { disconnectBlockchainAction, fetchBlockchain } from "../redux/blockchain/blockchainAction";
+import { disconnectBlockchainAction, fetchBlockchain} from "../redux/blockchain/blockchainAction";
 import cafe from "../images/logo/logo.png";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useEffect, useState } from "react";

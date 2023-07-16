@@ -118,7 +118,7 @@ export default function LinkAccess() {
                 {<div className='md:ml-4 bg-white w-auto h-full flex justify-center p-4 rounded-lg'>
 
                     {
-                        linksLoaded ?
+                        !linksLoaded ?
                             vipAccess ?
                                 <>
                                     <div className='w-full h-full flex flex-col justify-center md:flex-row md:justify-center'>
