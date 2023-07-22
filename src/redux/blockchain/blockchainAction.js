@@ -159,7 +159,7 @@ export const updateStakingTokens = (inversioneStakingContract, accountAddress) =
     for(let i = 0;inversionesStakingBalances.length > i; i++){
         const restTime = await inversioneStakingContract.getRestTime(parseInt(inversionesStakingBalances[i]));
         const  reward = await inversioneStakingContract.rewardPerToken(parseInt(inversionesStakingBalances[i]), accountAddress);
-        const valorConvertido = ethers.utils.formatUnits(reward, 18);
+        const valorConvertido = ethers.utils.formatUnits(reward, 8);
         let info = {
             id: parseInt(inversionesStakingBalances[i]),
             Tiempo: parseInt(restTime),
@@ -404,7 +404,7 @@ export const fetchBlockchain = () => {
                       for(let i = 0;inversionesStakingBalances.length > i; i++){
                           const restTime = await inversioneStakingContract.getRestTime(parseInt(inversionesStakingBalances[i]));
                           const  reward = await inversioneStakingContract.rewardPerToken(parseInt(inversionesStakingBalances[i]), accountAddress);
-                          const valorConvertido = ethers.utils.formatUnits(reward, 18);
+                          const valorConvertido = parseFloat(ethers.utils.formatUnits(reward, 8)).toFixed(2);
                           let info = {
                               id: parseInt(inversionesStakingBalances[i]),
                               Tiempo: parseInt(restTime),

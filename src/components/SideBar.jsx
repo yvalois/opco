@@ -38,7 +38,7 @@ const NavLinkComponent = ({ to, icon: Icon, label, ...props }) => (
 export default function SideBar({ setIsOpen }) {
   const { isOwner } = useSelector(state => state.blockchain);
 
-  const { inversionesBalance, accountAddress } = useSelector((state) => state.blockchain)
+  const { inversionesBalance, accountAddress, inversionesStakingBalance } = useSelector((state) => state.blockchain)
 
   const routes = [
     <NavLinkComponent
@@ -101,7 +101,7 @@ export default function SideBar({ setIsOpen }) {
       icon={GoBriefcase}
       label="Inversiones"
     />,
-    inversionesBalance.length > 0 && 
+    (inversionesBalance.length > 0 || inversionesStakingBalance.length > 0 || isOwner) && 
     (<NavLinkComponent
       to="/inventarioInversiones/nn"
       icon={PiVaultBold}
@@ -115,14 +115,10 @@ export default function SideBar({ setIsOpen }) {
         label="Administrador"
       />
     ),
-    isOwner && (
-      <NavLinkComponent
-        to="/administrador"
-        icon={FaRegAddressBook}
-        label="Administrador"
-      />
-    )
+    null
   ];
+
+  
 
 
   return (
