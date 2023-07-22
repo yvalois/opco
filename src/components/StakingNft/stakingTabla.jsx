@@ -14,7 +14,7 @@ const Table = ({  modalManage }) => {
     const claimReward =async(id)=>{
       try {
         setLoading(true);
-        const tx = await inversioneStakingContract.claimReward(id, usdtContract.address,false );
+        const tx = await inversioneStakingContract.claimReward(id);
         await tx.wait();
         setLoading(false);
         Swal.fire({

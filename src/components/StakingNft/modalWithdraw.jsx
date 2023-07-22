@@ -80,7 +80,7 @@ const Modal = ({ isOpen, onClose, onRetirar, id }) => {
   const WithdrawCastigo =async()=>{
     try {
       setLoading(true);
-      const tx = await inversioneStakingContract.withdrawP(id, dropdownValue, isOpco);
+      const tx = await inversioneStakingContract.withdrawP(id);
       //const tx = await opcoContract.mint(accountAddress, ethers.utils.parseUnits("10000", 18));
       await tx.wait();
       dispatch(updateInversionTokens(inversionesContract ,accountAddress));

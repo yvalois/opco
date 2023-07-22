@@ -14,42 +14,43 @@ export default function Venta() {
     let prices = []
     const [link, setLink] = useState('');
     let [copyButtonStatus, setCopyButtonStatus] = useState(false);
+    const [cartLoading, setCartLoading] = useState(false);
+
     const { address } = useParams();
-    
+
     const Inversiones = [
         {
             nombre: "Inversion #1",
             tipo: 1,
             price: 0,
-            image: "https://guapacho.com/wp-content/uploads/2022/08/boredape_nft-1024x577.jpg"
+            image: "https://violet-disgusted-halibut-418.mypinata.cloud/ipfs/QmUncKwRVF1yXsckcTA3cQ6GgfMag1M8nQxgrKXMLWkbWH/1.png"
         },
         {
             nombre: "Inversion #2",
             tipo: 2,
             price: 0,
-            image: "https://guapacho.com/wp-content/uploads/2022/08/boredape_nft-1024x577.jpg"
+            image: "https://violet-disgusted-halibut-418.mypinata.cloud/ipfs/QmUncKwRVF1yXsckcTA3cQ6GgfMag1M8nQxgrKXMLWkbWH/2.png"
         },
         {
             nombre: "Inversion #3",
             tipo: 3,
             price: 0,
-            image: "https://guapacho.com/wp-content/uploads/2022/08/boredape_nft-1024x577.jpg"
+            image: "https://violet-disgusted-halibut-418.mypinata.cloud/ipfs/QmUncKwRVF1yXsckcTA3cQ6GgfMag1M8nQxgrKXMLWkbWH/3.png"
         },
         {
             nombre: "Inversion #4",
             tipo: 4,
             price: 0,
-            image: "https://guapacho.com/wp-content/uploads/2022/08/boredape_nft-1024x577.jpg"
+            image: "https://violet-disgusted-halibut-418.mypinata.cloud/ipfs/QmUncKwRVF1yXsckcTA3cQ6GgfMag1M8nQxgrKXMLWkbWH/4.png"
         },
         {
             nombre: "Inversion #5",
             tipo: 5,
             price: 0,
-            image: "https://guapacho.com/wp-content/uploads/2022/08/boredape_nft-1024x577.jpg"
+            image: "https://violet-disgusted-halibut-418.mypinata.cloud/ipfs/QmUncKwRVF1yXsckcTA3cQ6GgfMag1M8nQxgrKXMLWkbWH/3.png"
         },
 
     ]
-    const [cartLoading, setCartLoading] = useState(false);
 
     const changeLoadingCard = (is)=>{
         setCartLoading(is);
@@ -113,7 +114,7 @@ export default function Venta() {
                         <div className='grid grid-cols-2  xl:grid-cols-3 2xl:grid-cols-3 gap-y-6 gap-x-6 md:gap-x-20 justify-start mt-4 '>
                             {
                                 Inversiones.map((token, index) => (
-                                    <div>
+                                    <div key={index}>
                                         <StakingCard
                                             url={token.image}
                                             price={token.price}

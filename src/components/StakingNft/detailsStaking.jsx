@@ -55,7 +55,7 @@ const Inversiones = [
 ]
 
 export default function StakingDetail() {
-    const { inversionesContract, usdtContract, opcoContract, accountAddress } = useSelector((state) => state.blockchain)
+    const { inversionesContract, usdtContract, opcoContract, accountAddress,busdContract } = useSelector((state) => state.blockchain)
     const [opcoP, setOpco] = useState(0);
     const [precio, setPrecio] = useState(0);
     const [allowance, setAllowance] = useState(0);
@@ -74,32 +74,39 @@ export default function StakingDetail() {
     }
 
     const returnPrice = async (tipo) => {
-        setLoading(true)
+        
         const precio = await inversionesContract.prices_Per_Type(tipo);
-        const parsePrice = parseFloat(ethers.utils.formatUnits(precio, 18)).toFixed(2);
+        const parsePrice = parseFloat(ethers.utils.formatUnits(precio, 8)).toFixed(2);
         setPrecio(parsePrice)
-        setLoading(false)
-
-    }
-
-    const getAllowance = async () => {
-        setLoading(true)
-        const allowance = await usdtContract.allowance(accountAddress, inversionesContract.address);
-        const parseAllowance = parseFloat(ethers.utils.formatUnits(allowance, 18)).toFixed(2);
-        console.log(parseAllowance > precio);
+        
+    
+      }
+    
+      const getAllowance = async () => {
+        
+        const allowance = await busdContract.allowance(accountAddress, inversionesContract.address);
+        const parseAllowance = parseFloat(ethers.utils.formatUnits(allowance, 8)).toFixed(2);
         setAllowance(parseAllowance)
-        setLoading(false)
+        
+    
+      }
+      const getAllowanceU = async () => {
+        
+        const allowance = await usdtContract.allowance(accountAddress, inversionesContract.address);
+        const parseAllowance = parseFloat(ethers.utils.formatUnits(allowance, 8)).toFixed(2);
+        setAllowance(parseAllowance)
+        
+      }
+    
+      const getAllowanceO = async () => {
 
-    }
-
-    const getAllowanceO = async () => {
-        setLoading(true)
         const allowance = await opcoContract.allowance(accountAddress, inversionesContract.address);
-        const parseAllowance = parseFloat(ethers.utils.formatUnits(allowance, 18)).toFixed(2);
+        const parseAllowance = parseFloat(ethers.utils.formatUnits(allowance, 8)).toFixed(2);
         setAllowanceO(parseAllowance)
-        setLoading(false)
 
-    }
+    
+      }
+    
 
     const Approve = async () => {
         try {
@@ -157,7 +164,7 @@ export default function StakingDetail() {
     const buy = async () => {
         try {
             setLoading(true);
-            const tx = await inversionesContract.buyToken(id, usdtContract.address, "HOlaUwu", isRefer, refer, false);
+            const tx = await inversionesContract.buyToken(id, usdtContract.address, "HOlaUwu", isRefer, refer);
             await tx.wait();
             setLoading(false);
             Swal.fire({
@@ -180,7 +187,7 @@ export default function StakingDetail() {
     const buyOpco = async () => {
         try {
             setLoading(true);
-            const tx = await inversionesContract.buyToken(id, opcoContract.address, "HOlaUwu", isRefer, refer, true);
+            const tx = await inversionesContract.buyToken(id, opcoContract.address, "HOlaUwu", isRefer, refer);
             await tx.wait();
             setLoading(false);
             Swal.fire({

@@ -94,35 +94,32 @@ export default function SideBar({ setIsOpen }) {
           target="_blank"
           rel="noopener noreferrer"
         />),
-                  isOwner && (
+
+      <NavLinkComponent
+        to="/venta/nn"
+        icon={GoBriefcase}
+        label="Inversiones"
+      />,
+
+      <NavLinkComponent
+        to="/inventarioInversiones/nn"
+        icon={PiVaultBold}
+        label="Staking"
+      />,
+          isOwner && (
            <NavLinkComponent
              to="/administrador"
              icon={FaRegAddressBook}
              label="Administrador"
            />
          ),
-         null
-    
-
-    //  <NavLinkComponent
-    //    to="/venta/nn"
-    //    icon={GoBriefcase}
-    //    label="Inversiones"
-    //  />,
-
-    //  <NavLinkComponent
-    //    to="/inventarioInversiones/nn"
-    //    icon={PiVaultBold}
-    //    label="Staking"
-    //  />,
-    //      isOwner && (
-    //       <NavLinkComponent
-    //         to="/administrador"
-    //         icon={FaRegAddressBook}
-    //         label="Administrador"
-    //       />
-    //     ),
-    //     null
+         isOwner && (
+          <NavLinkComponent
+            to="/administrador"
+            icon={FaRegAddressBook}
+            label="Administrador"
+          />
+        )
   ];
 
 

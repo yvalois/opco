@@ -27,7 +27,6 @@ const USDT_ADDRESS = router.USTD_ADDRESS;
 const EXCHANGE_ADDRESS = router.EXCHANGE_ADDRESS;
 const STAKING_ADDRESS = router.STAKING_ADDRESS;
 const P2P_ADDRESS = router.P2P_ADDRESS;
-const USDT__ADDRESS = router.USDT__ADDRESS;
 const OPCO__ADDRESS = router.OPCO__ADDRESS;
 const INVERSIONES_ADDRESS = router.INVERSIONES_ADDRESS;
 const STAKING__ADDRESS = router.STAKING__ADDRESS;
@@ -196,8 +195,7 @@ export const fetchBlockchain = () => {
                      const opcoStoreContract = new ethers.Contract(router.OPCO_ADDRESS, storeAbi, signer);
                      const marketContract = new ethers.Contract(router.MARKET, marketAbi, signer);
                      const p2pContract = new ethers.Contract(P2P_ADDRESS, p2pAbi, signer);
-                     const fUsdtContract = new ethers.Contract(USDT__ADDRESS,usdtAbi, signer);
-                     const fOpcoContract = new ethers.Contract(OPCO__ADDRESS, opcoAbi, signer);
+                     const opcoContract = new ethers.Contract(OPCO__ADDRESS, opcoAbi, signer);
                      const inversionesContract = new ethers.Contract(INVERSIONES_ADDRESS, inversionesAbi, signer);
                      const inversioneStakingContract = new ethers.Contract(STAKING__ADDRESS, InverStakingAbi, signer);
                     
@@ -251,8 +249,8 @@ export const fetchBlockchain = () => {
                      dispatch(loadingBlockchainSuccess({
                          tokenContract,
                          busdContract,
-                         usdtContract: fUsdtContract,
-                         opcoContract:fOpcoContract,
+                         usdtContract: usdtContract,
+                         opcoContract: opcoContract,
                          inversionesContract,
                          inversioneStakingContract,
                          tokenBalance: tokenBalanceFormatted,
@@ -351,15 +349,18 @@ export const fetchBlockchain = () => {
 
                   if ((a === 'production' && networkID.chainId === 56) ||
                       (a === 'development' && networkID.chainId === 97)) {
-                      const tokenContract = new ethers.Contract(AOEX_ADDRESS, coffeeAbi, signer)
-                      const busdContract = new ethers.Contract(BUSD_ADDRESS, abiToken, signer)
-                      const usdtContract = new ethers.Contract(USDT_ADDRESS, abiToken, signer)
-                      const exchangeContract = new ethers.Contract(EXCHANGE_ADDRESS, exchangeAbi, signer)
-                      const stakingContract = new ethers.Contract(STAKING_ADDRESS, stakingAbi, signer)
-                      const priceSetterContract = new ethers.Contract(router.PRICE_SETTER_ADDRESS, priceSetterAbi, signer);
-                      const opcoStoreContract = new ethers.Contract(router.OPCO_ADDRESS, storeAbi, signer);
-                      const marketContract = new ethers.Contract(router.MARKET, marketAbi, signer);
-                      const p2pContract = new ethers.Contract(P2P_ADDRESS, p2pAbi, signer);
+                     const tokenContract = new ethers.Contract(AOEX_ADDRESS, coffeeAbi, signer)
+                     const busdContract = new ethers.Contract(BUSD_ADDRESS, abiToken, signer)
+                     const usdtContract = new ethers.Contract(USDT_ADDRESS, abiToken, signer)
+                     const exchangeContract = new ethers.Contract(EXCHANGE_ADDRESS, exchangeAbi, signer)
+                     const stakingContract = new ethers.Contract(STAKING_ADDRESS, stakingAbi, signer)
+                     const priceSetterContract = new ethers.Contract(router.PRICE_SETTER_ADDRESS, priceSetterAbi, signer);
+                     const opcoStoreContract = new ethers.Contract(router.OPCO_ADDRESS, storeAbi, signer);
+                     const marketContract = new ethers.Contract(router.MARKET, marketAbi, signer);
+                     const p2pContract = new ethers.Contract(P2P_ADDRESS, p2pAbi, signer);
+                     const opcoContract = new ethers.Contract(OPCO__ADDRESS, opcoAbi, signer);
+                     const inversionesContract = new ethers.Contract(INVERSIONES_ADDRESS, inversionesAbi, signer);
+                     const inversioneStakingContract = new ethers.Contract(STAKING__ADDRESS, InverStakingAbi, signer);
 
                       const tokenBalance = await tokenContract.balanceOf(accounts[0])
                       const exchangeBalance = await tokenContract.balanceOf(EXCHANGE_ADDRESS);
@@ -380,15 +381,49 @@ export const fetchBlockchain = () => {
 
                       const exchangeOwner = await exchangeContract.owner();
                       const isOwner = accountAddress.toLowerCase() === exchangeOwner.toLowerCase(); // *TODO: Buscar una mejor solucion.
-
+                      let inversionesBalance = [];
+                      let inversionesStakingBalance = [];
+                        
+                      /*let inversionesBalances = await inversionesContract.getMyInventory(accountAddress);
+                      let inversionesStakingBalances = await inversioneStakingContract.getNfts(accountAddress);
+ 
+                      for(let i = 0;inversionesBalances.length > i; i++){
+                          const tipo = await inversionesContract.getTipo(parseInt(inversionesBalances[i]));
+                          const name = `Inversiones ${tipo}`
+                          let info = {
+                              nombre: name,
+                              id: parseInt(inversionesBalances[i]),
+                              tipo: parseInt(tipo),
+                              image: `https://violet-disgusted-halibut-418.mypinata.cloud/ipfs/QmUncKwRVF1yXsckcTA3cQ6GgfMag1M8nQxgrKXMLWkbWH/${tipo}.png`
+                          }
+                          inversionesBalance.push(info)
+                      }
+                     
+                      for(let i = 0;inversionesStakingBalances.length > i; i++){
+                          const restTime = await inversioneStakingContract.getRestTime(parseInt(inversionesStakingBalances[i]));
+                          const  reward = await inversioneStakingContract.rewardPerToken(parseInt(inversionesStakingBalances[i]), accountAddress);
+                          const valorConvertido = ethers.utils.formatUnits(reward, 18);
+                          let info = {
+                              id: parseInt(inversionesStakingBalances[i]),
+                              Tiempo: parseInt(restTime),
+                              currentReward: valorConvertido
+                          }
+                          inversionesStakingBalance.push(info)
+                      }*/
+ 
                       dispatch(loadingBlockchainSuccess({
                           tokenContract,
                           busdContract,
-                          usdtContract,
+                          usdtContract: usdtContract,
+                          opcoContract: opcoContract,
+                          inversionesContract,
+                          inversioneStakingContract,
                           tokenBalance: tokenBalanceFormatted,
                           bnbBalance: bnbBalanceFormatted,
                           busdBalance: busdBalanceFormatted,
                           usdtBalance: usdtBalanceFormatted,
+                          inversionesBalance,
+                          inversionesStakingBalance,
                           accountAddress,
                           exchangeContract,
                           priceSetterContract,

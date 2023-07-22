@@ -30,6 +30,8 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
   const [precio, setPrecio] = useState(0);
   const [allowance, setAllowance] = useState(0);
   const [allowanceO, setAllowanceO] = useState(0);
+  const [allowanceU, setAllowanceU] = useState(0);
+  const code = process.env.REACT_APP_OPCO_PASSWORD
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState("OPCO")
 
@@ -40,17 +42,24 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
 
   const UsdtToOpco = async () => {
     setCartLoading(true)
-    const valor = ethers.utils.parseUnits(precio.toString(), 18)
-    const opco = await inversionesContract.usdtToOpco(valor)
-    const precioO = parseFloat(ethers.utils.formatUnits(opco, 18)).toFixed(2);
-    setOpco(precioO)
-    setCartLoading(false)
+    try{
+      const valor = ethers.utils.parseUnits(precio.toString(), 8)
+      const opco = await inversionesContract.usdtToOpco(valor)
+      const precioO = parseFloat(ethers.utils.formatUnits(opco, 8)).toFixed(2);
+      setOpco(precioO)
+      setCartLoading(false)
+    }catch(error){
+      console.log(error.reason)
+      setCartLoading(false)
+
+    }
+
   }
 
   const returnPrice = async (tipo) => {
     setCartLoading(true)
     const precio = await inversionesContract.prices_Per_Type(tipo);
-    const parsePrice = parseFloat(ethers.utils.formatUnits(precio, 18)).toFixed(2);
+    const parsePrice = parseFloat(ethers.utils.formatUnits(precio, 8)).toFixed(2);
     setPrecio(parsePrice)
     setCartLoading(false)
 
@@ -58,9 +67,16 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
 
   const getAllowance = async () => {
     setCartLoading(true)
+    const allowance = await busdContract.allowance(accountAddress, inversionesContract.address);
+    const parseAllowance = parseFloat(ethers.utils.formatUnits(allowance, 8)).toFixed(2);
+    setAllowance(parseAllowance)
+    setCartLoading(false)
+
+  }
+  const getAllowanceU = async () => {
+    setCartLoading(true)
     const allowance = await usdtContract.allowance(accountAddress, inversionesContract.address);
-    const parseAllowance = parseFloat(ethers.utils.formatUnits(allowance, 18)).toFixed(2);
-    console.log(parseAllowance > precio);
+    const parseAllowance = parseFloat(ethers.utils.formatUnits(allowance, 8)).toFixed(2);
     setAllowance(parseAllowance)
     setCartLoading(false)
 
@@ -69,7 +85,7 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
   const getAllowanceO = async () => {
     setCartLoading(true)
     const allowance = await opcoContract.allowance(accountAddress, inversionesContract.address);
-    const parseAllowance = parseFloat(ethers.utils.formatUnits(allowance, 18)).toFixed(2);
+    const parseAllowance = parseFloat(ethers.utils.formatUnits(allowance, 8)).toFixed(2);
     setAllowanceO(parseAllowance)
     setCartLoading(false)
 
@@ -128,6 +144,7 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
   }
 
   const ApproveO = async () => {
+    alert(code)
     try {
       setCartLoading(true);
       const cant = opcoP.toString();
@@ -158,7 +175,7 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
       //
       if (addr !== "nn") {
         alert(addr);
-        const tx = await inversionesContract.buyToken(rarity, busdContract.address, "HOlaUwu", true, addr, false);
+        const tx = await inversionesContract.buyToken(rarity, busdContract.address, code, true, addr);
         await tx.wait();
         dispatch(updateInversionTokens(inversionesContract, accountAddress));
         setLoading(false);
@@ -171,7 +188,7 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
       } else {
         alert(addr);
 
-        const tx = await inversionesContract.buyToken(rarity, busdContract.address, "HOlaUwu", false, accountAddress, false);
+        const tx = await inversionesContract.buyToken(rarity, busdContract.address, code, false, accountAddress);
         await tx.wait();
         dispatch(updateInversionTokens(inversionesContract, accountAddress));
         setLoading(false);
@@ -182,16 +199,6 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
           confirmButtonText: 'OK'
         });
       }
-      const tx = await inversionesContract.buyToken(rarity, busdContract.address, "HOlaUwu", true, addr, false);
-      await tx.wait();
-      dispatch(updateInversionTokens(inversionesContract, accountAddress));
-      setLoading(false);
-      Swal.fire({
-        title: 'Success',
-        text: 'Comprado correctamente',
-        icon: 'success',
-        confirmButtonText: 'OK'
-      });
     } catch (err) {
       setLoading(false);
       Swal.fire({
@@ -209,7 +216,7 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
       //
       if (addr !== "nn") {
         alert(addr);
-        const tx = await inversionesContract.buyToken(rarity, usdtContract.address, "HOlaUwu", true, addr, false);
+        const tx = await inversionesContract.buyToken(rarity, usdtContract.address, code, true, addr);
         await tx.wait();
         dispatch(updateInversionTokens(inversionesContract, accountAddress));
         setLoading(false);
@@ -222,7 +229,7 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
       } else {
         alert(addr);
 
-        const tx = await inversionesContract.buyToken(rarity, usdtContract.address, "HOlaUwu", false, accountAddress, false);
+        const tx = await inversionesContract.buyToken(rarity, usdtContract.address, code, false, accountAddress);
         await tx.wait();
         dispatch(updateInversionTokens(inversionesContract, accountAddress));
         setLoading(false);
@@ -233,16 +240,6 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
           confirmButtonText: 'OK'
         });
       }
-      const tx = await inversionesContract.buyToken(rarity, usdtContract.address, "HOlaUwu", true, addr, false);
-      await tx.wait();
-      dispatch(updateInversionTokens(inversionesContract, accountAddress));
-      setLoading(false);
-      Swal.fire({
-        title: 'Success',
-        text: 'Comprado correctamente',
-        icon: 'success',
-        confirmButtonText: 'OK'
-      });
     } catch (err) {
       setLoading(false);
       Swal.fire({
@@ -258,9 +255,7 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
     try {
       setLoading(true);
       if (addr !== "nn") {
-        alert(addr);
-
-        const tx = await inversionesContract.buyToken(rarity, opcoContract.address, "HOlaUwu", true, addr, true);
+        const tx = await inversionesContract.buyToken(rarity, opcoContract.address, code, true, addr);
         await tx.wait();
         dispatch(updateInversionTokens(inversionesContract, accountAddress));
         setLoading(false);
@@ -271,9 +266,7 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
           confirmButtonText: 'OK'
         });
       } else {
-        alert(addr);
-
-        const tx = await inversionesContract.buyToken(rarity, opcoContract.address, "HOlaUwu", false, accountAddress, true);
+        const tx = await inversionesContract.buyToken(rarity, opcoContract.address, code, false, accountAddress);
         await tx.wait();
         dispatch(updateInversionTokens(inversionesContract, accountAddress));
         setLoading(false);
@@ -301,6 +294,7 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
     returnPrice(rarity)
     getAllowance()
     getAllowanceO()
+    getAllowanceU();
   }, [])
 
   useEffect(() => {
@@ -309,14 +303,14 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
 
 
   return (
-    <div className="flex flex-col items-start bg-white shadow-2xl rounded-2xl overflow-hidden w-[160px] h-auto  md:w-72  md:h-[300px] transform transition-all duration-500 ease-in-out hover:scale-105">
+    <div className="flex flex-col items-start bg-white shadow-2xl rounded-2xl overflow-hidden w-[160px] h-auto  md:w-72  md:h-[280px] transform transition-all duration-500 ease-in-out hover:scale-105">
 
-      {!inventory && (<Link to={`/ventaDetails/${rarity}`} className="p-2 absolute z-10 top-2 right-2 text-white bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full hover:from-indigo-500 hover:to-purple-500 transition-all duration-300">
+      {/* {!inventory && (<Link to={`/ventaDetails/${rarity}`} className="p-2 absolute z-10 top-2 right-2 text-white bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full hover:from-indigo-500 hover:to-purple-500 transition-all duration-300">
         <AiOutlineSearch />
       </Link>)
-      }
-      <div className="w-full h-30 relative">
-        <img className="w-full h-full object-cover rounded-t-2xl" src={url} alt={name} />
+      } */}
+      <div className="w-full  relative">
+        <img className="w-full h-4/5 object-cover rounded-t-2xl" src={url} alt={name} />
       </div>
 
       <div className="w-full px-2 md:px-4 md:py-2 flex-grow flex flex-col justify-between">
@@ -400,7 +394,7 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
                 </button>))}
 
           {token === "USDT" && (
-            allowanceO < parseInt(opcoP) && !cartLoading ?
+            allowanceU < parseInt(precio) && !cartLoading ?
               (<button
                 className="w-9/12 md:w-4/5 px-4 py-2 text-white bg-gradient-to-r from-green-700 to-green-900 rounded-full hover:from-green-900 hover:to-green-700 transition-all duration-200 flex items-center justify-center space-x-2 "
                 onClick={ApproveU}

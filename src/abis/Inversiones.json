@@ -2,13 +2,18 @@
   {
     "inputs": [
       {
-        "internalType": "contract IERC20",
-        "name": "_token",
+        "internalType": "address",
+        "name": "_USDT",
         "type": "address"
       },
       {
-        "internalType": "contract IERC20",
-        "name": "Opco",
+        "internalType": "address",
+        "name": "_BUSD",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_OPCO",
         "type": "address"
       },
       {
@@ -120,19 +125,6 @@
     "type": "event"
   },
   {
-    "inputs": [],
-    "name": "DECIMALS",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -153,7 +145,7 @@
   {
     "inputs": [
       {
-        "internalType": "contract IERC20",
+        "internalType": "address",
         "name": "_tokenAddress",
         "type": "address"
       }
@@ -166,7 +158,7 @@
   {
     "inputs": [
       {
-        "internalType": "contract IERC20",
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -254,12 +246,31 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "buyRefer",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "_tipo",
         "type": "uint256"
       },
       {
-        "internalType": "contract IERC20",
+        "internalType": "address",
         "name": "_token",
         "type": "address"
       },
@@ -277,11 +288,6 @@
         "internalType": "address",
         "name": "refer",
         "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "isOpco",
-        "type": "bool"
       }
     ],
     "name": "buyToken",
@@ -330,7 +336,7 @@
   {
     "inputs": [
       {
-        "internalType": "contract IERC20",
+        "internalType": "address",
         "name": "_tokenAddress",
         "type": "address"
       }
@@ -338,6 +344,19 @@
     "name": "denyToken",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "fetchPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -817,7 +836,7 @@
         "type": "uint256"
       }
     ],
-    "stateMutability": "pure",
+    "stateMutability": "view",
     "type": "function"
   },
   {

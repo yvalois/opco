@@ -7,13 +7,13 @@
         "type": "address"
       },
       {
-        "internalType": "contract IERC20",
-        "name": "_token",
+        "internalType": "address",
+        "name": "_USDT",
         "type": "address"
       },
       {
-        "internalType": "contract IERC20",
-        "name": "_Opco",
+        "internalType": "address",
+        "name": "_OPCO",
         "type": "address"
       },
       {
@@ -146,7 +146,7 @@
   {
     "inputs": [
       {
-        "internalType": "contract IERC20",
+        "internalType": "address",
         "name": "_tokenAddress",
         "type": "address"
       }
@@ -159,7 +159,7 @@
   {
     "inputs": [
       {
-        "internalType": "contract IERC20",
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -199,16 +199,6 @@
         "internalType": "uint256",
         "name": "tokenId",
         "type": "uint256"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_token",
-        "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "isOpco",
-        "type": "bool"
       }
     ],
     "name": "claimReward",
@@ -219,7 +209,7 @@
   {
     "inputs": [
       {
-        "internalType": "contract IERC20",
+        "internalType": "address",
         "name": "_tokenAddress",
         "type": "address"
       }
@@ -616,7 +606,7 @@
         "type": "uint256"
       }
     ],
-    "stateMutability": "pure",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -657,16 +647,6 @@
         "internalType": "uint256",
         "name": "tokenId",
         "type": "uint256"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_token",
-        "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "isOpco",
-        "type": "bool"
       }
     ],
     "name": "withdrawP",
