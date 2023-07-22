@@ -1,9 +1,9 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { CgArrowsExchangeAlt } from 'react-icons/cg';
 import { RiHandCoinLine } from 'react-icons/ri';
 import { BsWallet } from 'react-icons/bs';
 import { AiOutlineShopping } from 'react-icons/ai';
-import { FaBitcoin,FaRegAddressBook } from 'react-icons/fa';
+import { FaBitcoin, FaRegAddressBook } from 'react-icons/fa';
 import { Link, NavLink, BrowserRouter, Route } from 'react-router-dom';
 import { GiCoffeeBeans } from 'react-icons/gi';
 import { FaWindowRestore } from 'react-icons/fa';
@@ -11,13 +11,13 @@ import { BsBook } from 'react-icons/bs';
 import { BsBank } from 'react-icons/bs';
 import { RiBitCoinLine } from 'react-icons/ri';
 import { BsWhatsapp } from 'react-icons/bs';
-import {GoBriefcase} from 'react-icons/go'
-import { GrDocumentText} from 'react-icons/gr';
+import { GoBriefcase } from 'react-icons/go'
+import { GrDocumentText } from 'react-icons/gr';
 import logo from '../images/logo/logo.png';
 import whatsapp from "../images/logo/whatsapp-logo.png"
 import { FaTwitter, FaFacebookF, FaYoutube, FaWhatsapp } from "react-icons/fa";
 import { FiInstagram } from "react-icons/fi";
-import {PiVaultBold} from 'react-icons/pi'
+import { PiVaultBold } from 'react-icons/pi'
 // import '../style/style_sideBar.css';
 import { useSelector } from 'react-redux';
 
@@ -38,7 +38,8 @@ const NavLinkComponent = ({ to, icon: Icon, label, ...props }) => (
 export default function SideBar({ setIsOpen }) {
   const { isOwner } = useSelector(state => state.blockchain);
 
-  
+  const { inversionesBalance, accountAddress } = useSelector((state) => state.blockchain)
+
   const routes = [
     <NavLinkComponent
       to="/"
@@ -86,40 +87,41 @@ export default function SideBar({ setIsOpen }) {
       icon={BsWallet}
       label="Retiros"
     />,
-        (<NavLinkComponent
-          as="a"
-          href="https://wa.me/+573212414237?text=Me%20interesa%20preguntar%20sobre%20Oppen%20Coffee"
-          icon={BsWhatsapp}
-          label="Whatsapp"
-          target="_blank"
-          rel="noopener noreferrer"
-        />),
+    (<NavLinkComponent
+      as="a"
+      href="https://wa.me/+573212414237?text=Me%20interesa%20preguntar%20sobre%20Oppen%20Coffee"
+      icon={BsWhatsapp}
+      label="Whatsapp"
+      target="_blank"
+      rel="noopener noreferrer"
+    />),
 
+    <NavLinkComponent
+      to="/venta/nn"
+      icon={GoBriefcase}
+      label="Inversiones"
+    />,
+    inversionesBalance.length > 0 && 
+    (<NavLinkComponent
+      to="/inventarioInversiones/nn"
+      icon={PiVaultBold}
+      label="Staking"
+    />)
+    ,
+    isOwner && (
       <NavLinkComponent
-        to="/venta/nn"
-        icon={GoBriefcase}
-        label="Inversiones"
-      />,
-
+        to="/administrador"
+        icon={FaRegAddressBook}
+        label="Administrador"
+      />
+    ),
+    isOwner && (
       <NavLinkComponent
-        to="/inventarioInversiones/nn"
-        icon={PiVaultBold}
-        label="Staking"
-      />,
-          isOwner && (
-           <NavLinkComponent
-             to="/administrador"
-             icon={FaRegAddressBook}
-             label="Administrador"
-           />
-         ),
-         isOwner && (
-          <NavLinkComponent
-            to="/administrador"
-            icon={FaRegAddressBook}
-            label="Administrador"
-          />
-        )
+        to="/administrador"
+        icon={FaRegAddressBook}
+        label="Administrador"
+      />
+    )
   ];
 
 
