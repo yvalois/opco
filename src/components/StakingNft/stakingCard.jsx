@@ -32,7 +32,6 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
   const [allowanceO, setAllowanceO] = useState(0);
   const [allowanceU, setAllowanceU] = useState(0);
   const code = process.env.REACT_APP_OPCO_PASSWORD
-  const [loading, setLoading] = useState(false);
   const [token, setToken] = useState("OPCO")
 
 
@@ -176,7 +175,7 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
         const tx = await inversionesContract.buyToken(rarity, busdContract.address, code, true, addr);
         await tx.wait();
         dispatch(updateInversionTokens(inversionesContract, accountAddress));
-        setLoading(false);
+        setCartLoading(false);
         Swal.fire({
           title: 'Success',
           text: 'Comprado correctamente',
@@ -188,7 +187,7 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
         const tx = await inversionesContract.buyToken(rarity, busdContract.address, code, false, accountAddress);
         await tx.wait();
         dispatch(updateInversionTokens(inversionesContract, accountAddress));
-        setLoading(false);
+        setCartLoading(false);
         Swal.fire({
           title: 'Success',
           text: 'Comprado correctamente',
@@ -197,7 +196,7 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
         });
       }
     } catch (err) {
-      setLoading(false);
+      setCartLoading(false);
       Swal.fire({
         title: 'Hubo un error en la transacion',
         text: err.reason,
@@ -209,13 +208,13 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
 
   const buyU = async () => {
     try {
-      setLoading(true);
+      setCartLoading(true);
       //
       if (addr !== "nn") {
         const tx = await inversionesContract.buyToken(rarity, usdtContract.address, code, true, addr);
         await tx.wait();
         dispatch(updateInversionTokens(inversionesContract, accountAddress));
-        setLoading(false);
+        setCartLoading(false);
         Swal.fire({
           title: 'Success',
           text: 'Comprado correctamente',
@@ -227,7 +226,7 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
         const tx = await inversionesContract.buyToken(rarity, usdtContract.address, code, false, accountAddress);
         await tx.wait();
         dispatch(updateInversionTokens(inversionesContract, accountAddress));
-        setLoading(false);
+        setCartLoading(false);
         Swal.fire({
           title: 'Success',
           text: 'Comprado correctamente',
@@ -236,7 +235,7 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
         });
       }
     } catch (err) {
-      setLoading(false);
+      setCartLoading(false);
       Swal.fire({
         title: 'Hubo un error en la transacion',
         text: err.reason,
@@ -248,12 +247,12 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
 
   const buyOpco = async () => {
     try {
-      setLoading(true);
+      setCartLoading(true);
       if (addr !== "nn") {
         const tx = await inversionesContract.buyToken(rarity, opcoContract.address, code, true, addr);
         await tx.wait();
         dispatch(updateInversionTokens(inversionesContract, accountAddress));
-        setLoading(false);
+        setCartLoading(false);
         Swal.fire({
           title: 'Success',
           text: 'Comprado correctamente',
@@ -264,7 +263,7 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
         const tx = await inversionesContract.buyToken(rarity, opcoContract.address, code, false, accountAddress);
         await tx.wait();
         dispatch(updateInversionTokens(inversionesContract, accountAddress));
-        setLoading(false);
+        setCartLoading(false);
         Swal.fire({
           title: 'Success',
           text: 'Comprado correctamente',
@@ -274,7 +273,7 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
       }
 
     } catch (err) {
-      setLoading(false);
+      setCartLoading(false);
       Swal.fire({
         title: 'Hubo un error en la transacion',
         text: err.reason,

@@ -21,6 +21,8 @@ export default function Inventario() {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenS, setIsOpenS] = useState(false);
   const [isOpenT, setIsOpenT] = useState(false);
+  const [cartLoading, setCartLoading] = useState(false);
+
   const { address } = useParams();
   const [link, setLink] = useState('');
   let [copyButtonStatus, setCopyButtonStatus] = useState(false);
@@ -34,6 +36,11 @@ export default function Inventario() {
     setId(id);
     onClose(type);
   }
+
+  
+  const changeLoadingCard = (is)=>{
+    setCartLoading(is);
+}
   const onClose = (type) => {
 
     if (type === "s") {
@@ -58,6 +65,9 @@ export default function Inventario() {
         setCopyButtonStatus(copyButtonStatus);
     }, 2500);
 };
+
+
+
   
 
   return (<>
@@ -125,6 +135,9 @@ export default function Inventario() {
                         rarity={token.tipo}
                         inventory={true}
                         switcherS={manejadorModal}
+                        addr={address}
+                        cartLoading={cartLoading}
+                        setCartLoading={changeLoadingCard}
                         key={index}
                       />
                     </div>

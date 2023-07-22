@@ -142,7 +142,8 @@ export const updateInversionTokens = (inversionesContract, accountAddress) => as
             nombre: name,
             id: parseInt(inversionesBalances[i]),
             tipo: parseInt(tipo),
-            image: "https://guapacho.com/wp-content/uploads/2022/08/boredape_nft-1024x577.jpg"
+            image: `https://violet-disgusted-halibut-418.mypinata.cloud/ipfs/QmUncKwRVF1yXsckcTA3cQ6GgfMag1M8nQxgrKXMLWkbWH/${tipo}.png`
+
         }
         inversionesBalance.push(info)
     }
@@ -162,7 +163,8 @@ export const updateStakingTokens = (inversioneStakingContract, accountAddress) =
         let info = {
             id: parseInt(inversionesStakingBalances[i]),
             Tiempo: parseInt(restTime),
-            currentReward: valorConvertido
+            currentReward: valorConvertido,
+
         }
         console.log(info)
         inversionesStakingBalance.push(info)
@@ -384,7 +386,7 @@ export const fetchBlockchain = () => {
                       let inversionesBalance = [];
                       let inversionesStakingBalance = [];
                         
-                      /*let inversionesBalances = await inversionesContract.getMyInventory(accountAddress);
+                      let inversionesBalances = await inversionesContract.getMyInventory(accountAddress);
                       let inversionesStakingBalances = await inversioneStakingContract.getNfts(accountAddress);
  
                       for(let i = 0;inversionesBalances.length > i; i++){
@@ -409,7 +411,7 @@ export const fetchBlockchain = () => {
                               currentReward: valorConvertido
                           }
                           inversionesStakingBalance.push(info)
-                      }*/
+                      }
  
                       dispatch(loadingBlockchainSuccess({
                           tokenContract,
