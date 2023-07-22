@@ -314,7 +314,7 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
             {repeatStar(rarity)}
           </div>
         </div>
-        <div className='w-full flex justify-start mt-2'>
+       {!inventory &&  (<div className='w-full flex justify-start mt-2'>
           <div className='w-4/5 md:w-2/5 '>
             <select onChange={(e) => setToken(e.target.value)}>
               <option value='OPCO'>OPCO</option>
@@ -322,7 +322,7 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
               <option value='BUSD'>BUSD</option>
             </select>
           </div>
-        </div>
+        </div>)}
 
 
 
