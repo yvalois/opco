@@ -144,7 +144,6 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
   }
 
   const ApproveO = async () => {
-    alert(code)
     try {
       setCartLoading(true);
       const cant = opcoP.toString();
@@ -174,7 +173,6 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
       setCartLoading(true);
       //
       if (addr !== "nn") {
-        alert(addr);
         const tx = await inversionesContract.buyToken(rarity, busdContract.address, code, true, addr);
         await tx.wait();
         dispatch(updateInversionTokens(inversionesContract, accountAddress));
@@ -186,7 +184,6 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
           confirmButtonText: 'OK'
         });
       } else {
-        alert(addr);
 
         const tx = await inversionesContract.buyToken(rarity, busdContract.address, code, false, accountAddress);
         await tx.wait();
@@ -215,7 +212,6 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
       setLoading(true);
       //
       if (addr !== "nn") {
-        alert(addr);
         const tx = await inversionesContract.buyToken(rarity, usdtContract.address, code, true, addr);
         await tx.wait();
         dispatch(updateInversionTokens(inversionesContract, accountAddress));
@@ -227,7 +223,6 @@ function StakingCard({ url, price, name, rarity, inventory, switcherS, id, addr,
           confirmButtonText: 'OK'
         });
       } else {
-        alert(addr);
 
         const tx = await inversionesContract.buyToken(rarity, usdtContract.address, code, false, accountAddress);
         await tx.wait();
