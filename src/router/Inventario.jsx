@@ -57,7 +57,7 @@ export default function Inventario() {
     const aux = window.location.href;
     const a = aux.split('inventarioInversiones/nn');
     const e = a[0];
-    setLink(e);
+    setLink(e);   
     navigator.clipboard.writeText(`${e}venta/${accountAddress}`);
 
     setCopyButtonStatus(true);

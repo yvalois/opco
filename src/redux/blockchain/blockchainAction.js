@@ -49,24 +49,34 @@ const providerOptions = await EthereumProvider.init({
    });
    */
 
- const providerOptions = {
-     walletconnect: {
-       package: WalletConnectProvider,
-       options: {
-         rpc: {
-         31337: "http://localhost:8545", // Agrega el RPC de tu red local de Hardhat
-           56: "https://bsc-dataseed.binance.org/",
-           97: "https://data-seed-prebsc-1-s1.binance.org:8545/"
-         }
-       }
-     }
-   };
+//  const providerOptions = {
+//      walletconnect: {
+//        package: WalletConnectProvider,
+//        options: {
+//          rpc: {
+//          31337: "http://localhost:8545", // Agrega el RPC de tu red local de Hardhat
+//            56: "https://bsc-dataseed.binance.org/",
+//            97: "https://data-seed-prebsc-1-s1.binance.org:8545/"
+//          }
+//        }
+//      }
+//    };
+
+const providerOptions  = await EthereumProvider.init({
+    projectId: '8e703b1c2e1918ec37ad64a8b1a38dd9', // required
+    chains: [56], // required
+    showQrModal: false // requires @walletconnect/modal
+  })
+ 
   
- const web3Modal = new Web3Modal({
-     disableInjectedProvider: false,
-     cacheProvider: true,
-     providerOptions // required
- });
+  const web3Modal = new Web3Modal({
+      disableInjectedProvider: false,
+      cacheProvider: true,
+      providerOptions // required
+  });
+
+
+
 
 
 const loadingBlockchain = () => ({
@@ -177,6 +187,12 @@ export const fetchBlockchain = () => {
         const a = "production"
         dispatch(loadingBlockchain())
         try {
+            const providerOptions  = await EthereumProvider.init({
+                projectId: '8e703b1c2e1918ec37ad64a8b1a38dd9', // required
+                chains: [1], // required
+                showQrModal: false // requires @walletconnect/modal
+              })
+             
             const instance = await web3Modal.connect(providerOptions);
             const provider = new ethers.providers.Web3Provider(instance);
             const signer = provider.getSigner();
