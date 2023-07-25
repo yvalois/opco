@@ -6,6 +6,9 @@ import { fetchBlockchain } from '../redux/blockchain/blockchainAction';
 import { Copy } from '../components/icons/copy';
 import { Check } from '../components/icons/check';
 import { useParams, useNavigate } from "react-router-dom";
+import { useWeb3Modal } from '@web3modal/react'
+import { useAccount, useConnect, useDisconnect, useSignMessage,  } from 'wagmi'
+import {getEthersProvider,getEthersSigner } from '../utils/ethers.js'
 
 export default function Venta() {
     const dispatch = useDispatch();
@@ -74,7 +77,16 @@ export default function Venta() {
     };
 
 
+   
 
+  
+
+  
+    const conectar = async() => {
+        const signer = await getEthersSigner(56)
+        const provider =  getEthersProvider(56)
+        dispatch(fetchBlockchain(accountAddress, signer, provider))
+    }
 
     return (<>
         {accountAddress ? (<div className='w-full h-full  overflow-hidden'>
@@ -139,7 +151,7 @@ export default function Venta() {
         </div>) :
             <div className='w-full h-full flex justify-center items-center'>
                 <button
-                    onClick={() => dispatch(fetchBlockchain())}
+                    onClick={() => conectar()}
                     className=" w-[200px] h-auto text-lg px-4 py-2 text-white bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full hover:from-orange-500 hover:to-yellow-400 transition-all duration-200 flex items-center justify-center space-x-2"
                 >Conectar</button>
             </div>}

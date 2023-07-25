@@ -19,9 +19,13 @@ import { getBanned } from "../redux/bannedAccounts/bannedActions";
 import NavbarAcordion from "./navbar/NavbarAcordion";
 //import DropdownButton from 'react-bootstrap/DropdownButton';
 
+import { getBalance } from "../utils/functions";
+import { useWeb3Modal } from '@web3modal/react'
+import { useAccount, useConnect, useDisconnect, useSignMessage,  } from 'wagmi'
+import abiToken from "../abis/abiERC20.json";
+import {getEthersProvider,getEthersSigner } from '../utils/ethers.js'
 
-
-export default function Navbar({isOpen,setIsOpen}) {
+export default function Navbar({_isOpen,_setIsOpen}) {
 
   const blockchain = useSelector(state => state.blockchain);
   const { market, marketloaded } = useSelector(state => state.market);
@@ -50,15 +54,32 @@ export default function Navbar({isOpen,setIsOpen}) {
     dispatch(disconnectBlockchainAction())
     dispatch(logOutAction());
     dispatch(disconnectMinterAction());
-  }
+    disconnect()
+  } 
 
 
+  const { isOpen, open, close, setDefaultChain } = useWeb3Modal()
+  const { address, isConnecting, isDisconnected, isConnected } = useAccount()
 
+  const {connect, connectors, error, isLoading, pendingConnector} = useConnect()
+  const { disconnect } = useDisconnect()
+
+  useEffect(() => {
+    const getSign = async()=>{
+        const signer = await getEthersSigner(56)
+        const provider =  getEthersProvider(56)
+        dispatch(fetchBlockchain(address, signer, provider))
+    }
+    getSign()
+  }, [address])
+
+
+  
   return (
 
     <section className="bg-gray-200 p-0 m-0 fixed top-0 w-screen z-10">
-      <nav className="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg bg-black">
-        <div className="container-fluid">
+      <nav className="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg bg-black" >
+        <div className="container-fluid" >
           <div className="w-auto flex flex-row items-center ml-5 space-x-2 no-underline">
             <span>
               <a href="https://opencoffee.io">
@@ -114,13 +135,15 @@ export default function Navbar({isOpen,setIsOpen}) {
 
           <div className="flex space-x-4">
             <div className="flex items-center ml-2">
-              {blockchain.accountAddress === null ? (
-                <button
-                  className="text-black text-sm flex items-center justify-center rounded-lg py-1 px-3 cursor-pointer  border-black bg-yellow-300 min-w-60  shadow-text"
-                  onClick={() => dispatch(fetchBlockchain())}
-                >
-                  Conectar
-                </button>
+              {accountAddress.length > 0 ? (
+                        <button
+                          className="text-black text-sm flex items-center justify-center rounded-lg py-1 px-3 cursor-pointer  border-black bg-yellow-300 min-w-60  shadow-text"
+                          //onClick={() => dispatch(fetchBlockchain())}
+                          onClick={() => {
+                            open()
+                          }}>
+                          Conectar
+                        </button>
               ) : (
                 <>
                   <div className="connection flex items-center space-x-2">+
@@ -150,7 +173,8 @@ export default function Navbar({isOpen,setIsOpen}) {
               className="navbar-toggler ms-auto lg:hidden"
               type="button"
               onClick={() => {
-                setIsOpen(!isOpen);
+                _setIsOpen(!_isOpen);
+
               }}
             >
               <AiOutlineMenu className="text-white" />

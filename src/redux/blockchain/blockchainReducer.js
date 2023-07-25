@@ -142,7 +142,6 @@ const blockchainReducer = (state = initialState, action) => {
                 usdtContract: null,
                 isConnect: false
             }
-
         default:
             return state
         }

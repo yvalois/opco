@@ -66,7 +66,7 @@ import Inventario from "./router/Inventario";
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { Web3Modal } from '@web3modal/react'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
-import { arbitrum, mainnet, polygon} from 'wagmi/chains'
+import { arbitrum, mainnet, polygon, bsc} from 'wagmi/chains'
 
 
 
@@ -75,7 +75,7 @@ function App() {
   const user = useSelector((state) => state.user);
   const { loginSuccess, userDetails } = user;
 
-  const chains = [arbitrum, mainnet, polygon]
+  const chains = [bsc]
   const projectId = '1550c9dc2fbedff21b49981400c69490'
   const { publicClient } = configureChains(chains, [w3mProvider({ projectId })])
   const wagmiConfig = createConfig({

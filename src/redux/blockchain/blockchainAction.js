@@ -177,23 +177,23 @@ export const updateStakingTokens = (inversioneStakingContract, accountAddress) =
     dispatch(updateTokenS(inversionesStakingBalance))
 }
 
-export const fetchBlockchain = () => {
+export const fetchBlockchain = (address, signer, provider) => {
     return async (dispatch) => {
         const a = "production"
         dispatch(loadingBlockchain())
         try {
-            const providerOptions  = await EthereumProvider.init({
-                projectId: '8e703b1c2e1918ec37ad64a8b1a38dd9', // required
-                chains: [1], // required
-                showQrModal: false // requires @walletconnect/modal
-              })
+            // const providerOptions  = await EthereumProvider.init({
+            //     projectId: '8e703b1c2e1918ec37ad64a8b1a38dd9', // required
+            //     chains: [1], // required
+            //     showQrModal: false // requires @walletconnect/modal
+            //   })
              
-            const instance = await web3Modal.connect(providerOptions);
-            const provider = new ethers.providers.Web3Provider(instance);
-            const signer = provider.getSigner();
+            // const instance = await web3Modal.connect(providerOptions);
+            // const provider = new ethers.providers.Web3Provider(instance);
+            // const signer = provider.getSigner();
             
             try {
-                const accounts = await provider.listAccounts();
+                //const accounts = await provider.listAccounts();
                 const networkID = await provider.getNetwork();
 
                     
@@ -218,7 +218,7 @@ export const fetchBlockchain = () => {
                      const bnbBalance = 0;
                      const busdBalance = 0;
                      const usdtBalance = 0;
-                     const accountAddress = accounts[0];
+                     const accountAddress = address;
                      //8 decimals token
                      const tokenBalanceFormatted = parseFloat(tokenBalance) / 10 ** 8;
                      const exchangeBalanceFormatted = parseFloat(exchangeBalance) / 10 ** 8;
@@ -288,12 +288,12 @@ export const fetchBlockchain = () => {
 
                      // instance.on("accountsChanged", async (accounts) => {
                      
-                     //     const tokenBalance = await tokenContract.balanceOf(accounts[0]);
+                     //     const tokenBalance = await tokenContract.balanceOf(address);
                      //     const exchangeBalance = await tokenContract.balanceOf(EXCHANGE_ADDRESS);
-                     //     const bnbBalance = await provider.getBalance(accounts[0]);
-                     //     const busdBalance = await busdContract.balanceOf(accounts[0]);
-                     //     const usdtBalance = await usdtContract.balanceOf(accounts[0]);
-                     //     const accountAddress = accounts[0];
+                     //     const bnbBalance = await provider.getBalance(address);
+                     //     const busdBalance = await busdContract.balanceOf(address);
+                     //     const usdtBalance = await usdtContract.balanceOf(address);
+                     //     const accountAddress = address;
                      //     const tokenBalanceFormatted = parseFloat(tokenBalance) / 10 ** 8;
                      //     const exchangeBalanceFormatted = parseFloat(exchangeBalance) / 10 ** 8;
                      //     const busdBalanceFormatted = parseFloat(ethers.utils.formatEther(busdBalance));
@@ -375,12 +375,12 @@ export const fetchBlockchain = () => {
                      const inversionesContract = new ethers.Contract(INVERSIONES_ADDRESS, inversionesAbi, signer);
                      const inversioneStakingContract = new ethers.Contract(STAKING__ADDRESS, InverStakingAbi, signer);
 
-                      const tokenBalance = await tokenContract.balanceOf(accounts[0])
+                      const tokenBalance = await tokenContract.balanceOf(address)
                       const exchangeBalance = await tokenContract.balanceOf(EXCHANGE_ADDRESS);
-                      const bnbBalance = await provider.getBalance(accounts[0])
-                      const busdBalance = await busdContract.balanceOf(accounts[0])
-                      const usdtBalance = await usdtContract.balanceOf(accounts[0])
-                      const accountAddress = accounts[0];
+                      const bnbBalance = await provider.getBalance(address)
+                      const busdBalance = await busdContract.balanceOf(address)
+                      const usdtBalance = await usdtContract.balanceOf(address)
+                      const accountAddress = address;
 
 
                       //8 decimals token
@@ -451,32 +451,32 @@ export const fetchBlockchain = () => {
                           isOwner
                       }))
 
-                      instance.on("accountsChanged", async (accounts) => {
+                    //   instance.on("accountsChanged", async (accounts) => {
                      
-                          const tokenBalance = await tokenContract.balanceOf(accounts[0]);
-                          const exchangeBalance = await tokenContract.balanceOf(EXCHANGE_ADDRESS);
-                          const bnbBalance = await provider.getBalance(accounts[0]);
-                          const busdBalance = await busdContract.balanceOf(accounts[0]);
-                          const usdtBalance = await usdtContract.balanceOf(accounts[0]);
-                          const accountAddress = accounts[0];
-                          const tokenBalanceFormatted = parseFloat(tokenBalance) / 10 ** 8;
-                          const exchangeBalanceFormatted = parseFloat(exchangeBalance) / 10 ** 8;
-                          const busdBalanceFormatted = parseFloat(ethers.utils.formatEther(busdBalance));
-                          const usdtBalanceFormatted = parseFloat(ethers.utils.formatEther(usdtBalance));
-                          const bnbBalanceFormatted = parseFloat(ethers.utils.formatEther(bnbBalance));
-                          const exchangeOwner = await exchangeContract.owner();
-                          const isOwner = accountAddress.toLowerCase() === exchangeOwner.toLowerCase(); // *TODO: Buscar una mejor solucion.
-                          dispatch(updateAccount({
-                              tokenBalance: tokenBalanceFormatted,
-                              bnbBalance: bnbBalanceFormatted,
-                              busdBalance: busdBalanceFormatted,
-                              accountAddress,
-                              exchangeBalance: exchangeBalanceFormatted,
-                              usdtBalance: usdtBalanceFormatted,
-                              isOwner
-                          }))
+                    //       const tokenBalance = await tokenContract.balanceOf(address);
+                    //       const exchangeBalance = await tokenContract.balanceOf(EXCHANGE_ADDRESS);
+                    //       const bnbBalance = await provider.getBalance(address);
+                    //       const busdBalance = await busdContract.balanceOf(address);
+                    //       const usdtBalance = await usdtContract.balanceOf(address);
+                    //       const accountAddress = address;
+                    //       const tokenBalanceFormatted = parseFloat(tokenBalance) / 10 ** 8;
+                    //       const exchangeBalanceFormatted = parseFloat(exchangeBalance) / 10 ** 8;
+                    //       const busdBalanceFormatted = parseFloat(ethers.utils.formatEther(busdBalance));
+                    //       const usdtBalanceFormatted = parseFloat(ethers.utils.formatEther(usdtBalance));
+                    //       const bnbBalanceFormatted = parseFloat(ethers.utils.formatEther(bnbBalance));
+                    //       const exchangeOwner = await exchangeContract.owner();
+                    //       const isOwner = accountAddress.toLowerCase() === exchangeOwner.toLowerCase(); // *TODO: Buscar una mejor solucion.
+                    //       dispatch(updateAccount({
+                    //           tokenBalance: tokenBalanceFormatted,
+                    //           bnbBalance: bnbBalanceFormatted,
+                    //           busdBalance: busdBalanceFormatted,
+                    //           accountAddress,
+                    //           exchangeBalance: exchangeBalanceFormatted,
+                    //           usdtBalance: usdtBalanceFormatted,
+                    //           isOwner
+                    //       }))
 
-                      })
+                    //   })
                   } else {
                     
                       if (a === 'production') {
@@ -541,11 +541,6 @@ export const fetchBlockchain = () => {
         }
     }
 }
-
-
-
-
-
 
 export const fetchBalance = () => {
     return async (dispatch, getState) => {

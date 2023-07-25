@@ -6,7 +6,9 @@ import { fetchBlockchain } from '../../redux/blockchain/blockchainAction';
 import ErrorMsg from '../ErrorMsg';
 import { fetchP2p } from '../../redux/p2p/p2pActions';
 import LoaderFullScreen from '../loaderFullScreen';
-
+import { useWeb3Modal } from '@web3modal/react'
+import { useAccount, useConnect, useDisconnect, useSignMessage,  } from 'wagmi'
+import {getEthersProvider,getEthersSigner } from '../../utils/ethers.js'
 export const P2pNewOfferModal = ({ offerModal, setOfferModal, tokenBalance, contractP2p, accountAddress, tokenContract }) => {
     const dispatch = useDispatch();
     const [precios, setPrecios] = useState(0);
@@ -24,6 +26,16 @@ export const P2pNewOfferModal = ({ offerModal, setOfferModal, tokenBalance, cont
 
         const approvedAmountWei = parseFloat(ethers.utils.formatEther(approvedAmount));
         setApprovedTokens(approvedAmountWei);
+    }
+
+    const { address} = useAccount()
+  
+
+  
+    const conectar = async() => {
+        const signer = await getEthersSigner(56)
+        const provider =  getEthersProvider(56)
+        dispatch(fetchBlockchain(address, signer, provider))
     }
 
     const approve = async () => {
@@ -47,7 +59,7 @@ export const P2pNewOfferModal = ({ offerModal, setOfferModal, tokenBalance, cont
     const connect = async () => {
         setLoading(true);
         try {
-            dispatch(fetchBlockchain());
+            conectar();
             setLoading(false);
         }
         catch (e) {
@@ -92,7 +104,7 @@ export const P2pNewOfferModal = ({ offerModal, setOfferModal, tokenBalance, cont
                 const MinAmount = ethers.utils.parseEther(minimo.toString());
                 contractP2p.adSellOffer(Amount.toString(), Price, MinAmount);
                 contractP2p.on('Sell', (address, amount, price) => {
-                    dispatch(fetchBlockchain());
+                    conectar();
                     dispatch(fetchP2p());
                     setLoading(false);
                     closeOfferModal();

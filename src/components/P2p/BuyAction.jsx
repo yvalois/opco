@@ -6,7 +6,9 @@ import { fetchBlockchain } from '../../redux/blockchain/blockchainAction';
 import ErrorMsg from '../ErrorMsg';
 import { fetchP2p } from '../../redux/p2p/p2pActions';
 import LoaderFullScreen from '../loaderFullScreen';
-
+import { useWeb3Modal } from '@web3modal/react'
+import { useAccount, useConnect, useDisconnect, useSignMessage,  } from 'wagmi'
+import {getEthersProvider,getEthersSigner } from '../../utils/ethers'
 export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalance, setBuyModal, buyModal, accountAddress, busdContract, usdtContract, p2pContract }) => {
     const dispatch = useDispatch();
 
@@ -22,8 +24,16 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
 
     }
 
-    const connect = () => {
-        dispatch(fetchBlockchain());
+  
+   
+    const { address} = useAccount()
+  
+
+  
+    const conectar = async() => {
+        const signer = await getEthersSigner(56)
+        const provider =  getEthersProvider(56)
+        dispatch(fetchBlockchain(address, signer, provider))
     }
 
     const [tokenInput, setTokenInput] = useState(0)
@@ -61,7 +71,7 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
                 setLoading(true)
                 const approvedBusd = await busdContract.approve(p2pContract.address, ethers.utils.parseEther('99999'));
                 busdContract.on('Approval', (data) => {
-                    dispatch(fetchBlockchain());
+                    conectar();
                     setLoading(false)
                     setError(false)
                     setErrorMessage('')
@@ -85,7 +95,7 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
                 setLoading(true)
                 const approvedUsdt = await usdtContract.approve(p2pContract.address, ethers.utils.parseEther('99999'));
                 usdtContract.on('Approval', (data) => {
-                    dispatch(fetchBlockchain());
+                    conectar();
                     setLoading(false)
                     setError(false)
                     setErrorMessage('')
@@ -171,7 +181,7 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
               
                 await p2pContract.buyOffer(Amount, ID, Token);
                 p2pContract.on('Buy', (data) => {
-                    dispatch(fetchBlockchain());
+                    conectar();
                     dispatch(fetchP2p());
                     setLoading(false)
                     closeBuyModal()
@@ -197,7 +207,7 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
                 const Token = selectToken === 'BUSD' ? busdContract.address : usdtContract.address;
                 await p2pContract.buyOffer(Amount, ID, Token);
                 p2pContract.on('Buy', (data) => {
-                    dispatch(fetchBlockchain());
+                    conectar();
                     dispatch(fetchP2p());
                     setLoading(false)
                     closeBuyModal()

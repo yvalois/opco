@@ -14,6 +14,10 @@ import TransferModal from "../components/marketNft/TransferModal";
 import SellModal from '../components/marketNft/SellModal';
 import { AiFillStar } from 'react-icons/ai';
 import { fetchBlockchain } from '../redux/blockchain/blockchainAction';
+import { useWeb3Modal } from '@web3modal/react'
+import { useAccount, useConnect, useDisconnect, useSignMessage,  } from 'wagmi'
+import {getEthersProvider,getEthersSigner } from '../utils/ethers.js'
+
 
 export default function NftOpco() {
     const { password } = useParams();
@@ -118,7 +122,16 @@ export default function NftOpco() {
     }
 
 
+   
+    const { address} = useAccount()
+  
 
+  
+    const conectar = async() => {
+        const signer = await getEthersSigner(56)
+        const provider =  getEthersProvider(56)
+        dispatch(fetchBlockchain(address, signer, provider))
+    }
 
 
     return (
@@ -195,7 +208,7 @@ export default function NftOpco() {
                         :!blockchain.accountAddress ?
                         <div className='w-full h-full flex justify-center items-center z-[-10]'>
                             <button
-                                onClick={() => dispatch(fetchBlockchain())}
+                                onClick={() => conectar()}
                                 className=" w-[200px] h-auto text-lg px-4 py-2 text-white bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full hover:from-orange-500 hover:to-yellow-400 transition-all duration-200 flex items-center justify-center space-x-2"
                             >Conectar</button>
                         </div>

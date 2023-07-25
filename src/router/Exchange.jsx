@@ -14,7 +14,9 @@ import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import emailjs from '@emailjs/browser'
 import { contract } from '../redux/blockchain/blockchainRouter';
-
+import { useWeb3Modal } from '@web3modal/react'
+import { useAccount, useConnect, useDisconnect, useSignMessage,  } from 'wagmi'
+import {getEthersProvider,getEthersSigner } from '../utils/ethers.js'
 const fee = 0.01;
 
 
@@ -252,6 +254,15 @@ export default function Exchange() {
 
   }
 
+     
+  const { address} = useAccount()
+  
+  const conectar = async() => {
+      const signer = await getEthersSigner(56)
+      const provider =  getEthersProvider(56)
+      dispatch(fetchBlockchain(address, signer, provider))
+  }
+
   const sellAOEX = async () => {
     setError(false);
     setSuccess(false);
@@ -273,7 +284,7 @@ export default function Exchange() {
           const tx = await blockchain.exchangeContract.sellToken((_amount.toString()), adrressBUSD);
           await tx.wait()
           setSuccess(true);
-          dispatch(fetchBlockchain())
+          conectar()
           setBusdPrice(0);
           setAoexPrice(0);
           setAoexCost(0);
@@ -311,7 +322,7 @@ export default function Exchange() {
       const tx = await blockchain.busdContract.approve(blockchain.exchangeContract.address, ethers.utils.parseEther('999999999999'));
       await tx.wait()
       setSuccess(true);
-      dispatch(fetchBlockchain())
+      conectar()
       
       
     } catch (err) {
@@ -329,7 +340,7 @@ export default function Exchange() {
       const tx = await blockchain.tokenContract.approve(blockchain.exchangeContract.address, ethers.utils.parseEther('999999999999'));
       await tx.wait();
       setSuccess(true);
-      dispatch(fetchBlockchain())
+      conectar()
       
       
     } catch (err) {
@@ -560,7 +571,7 @@ export default function Exchange() {
               {blockchain.accountAddress === null ?
                 <button className='mt-5 text-md font-semibold bg-black text-white w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
                  hover:text-black'
-                  onClick={() => dispatch(fetchBlockchain())}
+                  onClick={() => conectar()}
                 >Connect</button> 
                 :
                 <>

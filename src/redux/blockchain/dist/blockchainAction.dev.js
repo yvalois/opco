@@ -285,50 +285,26 @@ var updateStakingTokens = function updateStakingTokens(inversioneStakingContract
 
 exports.updateStakingTokens = updateStakingTokens;
 
-var fetchBlockchain = function fetchBlockchain() {
-  return function _callee4(dispatch) {
-    var a, _providerOptions, instance, provider, signer, accounts, networkID, tokenContract, busdContract, usdtContract, exchangeContract, stakingContract, priceSetterContract, opcoStoreContract, marketContract, p2pContract, opcoContract, inversionesContract, inversioneStakingContract, tokenBalance, exchangeBalance, bnbBalance, busdBalance, usdtBalance, accountAddress, tokenBalanceFormatted, exchangeBalanceFormatted, busdBalanceFormatted, usdtBalanceFormatted, bnbBalanceFormatted, tokenPriceWeth, tokenPrice, exchangeOwner, isOwner, inversionesBalance, inversionesStakingBalance, inversionesBalances, inversionesStakingBalances, i, tipo, name, info, _i, restTime, reward, valorConvertido, _info;
+var fetchBlockchain = function fetchBlockchain(address, signer, provider) {
+  return function _callee3(dispatch) {
+    var a, networkID, tokenContract, busdContract, usdtContract, exchangeContract, stakingContract, priceSetterContract, opcoStoreContract, marketContract, p2pContract, opcoContract, inversionesContract, inversioneStakingContract, tokenBalance, exchangeBalance, bnbBalance, busdBalance, usdtBalance, accountAddress, tokenBalanceFormatted, exchangeBalanceFormatted, busdBalanceFormatted, usdtBalanceFormatted, bnbBalanceFormatted, tokenPriceWeth, tokenPrice, exchangeOwner, isOwner, inversionesBalance, inversionesStakingBalance, inversionesBalances, inversionesStakingBalances, i, tipo, name, info, _i, restTime, reward, valorConvertido, _info;
 
-    return regeneratorRuntime.async(function _callee4$(_context4) {
+    return regeneratorRuntime.async(function _callee3$(_context3) {
       while (1) {
-        switch (_context4.prev = _context4.next) {
+        switch (_context3.prev = _context3.next) {
           case 0:
             a = "production";
             dispatch(loadingBlockchain());
-            _context4.prev = 2;
-            _context4.next = 5;
-            return regeneratorRuntime.awrap(_ethereumProvider.EthereumProvider.init({
-              projectId: '8e703b1c2e1918ec37ad64a8b1a38dd9',
-              // required
-              chains: [1],
-              // required
-              showQrModal: false // requires @walletconnect/modal
-
-            }));
-
-          case 5:
-            _providerOptions = _context4.sent;
-            _context4.next = 8;
-            return regeneratorRuntime.awrap(web3Modal.connect(_providerOptions));
-
-          case 8:
-            instance = _context4.sent;
-            provider = new _ethers.ethers.providers.Web3Provider(instance);
-            signer = provider.getSigner();
-            _context4.prev = 11;
-            _context4.next = 14;
-            return regeneratorRuntime.awrap(provider.listAccounts());
-
-          case 14:
-            accounts = _context4.sent;
-            _context4.next = 17;
+            _context3.prev = 2;
+            _context3.prev = 3;
+            _context3.next = 6;
             return regeneratorRuntime.awrap(provider.getNetwork());
 
-          case 17:
-            networkID = _context4.sent;
+          case 6:
+            networkID = _context3.sent;
 
             if (!(a === 'production' && networkID.chainId === 56 || a === 'development' && networkID.chainId === 97)) {
-              _context4.next = 97;
+              _context3.next = 85;
               break;
             }
 
@@ -344,76 +320,76 @@ var fetchBlockchain = function fetchBlockchain() {
             opcoContract = new _ethers.ethers.Contract(OPCO__ADDRESS, _OpcoP["default"], signer);
             inversionesContract = new _ethers.ethers.Contract(INVERSIONES_ADDRESS, _Inversiones["default"], signer);
             inversioneStakingContract = new _ethers.ethers.Contract(STAKING__ADDRESS, _inversionesStaking["default"], signer);
-            _context4.next = 33;
-            return regeneratorRuntime.awrap(tokenContract.balanceOf(accounts[0]));
+            _context3.next = 22;
+            return regeneratorRuntime.awrap(tokenContract.balanceOf(address));
 
-          case 33:
-            tokenBalance = _context4.sent;
-            _context4.next = 36;
+          case 22:
+            tokenBalance = _context3.sent;
+            _context3.next = 25;
             return regeneratorRuntime.awrap(tokenContract.balanceOf(EXCHANGE_ADDRESS));
 
-          case 36:
-            exchangeBalance = _context4.sent;
-            _context4.next = 39;
-            return regeneratorRuntime.awrap(provider.getBalance(accounts[0]));
+          case 25:
+            exchangeBalance = _context3.sent;
+            _context3.next = 28;
+            return regeneratorRuntime.awrap(provider.getBalance(address));
 
-          case 39:
-            bnbBalance = _context4.sent;
-            _context4.next = 42;
-            return regeneratorRuntime.awrap(busdContract.balanceOf(accounts[0]));
+          case 28:
+            bnbBalance = _context3.sent;
+            _context3.next = 31;
+            return regeneratorRuntime.awrap(busdContract.balanceOf(address));
 
-          case 42:
-            busdBalance = _context4.sent;
-            _context4.next = 45;
-            return regeneratorRuntime.awrap(usdtContract.balanceOf(accounts[0]));
+          case 31:
+            busdBalance = _context3.sent;
+            _context3.next = 34;
+            return regeneratorRuntime.awrap(usdtContract.balanceOf(address));
 
-          case 45:
-            usdtBalance = _context4.sent;
-            accountAddress = accounts[0]; //8 decimals token
+          case 34:
+            usdtBalance = _context3.sent;
+            accountAddress = address; //8 decimals token
 
             tokenBalanceFormatted = parseFloat(tokenBalance) / Math.pow(10, 8);
             exchangeBalanceFormatted = parseFloat(exchangeBalance) / Math.pow(10, 8);
             busdBalanceFormatted = parseFloat(_ethers.ethers.utils.formatEther(busdBalance));
             usdtBalanceFormatted = parseFloat(_ethers.ethers.utils.formatEther(usdtBalance));
             bnbBalanceFormatted = parseFloat(_ethers.ethers.utils.formatEther(bnbBalance));
-            _context4.next = 54;
+            _context3.next = 43;
             return regeneratorRuntime.awrap(exchangeContract.fetchPrice());
 
-          case 54:
-            tokenPriceWeth = _context4.sent;
+          case 43:
+            tokenPriceWeth = _context3.sent;
             tokenPrice = parseFloat(_ethers.ethers.utils.formatEther(tokenPriceWeth));
-            _context4.next = 58;
+            _context3.next = 47;
             return regeneratorRuntime.awrap(exchangeContract.owner());
 
-          case 58:
-            exchangeOwner = _context4.sent;
+          case 47:
+            exchangeOwner = _context3.sent;
             isOwner = accountAddress.toLowerCase() === exchangeOwner.toLowerCase(); // *TODO: Buscar una mejor solucion.
 
             inversionesBalance = [];
             inversionesStakingBalance = [];
-            _context4.next = 64;
+            _context3.next = 53;
             return regeneratorRuntime.awrap(inversionesContract.getMyInventory(accountAddress));
 
-          case 64:
-            inversionesBalances = _context4.sent;
-            _context4.next = 67;
+          case 53:
+            inversionesBalances = _context3.sent;
+            _context3.next = 56;
             return regeneratorRuntime.awrap(inversioneStakingContract.getNfts(accountAddress));
 
-          case 67:
-            inversionesStakingBalances = _context4.sent;
+          case 56:
+            inversionesStakingBalances = _context3.sent;
             i = 0;
 
-          case 69:
+          case 58:
             if (!(inversionesBalances.length > i)) {
-              _context4.next = 79;
+              _context3.next = 68;
               break;
             }
 
-            _context4.next = 72;
+            _context3.next = 61;
             return regeneratorRuntime.awrap(inversionesContract.getTipo(parseInt(inversionesBalances[i])));
 
-          case 72:
-            tipo = _context4.sent;
+          case 61:
+            tipo = _context3.sent;
             name = "Inversiones ".concat(tipo);
             info = {
               nombre: name,
@@ -423,30 +399,30 @@ var fetchBlockchain = function fetchBlockchain() {
             };
             inversionesBalance.push(info);
 
-          case 76:
+          case 65:
             i++;
-            _context4.next = 69;
+            _context3.next = 58;
             break;
 
-          case 79:
+          case 68:
             _i = 0;
 
-          case 80:
+          case 69:
             if (!(inversionesStakingBalances.length > _i)) {
-              _context4.next = 93;
+              _context3.next = 82;
               break;
             }
 
-            _context4.next = 83;
+            _context3.next = 72;
             return regeneratorRuntime.awrap(inversioneStakingContract.getRestTime(parseInt(inversionesStakingBalances[_i])));
 
-          case 83:
-            restTime = _context4.sent;
-            _context4.next = 86;
+          case 72:
+            restTime = _context3.sent;
+            _context3.next = 75;
             return regeneratorRuntime.awrap(inversioneStakingContract.rewardPerToken(parseInt(inversionesStakingBalances[_i]), accountAddress));
 
-          case 86:
-            reward = _context4.sent;
+          case 75:
+            reward = _context3.sent;
             valorConvertido = parseFloat(_ethers.ethers.utils.formatUnits(reward, 8)).toFixed(2);
             _info = {
               id: parseInt(inversionesStakingBalances[_i]),
@@ -455,12 +431,12 @@ var fetchBlockchain = function fetchBlockchain() {
             };
             inversionesStakingBalance.push(_info);
 
-          case 90:
+          case 79:
             _i++;
-            _context4.next = 80;
+            _context3.next = 69;
             break;
 
-          case 93:
+          case 82:
             dispatch(loadingBlockchainSuccess({
               tokenContract: tokenContract,
               busdContract: busdContract,
@@ -486,79 +462,42 @@ var fetchBlockchain = function fetchBlockchain() {
               marketContract: marketContract,
               p2pContract: p2pContract,
               isOwner: isOwner
-            }));
-            instance.on("accountsChanged", function _callee3(accounts) {
-              var tokenBalance, exchangeBalance, bnbBalance, busdBalance, usdtBalance, accountAddress, tokenBalanceFormatted, exchangeBalanceFormatted, busdBalanceFormatted, usdtBalanceFormatted, bnbBalanceFormatted, exchangeOwner, isOwner;
-              return regeneratorRuntime.async(function _callee3$(_context3) {
-                while (1) {
-                  switch (_context3.prev = _context3.next) {
-                    case 0:
-                      _context3.next = 2;
-                      return regeneratorRuntime.awrap(tokenContract.balanceOf(accounts[0]));
+            })); //   instance.on("accountsChanged", async (accounts) => {
+            //       const tokenBalance = await tokenContract.balanceOf(address);
+            //       const exchangeBalance = await tokenContract.balanceOf(EXCHANGE_ADDRESS);
+            //       const bnbBalance = await provider.getBalance(address);
+            //       const busdBalance = await busdContract.balanceOf(address);
+            //       const usdtBalance = await usdtContract.balanceOf(address);
+            //       const accountAddress = address;
+            //       const tokenBalanceFormatted = parseFloat(tokenBalance) / 10 ** 8;
+            //       const exchangeBalanceFormatted = parseFloat(exchangeBalance) / 10 ** 8;
+            //       const busdBalanceFormatted = parseFloat(ethers.utils.formatEther(busdBalance));
+            //       const usdtBalanceFormatted = parseFloat(ethers.utils.formatEther(usdtBalance));
+            //       const bnbBalanceFormatted = parseFloat(ethers.utils.formatEther(bnbBalance));
+            //       const exchangeOwner = await exchangeContract.owner();
+            //       const isOwner = accountAddress.toLowerCase() === exchangeOwner.toLowerCase(); // *TODO: Buscar una mejor solucion.
+            //       dispatch(updateAccount({
+            //           tokenBalance: tokenBalanceFormatted,
+            //           bnbBalance: bnbBalanceFormatted,
+            //           busdBalance: busdBalanceFormatted,
+            //           accountAddress,
+            //           exchangeBalance: exchangeBalanceFormatted,
+            //           usdtBalance: usdtBalanceFormatted,
+            //           isOwner
+            //       }))
+            //   })
 
-                    case 2:
-                      tokenBalance = _context3.sent;
-                      _context3.next = 5;
-                      return regeneratorRuntime.awrap(tokenContract.balanceOf(EXCHANGE_ADDRESS));
-
-                    case 5:
-                      exchangeBalance = _context3.sent;
-                      _context3.next = 8;
-                      return regeneratorRuntime.awrap(provider.getBalance(accounts[0]));
-
-                    case 8:
-                      bnbBalance = _context3.sent;
-                      _context3.next = 11;
-                      return regeneratorRuntime.awrap(busdContract.balanceOf(accounts[0]));
-
-                    case 11:
-                      busdBalance = _context3.sent;
-                      _context3.next = 14;
-                      return regeneratorRuntime.awrap(usdtContract.balanceOf(accounts[0]));
-
-                    case 14:
-                      usdtBalance = _context3.sent;
-                      accountAddress = accounts[0];
-                      tokenBalanceFormatted = parseFloat(tokenBalance) / Math.pow(10, 8);
-                      exchangeBalanceFormatted = parseFloat(exchangeBalance) / Math.pow(10, 8);
-                      busdBalanceFormatted = parseFloat(_ethers.ethers.utils.formatEther(busdBalance));
-                      usdtBalanceFormatted = parseFloat(_ethers.ethers.utils.formatEther(usdtBalance));
-                      bnbBalanceFormatted = parseFloat(_ethers.ethers.utils.formatEther(bnbBalance));
-                      _context3.next = 23;
-                      return regeneratorRuntime.awrap(exchangeContract.owner());
-
-                    case 23:
-                      exchangeOwner = _context3.sent;
-                      isOwner = accountAddress.toLowerCase() === exchangeOwner.toLowerCase(); // *TODO: Buscar una mejor solucion.
-
-                      dispatch(updateAccount({
-                        tokenBalance: tokenBalanceFormatted,
-                        bnbBalance: bnbBalanceFormatted,
-                        busdBalance: busdBalanceFormatted,
-                        accountAddress: accountAddress,
-                        exchangeBalance: exchangeBalanceFormatted,
-                        usdtBalance: usdtBalanceFormatted,
-                        isOwner: isOwner
-                      }));
-
-                    case 26:
-                    case "end":
-                      return _context3.stop();
-                  }
-                }
-              });
-            });
-            _context4.next = 126;
+            _context3.next = 114;
             break;
 
-          case 97:
+          case 85:
             if (!(a === 'production')) {
-              _context4.next = 117;
+              _context3.next = 105;
               break;
             }
 
-            _context4.prev = 98;
-            _context4.next = 101;
+            _context3.prev = 86;
+            _context3.next = 89;
             return regeneratorRuntime.awrap(provider.provider.request({
               method: 'wallet_switchEthereumChain',
               params: [{
@@ -566,21 +505,21 @@ var fetchBlockchain = function fetchBlockchain() {
               }]
             }));
 
-          case 101:
-            _context4.next = 115;
+          case 89:
+            _context3.next = 103;
             break;
 
-          case 103:
-            _context4.prev = 103;
-            _context4.t0 = _context4["catch"](98);
+          case 91:
+            _context3.prev = 91;
+            _context3.t0 = _context3["catch"](86);
 
-            if (!(_context4.t0.code === 4902)) {
-              _context4.next = 115;
+            if (!(_context3.t0.code === 4902)) {
+              _context3.next = 103;
               break;
             }
 
-            _context4.prev = 106;
-            _context4.next = 109;
+            _context3.prev = 94;
+            _context3.next = 97;
             return regeneratorRuntime.awrap(provider.provider.request({
               method: 'wallet_addEthereumChain',
               params: [{
@@ -596,28 +535,28 @@ var fetchBlockchain = function fetchBlockchain() {
               }]
             }));
 
-          case 109:
-            _context4.next = 115;
+          case 97:
+            _context3.next = 103;
             break;
 
-          case 111:
-            _context4.prev = 111;
-            _context4.t1 = _context4["catch"](106);
-            console.log(_context4.t1);
-            dispatch(loadingBlockchainFailure(_context4.t1));
+          case 99:
+            _context3.prev = 99;
+            _context3.t1 = _context3["catch"](94);
+            console.log(_context3.t1);
+            dispatch(loadingBlockchainFailure(_context3.t1));
 
-          case 115:
-            _context4.next = 126;
+          case 103:
+            _context3.next = 114;
             break;
 
-          case 117:
+          case 105:
             if (!(a === 'development')) {
-              _context4.next = 126;
+              _context3.next = 114;
               break;
             }
 
-            _context4.prev = 118;
-            _context4.next = 121;
+            _context3.prev = 106;
+            _context3.next = 109;
             return regeneratorRuntime.awrap(provider.provider.request({
               method: 'wallet_switchEthereumChain',
               params: [{
@@ -625,76 +564,76 @@ var fetchBlockchain = function fetchBlockchain() {
               }]
             }));
 
-          case 121:
-            _context4.next = 126;
+          case 109:
+            _context3.next = 114;
             break;
 
-          case 123:
-            _context4.prev = 123;
-            _context4.t2 = _context4["catch"](118);
-            console.log(_context4.t2);
+          case 111:
+            _context3.prev = 111;
+            _context3.t2 = _context3["catch"](106);
+            console.log(_context3.t2);
 
-          case 126:
-            _context4.next = 132;
+          case 114:
+            _context3.next = 120;
             break;
 
-          case 128:
-            _context4.prev = 128;
-            _context4.t3 = _context4["catch"](11);
+          case 116:
+            _context3.prev = 116;
+            _context3.t3 = _context3["catch"](3);
             dispatch(loadingBlockchainFailure({
               errorMsg: 'Error de transaccion'
             }));
-            console.log(_context4.t3);
+            console.log(_context3.t3);
 
-          case 132:
-            _context4.next = 140;
+          case 120:
+            _context3.next = 128;
             break;
 
-          case 134:
-            _context4.prev = 134;
-            _context4.t4 = _context4["catch"](2);
-            alert(_context4.t4);
+          case 122:
+            _context3.prev = 122;
+            _context3.t4 = _context3["catch"](2);
+            alert(_context3.t4);
             web3Modal.clearCachedProvider();
             dispatch(loadingBlockchainFailure({
               errorMsg: 'Error de conneccion'
             }));
-            console.log(_context4.t4);
+            console.log(_context3.t4);
 
-          case 140:
+          case 128:
           case "end":
-            return _context4.stop();
+            return _context3.stop();
         }
       }
-    }, null, null, [[2, 134], [11, 128], [98, 103], [106, 111], [118, 123]]);
+    }, null, null, [[2, 122], [3, 116], [86, 91], [94, 99], [106, 111]]);
   };
 };
 
 exports.fetchBlockchain = fetchBlockchain;
 
 var fetchBalance = function fetchBalance() {
-  return function _callee5(dispatch, getState) {
+  return function _callee4(dispatch, getState) {
     var _getState$blockchain, tokenContract, busdContract, usdtContract, accountAddress, exchangeContract, tokenBalance, busdBalance, usdtBalance, tokenBalanceFormatted, busdBalanceFormatted, usdtBalanceFormatted;
 
-    return regeneratorRuntime.async(function _callee5$(_context5) {
+    return regeneratorRuntime.async(function _callee4$(_context4) {
       while (1) {
-        switch (_context5.prev = _context5.next) {
+        switch (_context4.prev = _context4.next) {
           case 0:
             _getState$blockchain = getState().blockchain, tokenContract = _getState$blockchain.tokenContract, busdContract = _getState$blockchain.busdContract, usdtContract = _getState$blockchain.usdtContract, accountAddress = _getState$blockchain.accountAddress, exchangeContract = _getState$blockchain.exchangeContract;
-            _context5.next = 3;
+            _context4.next = 3;
             return regeneratorRuntime.awrap(tokenContract.balanceOf(accountAddress));
 
           case 3:
-            tokenBalance = _context5.sent;
-            _context5.next = 6;
+            tokenBalance = _context4.sent;
+            _context4.next = 6;
             return regeneratorRuntime.awrap(busdContract.balanceOf(accountAddress));
 
           case 6:
-            busdBalance = _context5.sent;
-            _context5.next = 9;
+            busdBalance = _context4.sent;
+            _context4.next = 9;
             return regeneratorRuntime.awrap(usdtContract.balanceOf(accountAddress));
 
           case 9:
-            usdtBalance = _context5.sent;
+            usdtBalance = _context4.sent;
             tokenBalanceFormatted = parseFloat(tokenBalance) / Math.pow(10, 8);
             busdBalanceFormatted = parseFloat(_ethers.ethers.utils.formatEther(busdBalance));
             usdtBalanceFormatted = parseFloat(_ethers.ethers.utils.formatEther(usdtBalance));
@@ -702,7 +641,7 @@ var fetchBalance = function fetchBalance() {
 
           case 14:
           case "end":
-            return _context5.stop();
+            return _context4.stop();
         }
       }
     });
@@ -712,17 +651,17 @@ var fetchBalance = function fetchBalance() {
 exports.fetchBalance = fetchBalance;
 
 var disconnectBlockchainAction = function disconnectBlockchainAction() {
-  return function _callee6(dispatch) {
-    return regeneratorRuntime.async(function _callee6$(_context6) {
+  return function _callee5(dispatch) {
+    return regeneratorRuntime.async(function _callee5$(_context5) {
       while (1) {
-        switch (_context6.prev = _context6.next) {
+        switch (_context5.prev = _context5.next) {
           case 0:
             //providerOptions.clearCachedProvider();
             dispatch(disconnectBlockchain());
 
           case 1:
           case "end":
-            return _context6.stop();
+            return _context5.stop();
         }
       }
     });

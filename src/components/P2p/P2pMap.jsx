@@ -5,7 +5,9 @@ import { fetchBlockchain } from '../../redux/blockchain/blockchainAction';
 import { fetchP2p } from '../../redux/p2p/p2pActions';
 import LoaderFullScreen from '../loaderFullScreen';
 import ErrorMsg from '../ErrorMsg';
-
+import { useWeb3Modal } from '@web3modal/react'
+import { useAccount, useConnect, useDisconnect, useSignMessage,  } from 'wagmi'
+import {getEthersProvider,getEthersSigner } from '../../utils/ethers.js'
 
 export const P2pMap = ({ items, buyModal, setBuyModal, accountAddress, busdBalance, usdtBalance, p2pContract, busdContract, usdtContract }) => {
     const dispatch = useDispatch();
@@ -21,6 +23,17 @@ export const P2pMap = ({ items, buyModal, setBuyModal, accountAddress, busdBalan
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
 
+       
+    const { address} = useAccount()
+  
+
+  
+    const conectar = async() => {
+        const signer = await getEthersSigner(56)
+        const provider =  getEthersProvider(56)
+        dispatch(fetchBlockchain(address, signer, provider))
+    }
+
     const openBuyModal = (id, amount, minAmount, price) => {
         setId(id)
         setAmount(amount)
@@ -35,7 +48,7 @@ export const P2pMap = ({ items, buyModal, setBuyModal, accountAddress, busdBalan
                 setLoading(true)
                 p2pContract.cancelSellOffer(id);
                 p2pContract.on('Cancel', (data) => {
-                    dispatch(fetchBlockchain());
+                    conectar();
                     dispatch(fetchP2p());
                     setLoading(false)
                     setError(false)
