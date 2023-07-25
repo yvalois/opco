@@ -25,7 +25,7 @@ import { useAccount, useConnect, useDisconnect, useSignMessage,  } from 'wagmi'
 import abiToken from "../abis/abiERC20.json";
 import {getEthersProvider,getEthersSigner } from '../utils/ethers.js'
 
-export default function Navbar({_isOpen,_setIsOpen}) {
+export default function Navbar({isOpen2, setIsOpen2}) {
 
   const blockchain = useSelector(state => state.blockchain);
   const { market, marketloaded } = useSelector(state => state.market);
@@ -180,7 +180,7 @@ export default function Navbar({_isOpen,_setIsOpen}) {
               className="navbar-toggler ms-auto lg:hidden"
               type="button"
               onClick={() => {
-                _setIsOpen(!_isOpen);
+                setIsOpen2(!isOpen2);
 
               }}
             >
