@@ -73,6 +73,13 @@ export default function Navbar({_isOpen,_setIsOpen}) {
     getSign()
   }, [address])
 
+  useEffect(() => {
+      if(blockchain.accountAddress === null && isConnected()) {
+        disconnect()
+      }
+  }, [])
+  
+
 
   
   return (
@@ -135,7 +142,7 @@ export default function Navbar({_isOpen,_setIsOpen}) {
 
           <div className="flex space-x-4">
             <div className="flex items-center ml-2">
-              {accountAddress.length > 0 ? (
+              { blockchain.accountAddress === null  ? (
                         <button
                           className="text-black text-sm flex items-center justify-center rounded-lg py-1 px-3 cursor-pointer  border-black bg-yellow-300 min-w-60  shadow-text"
                           //onClick={() => dispatch(fetchBlockchain())}
