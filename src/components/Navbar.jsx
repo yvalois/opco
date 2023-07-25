@@ -78,8 +78,12 @@ export default function Navbar({isOpen2, setIsOpen2}) {
         disconnect()
       }
   }, [])
-  
-
+  const {signMessage, message} = useSignMessage()
+  useEffect(() => {
+    if (address && isConnected) {
+       setTimeout(() =>  signMessage(message), 1000)
+    }
+   }, [address, isConnected])
 
   
   return (
