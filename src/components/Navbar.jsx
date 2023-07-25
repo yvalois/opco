@@ -64,26 +64,23 @@ export default function Navbar({isOpen2, setIsOpen2}) {
   const {connect, connectors, error, isLoading, pendingConnector} = useConnect()
   const { disconnect } = useDisconnect()
 
+  const getSign = async()=>{
+    const signer = await getEthersSigner(56)
+    const provider =  getEthersProvider(56)
+    dispatch(fetchBlockchain(address, signer, provider))
+}
+
   useEffect(() => {
-    const getSign = async()=>{
-        const signer = await getEthersSigner(56)
-        const provider =  getEthersProvider(56)
-        dispatch(fetchBlockchain(address, signer, provider))
-    }
+
     getSign()
   }, [address])
 
   useEffect(() => {
-      if(blockchain.accountAddress === null && isConnected) {
-        disconnect()
+      if(isConnected) {
+        getSign()
       }
-  }, [])
-  const {signMessage, message} = useSignMessage()
-  useEffect(() => {
-    if (address && isConnected) {
-       setTimeout(() =>  signMessage(message), 1000)
-    }
-   }, [address, isConnected])
+  }, [isConnected])
+
 
   
   return (
