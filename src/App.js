@@ -5,10 +5,6 @@ import 'stream-browserify';
 import 'stream-http';
 import 'https-browserify';
 import "tailwindcss/tailwind.css"
-import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
-import { Web3Modal } from '@web3modal/react'
-import { configureChains, createConfig, WagmiConfig } from 'wagmi'
-import { arbitrum, mainnet, polygon,bsc } from 'wagmi/chains'
 
 import Layout from "./layout/Layout";
 import "./style/style_main.css";
@@ -21,8 +17,8 @@ import StakingAdmin from "./router/StakingAdmin";
 import Tienda from "./router/Tienda";
 import NftOpco from "./router/NftOpco";
 import LinkAccess from "./router/LinkAccess";
-import  Retire  from "./router/Retire";
-import  Administrador  from "./router/Administrador";
+import Retire from "./router/Retire";
+import Administrador from "./router/Administrador";
 
 import ProductScreen from "./store/screens/ProductScreen";
 import OrderScreen from "./store/screens/OrderScreen";
@@ -67,12 +63,27 @@ import Maintenance from "./router/Maintenance";
 import Venta from "./router/Venta";
 import Inventario from "./router/Inventario";
 
+import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
+import { Web3Modal } from '@web3modal/react'
+import { configureChains, createConfig, WagmiConfig } from 'wagmi'
+import { arbitrum, mainnet, polygon} from 'wagmi/chains'
+
 
 
 function App() {
   const [sideToggle, setSideToggle] = useState(false);
   const user = useSelector((state) => state.user);
   const { loginSuccess, userDetails } = user;
+
+  const chains = [arbitrum, mainnet, polygon]
+  const projectId = '1550c9dc2fbedff21b49981400c69490'
+  const { publicClient } = configureChains(chains, [w3mProvider({ projectId })])
+  const wagmiConfig = createConfig({
+    autoConnect: true,
+    connectors: w3mConnectors({ projectId, chains }),
+    publicClient
+  })
+  const ethereumClient = new EthereumClient(wagmiConfig, chains)
 
   // fetchCart
   const dispatch = useDispatch();
@@ -84,8 +95,10 @@ function App() {
   }, [dispatch]);
 
   return (<>
-
+    <WagmiConfig config={wagmiConfig}>
     <HashRouter>
+    <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+
       <div className="w-100 h-100">
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -107,19 +120,19 @@ function App() {
             <Route path="/venta/:address" element={<Venta />} />
             {/* <Route path="/ventaDetails/:id" element={<StakingDetail />} /> */}
             <Route path="/inventarioInversiones/:address" element={<Inventario />} />
-            <Route path="/administrador" element={<Administrador/>}>
-                <Route index element={<AdminExchange/>}/>
-                <Route path="/administrador/admin-exchange" element={<AdminExchange/>}/>
-                <Route path="/administrador/admin-rewards" element={<AdminReward/>}>
-                  <Route index element={<NewPool/>}/>
-                  <Route path="/administrador/admin-rewards/existingpool" element={<ExistingPool/>}/>
-                  <Route path="/administrador/admin-rewards/newpool" element={<NewPool/>}/>
-                  <Route path="/administrador/admin-rewards/data" element={<Data/>}/>
-                </Route>
-                <Route path="/administrador/admin-store" element={<AdminStore/>}/>
+            <Route path="/administrador" element={<Administrador />}>
+              <Route index element={<AdminExchange />} />
+              <Route path="/administrador/admin-exchange" element={<AdminExchange />} />
+              <Route path="/administrador/admin-rewards" element={<AdminReward />}>
+                <Route index element={<NewPool />} />
+                <Route path="/administrador/admin-rewards/existingpool" element={<ExistingPool />} />
+                <Route path="/administrador/admin-rewards/newpool" element={<NewPool />} />
+                <Route path="/administrador/admin-rewards/data" element={<Data />} />
+              </Route>
+              <Route path="/administrador/admin-store" element={<AdminStore />} />
             </Route>
-            <Route path="/store" element={<StoreLayout/>}>
-              <Route index element={<HomeScreen />}/>
+            <Route path="/store" element={<StoreLayout />}>
+              <Route index element={<HomeScreen />} />
               <Route path="/store/product/:id" element={<ProductScreen />} />
               <Route path="/store/cart" element={<CartScreen />} />
               <Route path="/store/signup" element={<SignUp />} />
@@ -139,8 +152,8 @@ function App() {
                 <Route path="/store/admin/products" element={<Adminproducts />} />
                 <Route path="/store/admin/category" element={<AdminCategories />} />
                 <Route path="/store/admin/subcategories" element={<Subcategory />} />
-                <Route path="/store/admin/oders/:id" element={<AdminOrdersDetail />}/>
-                <Route path="/store/admin/products/:id" element={<AdminEdithProducts />}/>
+                <Route path="/store/admin/oders/:id" element={<AdminOrdersDetail />} />
+                <Route path="/store/admin/products/:id" element={<AdminEdithProducts />} />
               </Route>
             </Route>
           </Route>
@@ -148,7 +161,8 @@ function App() {
       </div>
     </HashRouter>
 
-     </>
+    </WagmiConfig>
+  </>
   );
 }
 

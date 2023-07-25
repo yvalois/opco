@@ -71,19 +71,20 @@ const providerOptions = await EthereumProvider.init({
      },
    });
    */
-//  const providerOptions = {
-//      walletconnect: {
-//        package: WalletConnectProvider,
-//        options: {
-//          rpc: {
-//          31337: "http://localhost:8545", // Agrega el RPC de tu red local de Hardhat
-//            56: "https://bsc-dataseed.binance.org/",
-//            97: "https://data-seed-prebsc-1-s1.binance.org:8545/"
-//          }
-//        }
-//      }
-//    };
 
+var providerOptions = {
+  walletconnect: {
+    "package": _walletSdk["default"],
+    options: {
+      rpc: {
+        31337: "http://localhost:8545",
+        // Agrega el RPC de tu red local de Hardhat
+        56: "https://bsc-dataseed.binance.org/",
+        97: "https://data-seed-prebsc-1-s1.binance.org:8545/"
+      }
+    }
+  }
+};
 var web3Modal = new _web3modal["default"]({
   disableInjectedProvider: false,
   cacheProvider: true,
@@ -243,7 +244,7 @@ var updateStakingTokens = function updateStakingTokens(inversioneStakingContract
 
           case 5:
             if (!(inversionesStakingBalances.length > i)) {
-              _context2.next = 19;
+              _context2.next = 18;
               break;
             }
 
@@ -263,18 +264,17 @@ var updateStakingTokens = function updateStakingTokens(inversioneStakingContract
               Tiempo: parseInt(restTime),
               currentReward: valorConvertido
             };
-            console.log(info);
             inversionesStakingBalance.push(info);
 
-          case 16:
+          case 15:
             i++;
             _context2.next = 5;
             break;
 
-          case 19:
+          case 18:
             dispatch(updateTokenS(inversionesStakingBalance));
 
-          case 20:
+          case 19:
           case "end":
             return _context2.stop();
         }

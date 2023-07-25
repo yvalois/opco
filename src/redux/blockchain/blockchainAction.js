@@ -18,7 +18,7 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 
 import CoinbaseWalletSDK from '@coinbase/wallet-sdk';
 import { contract } from './blockchainRouter';
-
+import { UseContractReadConfig } from "wagmi";
 const router = contract();
 
 const AOEX_ADDRESS = router.AOEX_ADDRESS;
@@ -49,24 +49,20 @@ const providerOptions = await EthereumProvider.init({
    });
    */
 
-//  const providerOptions = {
-//      walletconnect: {
-//        package: WalletConnectProvider,
-//        options: {
-//          rpc: {
-//          31337: "http://localhost:8545", // Agrega el RPC de tu red local de Hardhat
-//            56: "https://bsc-dataseed.binance.org/",
-//            97: "https://data-seed-prebsc-1-s1.binance.org:8545/"
-//          }
-//        }
-//      }
-//    };
+  const providerOptions = {
+      walletconnect: {
+        package: CoinbaseWalletSDK ,
+        options: {
+          rpc: {
+          31337: "http://localhost:8545", // Agrega el RPC de tu red local de Hardhat
+            56: "https://bsc-dataseed.binance.org/",
+            97: "https://data-seed-prebsc-1-s1.binance.org:8545/"
+          }
+        }
+      }
+    };
 
-const providerOptions  = await EthereumProvider.init({
-    projectId: '8e703b1c2e1918ec37ad64a8b1a38dd9', // required
-    chains: [56], // required
-    showQrModal: false // requires @walletconnect/modal
-  })
+
  
   
   const web3Modal = new Web3Modal({
@@ -176,7 +172,6 @@ export const updateStakingTokens = (inversioneStakingContract, accountAddress) =
             currentReward: valorConvertido,
 
         }
-        console.log(info)
         inversionesStakingBalance.push(info)
     }
     dispatch(updateTokenS(inversionesStakingBalance))
