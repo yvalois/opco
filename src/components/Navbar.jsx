@@ -74,7 +74,7 @@ export default function Navbar({_isOpen,_setIsOpen}) {
   }, [address])
 
   useEffect(() => {
-      if(blockchain.accountAddress === null && isConnected()) {
+      if(blockchain.accountAddress === null && isConnected) {
         disconnect()
       }
   }, [])
