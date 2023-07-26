@@ -46,7 +46,9 @@ export default function Exchange() {
   const [yoAreOwner, setYoAreOwner] = useState(false);
   const [referalCount, setReferalCount] = useState(0);
   const [is, setIs] = useState(false)
+  const {accountAddress} = useSelector(state => state.blockchain);
   const blockchain = useSelector(state => state.blockchain);
+
 
 
   const referalRef = useRef();
@@ -271,7 +273,7 @@ export default function Exchange() {
   }
 
   useEffect(() => {
-    if (isConnected && blockchain.accountAddress === null && is === false) {
+    if (isConnected && accountAddress === null && is === false) {
       setTimeout(() => {
         getSign();
         setIs(true)
@@ -282,7 +284,7 @@ export default function Exchange() {
   }, [isConnected])
 
   const abrir = () => {
-    if (isConnected && blockchain.accountAddress === null) {
+    if (isConnected && accountAddress === null) {
       console.log("No")
     } else {
       open()
@@ -290,7 +292,7 @@ export default function Exchange() {
   }
 
   useEffect(() => {
-    if (isConnected && blockchain.accountAddress === null && is === false) {
+    if (isConnected && accountAddress === null && is === false) {
       setTimeout(() => {
         getSign();
         setIs(true)
@@ -447,7 +449,7 @@ export default function Exchange() {
       <div className='w-full lg:w-8/12  2xl:w-4/12 h-full flex flex-col justify-center items-center'>
 
         <div className="w-full border border-solid rounded-lg flex flex-col font-bold relative justify-center align-middle  text-black">
-          {/* {blockchain.accountAddress ?
+          {/* {accountAddress ?
             <div className="flex flex-col items-start justify-start bg-gray-100 p-5">
               <div className="flex flex-col items-start justify-start bg-white p-5">
                 <p className="mb-2 font-medium text-gray-700">link de referido</p>
@@ -605,11 +607,11 @@ export default function Exchange() {
 
             <div className='w-full flex justify-center items-center'>
 
-              {blockchain.accountAddress === null ?
+              {accountAddress === null ?
                 <button className='mt-5 text-md font-semibold bg-black text-white w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
                  hover:text-black'
                   onClick={() => abrir()}
-                >                          {(isConnected && blockchain.accountAddress === null) ? 'conectando...' : 'getSign'}
+                >                          {(isConnected && accountAddress === null) ? 'conectando...' : 'conectar'}
                 </button>
                 :
                 <>

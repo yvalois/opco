@@ -44,7 +44,7 @@ export const P2pNewOfferModal = ({ offerModal, setOfferModal, tokenBalance, cont
   }
   
     useEffect(() => {
-        if(isConnected && blockchain.accountAddress === null && is === false) {
+        if(isConnected && accountAddress === null && is === false) {
           setTimeout(() => {
           getSign();
           setIs(true)
@@ -55,7 +55,7 @@ export const P2pNewOfferModal = ({ offerModal, setOfferModal, tokenBalance, cont
     }, [isConnected])
   
     const abrir =()=>{
-      if(isConnected && blockchain.accountAddress === null){
+      if(isConnected && accountAddress === null){
           console.log("No")
       }else{
         open()
@@ -63,7 +63,7 @@ export const P2pNewOfferModal = ({ offerModal, setOfferModal, tokenBalance, cont
     }
     
     useEffect(() => {
-        if(isConnected && blockchain.accountAddress === null && is === false) {
+        if(isConnected && accountAddress === null && is === false) {
           setTimeout(() => {
           getSign();
           setIs(true)
@@ -219,7 +219,7 @@ export const P2pNewOfferModal = ({ offerModal, setOfferModal, tokenBalance, cont
                                 {accountAddress &&
                                     <button className=' h-auto rounded-md bg-gray-700 px-4 py-2 text-whitew-full sm:w-auto'
                                     onClick={abrir}
-                                    >                          {(isConnected && blockchain.accountAddress === null) ? 'conectando...' : 'Conectar'}
+                                    >                          {(isConnected && accountAddress === null) ? 'conectando...' : 'Conectar'}
 </button>
                                 }
                             </div>

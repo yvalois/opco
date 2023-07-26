@@ -31,7 +31,9 @@ export default function NftOpco() {
     const [selectedNft, setSelectedNft] = useState();
     const [approved, setApproved] = useState(false);
     const[is, setIs] = useState(false)
+    const {accountAddress} = useSelector(state => state.blockchain);
     const blockchain = useSelector(state => state.blockchain);
+
 
     const dispatch = useDispatch(); 
 
@@ -139,7 +141,7 @@ export default function NftOpco() {
   }
   
     useEffect(() => {
-        if(isConnected && blockchain.accountAddress === null && is === false) {
+        if(isConnected && accountAddress === null && is === false) {
           setTimeout(() => {
           getSign();
           setIs(true)
@@ -150,7 +152,7 @@ export default function NftOpco() {
     }, [isConnected])
   
     const abrir =()=>{
-      if(isConnected && blockchain.accountAddress === null){
+      if(isConnected && accountAddress === null){
           console.log("No")
       }else{
         open()
@@ -158,7 +160,7 @@ export default function NftOpco() {
     }
     
     useEffect(() => {
-        if(isConnected && blockchain.accountAddress === null && is === false) {
+        if(isConnected && accountAddress === null && is === false) {
           setTimeout(() => {
           getSign();
           setIs(true)
@@ -239,13 +241,13 @@ export default function NftOpco() {
                                 </div>
                             ))}
                         </div>
-                        :!blockchain.accountAddress ?
+                        :!accountAddress ?
                         <div className='w-full h-full flex justify-center items-center z-[-10]'>
                             <button
                                 onClick={() => abrir()}
                                 className=" w-[200px] h-auto text-lg px-4 py-2 text-white bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full hover:from-orange-500 hover:to-yellow-400 transition-all duration-200 flex items-center justify-center space-x-2"
                             >                          
-                            {(isConnected && blockchain.accountAddress === null) ? 'conectando...' : 'Conectar'}
+                            {(isConnected && accountAddress === null) ? 'conectando...' : 'Conectar'}
                             </button>
                         </div>
                         :null

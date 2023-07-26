@@ -43,7 +43,7 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
     }
 
     useEffect(() => {
-        if (isConnected && blockchain.accountAddress === null && is === false) {
+        if (isConnected && accountAddress === null && is === false) {
             setTimeout(() => {
                 getSign();
                 setIs(true)
@@ -54,7 +54,7 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
     }, [isConnected])
 
     const abrir = () => {
-        if (isConnected && blockchain.accountAddress === null) {
+        if (isConnected && accountAddress === null) {
             console.log("No")
         } else {
             open()
@@ -62,7 +62,7 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
     }
 
     useEffect(() => {
-        if (isConnected && blockchain.accountAddress === null && is === false) {
+        if (isConnected && accountAddress === null && is === false) {
             setTimeout(() => {
                 getSign();
                 setIs(true)
@@ -361,7 +361,7 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
                                     {!accountAddress &&
                                         <button className='btn btn-dark ml-2'
                                             onClick={abrir}
-                                        >                          {(isConnected && blockchain.accountAddress === null) ? 'conectando...' : 'Conectar'}
+                                        >                          {(isConnected && accountAddress === null) ? 'conectando...' : 'Conectar'}
                                         </button>
                                     }
                                 </div>

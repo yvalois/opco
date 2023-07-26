@@ -75,7 +75,7 @@ export default function Navbar({isOpen2, setIsOpen2}) {
 
 
   useEffect(() => {
-      if(isConnected && blockchain.accountAddress === null && is === false) {
+      if(isConnected && accountAddress === null && is === false) {
         setTimeout(() => {
         getSign();
         setIs(true)
@@ -86,7 +86,7 @@ export default function Navbar({isOpen2, setIsOpen2}) {
   }, [isConnected])
 
   const abrir =()=>{
-    if(isConnected && blockchain.accountAddress === null){
+    if(isConnected && accountAddress === null){
         console.log("No")
     }else{
       open()
@@ -153,13 +153,13 @@ export default function Navbar({isOpen2, setIsOpen2}) {
 
           <div className="flex space-x-4">
             <div className="flex items-center ml-2">
-              { blockchain.accountAddress === null  ? (
+              { accountAddress === null  ? (
                         <button
                           className="text-black text-sm flex items-center justify-center rounded-lg py-1 px-3 cursor-pointer  border-black bg-yellow-300 min-w-60  shadow-text"
                           onClick={() => {
                             abrir()
                           }}>
-                          {(isConnected && blockchain.accountAddress === null) ? 'conectando...' : 'Conectar'}
+                          {(isConnected && accountAddress === null) ? 'conectando...' : 'Conectar'}
                         </button>
               ) : (
                 <>
