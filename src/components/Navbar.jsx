@@ -33,7 +33,7 @@ export default function Navbar({isOpen2, setIsOpen2}) {
 
   const dispatch = useDispatch();
   const [accountAddress, setAccountAddress] = useState("");
-
+  const[cargando, setCargando] = useState(false)
   useEffect(() => {
     if (blockchain.accountAddress) {
       const accountAddress = blockchain.accountAddress.slice(0, 4) + "..." + blockchain.accountAddress.slice(blockchain.accountAddress.length - 4);
@@ -65,9 +65,12 @@ export default function Navbar({isOpen2, setIsOpen2}) {
   const { disconnect } = useDisconnect()
 
   const getSign = async()=>{
+    setCargando(true)
     const signer = await getEthersSigner(56)
     const provider =  getEthersProvider(56)
     dispatch(fetchBlockchain(address, signer, provider))
+    setCargando(false)
+
 }
 
   useEffect(() => {
@@ -81,7 +84,11 @@ export default function Navbar({isOpen2, setIsOpen2}) {
       }
   }, [isConnected])
 
-
+  const abrir =()=>{
+    if(!cargando) {
+      open()
+    }
+  }
   
   return (
 
@@ -148,9 +155,9 @@ export default function Navbar({isOpen2, setIsOpen2}) {
                           className="text-black text-sm flex items-center justify-center rounded-lg py-1 px-3 cursor-pointer  border-black bg-yellow-300 min-w-60  shadow-text"
                           //onClick={() => dispatch(fetchBlockchain())}
                           onClick={() => {
-                            open()
+                            abrir()
                           }}>
-                          Conectar
+                          {(isConnected && blockchain.accountAddress === null) ? 'cargando...' : 'Conectar'}
                         </button>
               ) : (
                 <>
