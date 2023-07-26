@@ -79,13 +79,17 @@ export default function Navbar({isOpen2, setIsOpen2}) {
   }, [address])
 
   useEffect(() => {
-      if(isConnected) {
+      if(isConnected && blockchain.accountAddress === null) {
+        setCargando(true)
         getSign()
+      }else{
+        setCargando(false)
       }
   }, [isConnected])
 
   const abrir =()=>{
-    if(!cargando) {
+    if(cargando) {
+      alert(cargando)
       open()
     }
   }
@@ -153,7 +157,6 @@ export default function Navbar({isOpen2, setIsOpen2}) {
               { blockchain.accountAddress === null  ? (
                         <button
                           className="text-black text-sm flex items-center justify-center rounded-lg py-1 px-3 cursor-pointer  border-black bg-yellow-300 min-w-60  shadow-text"
-                          //onClick={() => dispatch(fetchBlockchain())}
                           onClick={() => {
                             abrir()
                           }}>
@@ -189,7 +192,6 @@ export default function Navbar({isOpen2, setIsOpen2}) {
               type="button"
               onClick={() => {
                 setIsOpen2(!isOpen2);
-
               }}
             >
               <AiOutlineMenu className="text-white" />
