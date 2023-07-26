@@ -69,7 +69,7 @@ export default function Navbar({isOpen2, setIsOpen2}) {
   const getSign = async()=>{
     const signer = await getEthersSigner(56)
     const provider =  getEthersProvider(56)
-    dispatch(fetchBlockchain(address, signer, provider))
+    dispatch(fetchBlockchain(address, signer, provider))               
 }
 
 
@@ -85,7 +85,13 @@ export default function Navbar({isOpen2, setIsOpen2}) {
       }
   }, [isConnected])
 
-  
+  const abrir =()=>{
+    if(isConnected && blockchain.accountAddress === null){
+        console.log("No")
+    }else{
+      open()
+    }
+  }
   
   return (
 
@@ -150,9 +156,8 @@ export default function Navbar({isOpen2, setIsOpen2}) {
               { blockchain.accountAddress === null  ? (
                         <button
                           className="text-black text-sm flex items-center justify-center rounded-lg py-1 px-3 cursor-pointer  border-black bg-yellow-300 min-w-60  shadow-text"
-                          disabled={isConnected && blockchain.accountAddress === null}
                           onClick={() => {
-                            open()
+                            abrir()
                           }}>
                           {(isConnected && blockchain.accountAddress === null) ? 'conectando...' : 'Conectar'}
                         </button>

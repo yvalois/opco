@@ -15,8 +15,8 @@ import Swal from 'sweetalert2';
 import emailjs from '@emailjs/browser'
 import { contract } from '../redux/blockchain/blockchainRouter';
 import { useWeb3Modal } from '@web3modal/react'
-import { useAccount, useConnect, useDisconnect, useSignMessage,  } from 'wagmi'
-import {getEthersProvider,getEthersSigner } from '../utils/ethers.js'
+import { useAccount, useConnect, useDisconnect, useSignMessage, } from 'wagmi'
+import { getEthersProvider, getEthersSigner } from '../utils/ethers.js'
 const fee = 0.01;
 
 
@@ -24,7 +24,7 @@ const fee = 0.01;
 export default function Exchange() {
   const dispatch = useDispatch();
 
-  const blockchain = useSelector(state => state.blockchain);
+
   const { refered } = useParams();
   //console.log('blockchain',blockchain);
   const [isHover, setIsHover] = useState(false);
@@ -45,8 +45,9 @@ export default function Exchange() {
   const [owner, setOwner] = useState('');
   const [yoAreOwner, setYoAreOwner] = useState(false);
   const [referalCount, setReferalCount] = useState(0);
+  const [is, setIs] = useState(false)
+  const blockchain = useSelector(state => state.blockchain);
 
-  
 
   const referalRef = useRef();
 
@@ -234,34 +235,70 @@ export default function Exchange() {
   }
 
   const buyAOEX = async () => {
-     setError(false);
-     setSuccess(false);
-     setLoader(true);
-     try {
-       const addressBUSD = blockchain.busdContract.address;
-       const tx = await blockchain.exchangeContract.buyToken(ethers.utils.parseEther(busdPrice.toString()), addressBUSD);
-       await tx.wait();
-         setSuccess(true);
-         dispatch(fetchBalance());
-         setBusdPrice(0);
-         setAoexPrice(0);
-         setBusdCost(0);
-         setAoexCost(0);
-     } catch (e) {
-       console.log(e);
-       setError(true);
-     }
+    setError(false);
+    setSuccess(false);
+    setLoader(true);
+    try {
+      const addressBUSD = blockchain.busdContract.address;
+      const tx = await blockchain.exchangeContract.buyToken(ethers.utils.parseEther(busdPrice.toString()), addressBUSD);
+      await tx.wait();
+      setSuccess(true);
+      dispatch(fetchBalance());
+      setBusdPrice(0);
+      setAoexPrice(0);
+      setBusdCost(0);
+      setAoexCost(0);
+    } catch (e) {
+      console.log(e);
+      setError(true);
+    }
 
   }
 
-     
-  const { address} = useAccount()
-  
-  const conectar = async() => {
-      const signer = await getEthersSigner(56)
-      const provider =  getEthersProvider(56)
-      dispatch(fetchBlockchain(address, signer, provider))
+
+
+
+  const { isOpen, open, close, setDefaultChain } = useWeb3Modal()
+  const { address, isConnecting, isDisconnected, isConnected } = useAccount()
+
+  const { connect, connectors, isLoading, pendingConnector } = useConnect()
+  const { disconnect } = useDisconnect()
+
+  const getSign = async () => {
+    const signer = await getEthersSigner(56)
+    const provider = getEthersProvider(56)
+    dispatch(fetchBlockchain(address, signer, provider))
   }
+
+  useEffect(() => {
+    if (isConnected && blockchain.accountAddress === null && is === false) {
+      setTimeout(() => {
+        getSign();
+        setIs(true)
+      }, 2000);
+    } else if (!isConnected) {
+      setIs(false)
+    }
+  }, [isConnected])
+
+  const abrir = () => {
+    if (isConnected && blockchain.accountAddress === null) {
+      console.log("No")
+    } else {
+      open()
+    }
+  }
+
+  useEffect(() => {
+    if (isConnected && blockchain.accountAddress === null && is === false) {
+      setTimeout(() => {
+        getSign();
+        setIs(true)
+      }, 2000);
+    } else if (!isConnected) {
+      setIs(false)
+    }
+  }, [isConnected])
 
   const sellAOEX = async () => {
     setError(false);
@@ -281,17 +318,17 @@ export default function Exchange() {
           const adrressBUSD = blockchain.busdContract.address;
           const _amount = (aoexPrice * 10 ** 8).toFixed(0);
           try {
-          const tx = await blockchain.exchangeContract.sellToken((_amount.toString()), adrressBUSD);
-          await tx.wait()
-          setSuccess(true);
-          conectar()
-          setBusdPrice(0);
-          setAoexPrice(0);
-          setAoexCost(0);
-          setBusdCost(0);
-          setLoader(false);
+            const tx = await blockchain.exchangeContract.sellToken((_amount.toString()), adrressBUSD);
+            await tx.wait()
+            setSuccess(true);
+            conectar()
+            setBusdPrice(0);
+            setAoexPrice(0);
+            setAoexCost(0);
+            setBusdCost(0);
+            setLoader(false);
           } catch (err) {
-          setLoader(false);
+            setLoader(false);
             Swal.fire({
               title: 'failed_',
               text: err.reason,
@@ -323,8 +360,8 @@ export default function Exchange() {
       await tx.wait()
       setSuccess(true);
       conectar()
-      
-      
+
+
     } catch (err) {
       console.log(err.reason);
       setError(true);
@@ -341,8 +378,8 @@ export default function Exchange() {
       await tx.wait();
       setSuccess(true);
       conectar()
-      
-      
+
+
     } catch (err) {
       console.log(err.reason);
       setError(true);
@@ -571,26 +608,27 @@ export default function Exchange() {
               {blockchain.accountAddress === null ?
                 <button className='mt-5 text-md font-semibold bg-black text-white w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
                  hover:text-black'
-                  onClick={() => conectar()}
-                >Connect</button> 
+                  onClick={() => abrir()}
+                >                          {(isConnected && blockchain.accountAddress === null) ? 'conectando...' : 'Conectar'}
+                </button>
                 :
                 <>
                   {aoexToBusd ?
                     <>
                       {blockchain.tokenBalance > aoexPrice ?
                         <>
-                        {loader ?
+                          {loader ?
                             <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
                            hover:text-white '>loading...</button>
-                            : 
+                            :
                             aoexAllowance >= aoexPrice && aoexPrice > 0 ?
                               <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
                            hover:text-white ' onClick={sellAOEX}>Exchange</button>
-                            : aoexPrice > 0 ?
-                            <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
+                              : aoexPrice > 0 ?
+                                <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
                            hover:text-white ' onClick={approveAoex}>Aprobar</button>
-                           : 
-                           <button className='mt-5 text-md font-semibold bg-gray-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
+                                :
+                                <button className='mt-5 text-md font-semibold bg-gray-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
                            hover:text-white '>Ingresar valor</button>
                           }
                         </>
@@ -611,13 +649,13 @@ export default function Exchange() {
                               <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
                            hover:text-white '  onClick={buyAOEX}>Exchange</button>
                               : busdPrice > 0 ?
-                              <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
+                                <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
                            hover:text-white ' onClick={approveBusd}>Aprobar</button>
-                          
-                          : 
-                          <button className='mt-5 text-md font-semibold bg-gray-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
+
+                                :
+                                <button className='mt-5 text-md font-semibold bg-gray-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
                            hover:text-white '>Ingresar valor</button>
-                           }
+                          }
                         </>
                         :
                         <button className='mt-5 text-md font-semibold bg-yellow-300 text-black w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-

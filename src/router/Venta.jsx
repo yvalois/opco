@@ -7,18 +7,22 @@ import { Copy } from '../components/icons/copy';
 import { Check } from '../components/icons/check';
 import { useParams, useNavigate } from "react-router-dom";
 import { useWeb3Modal } from '@web3modal/react'
-import { useAccount, useConnect, useDisconnect, useSignMessage,  } from 'wagmi'
-import {getEthersProvider,getEthersSigner } from '../utils/ethers.js'
+import { useAccount, useConnect, useDisconnect, useSignMessage, } from 'wagmi'
+import { getEthersProvider, getEthersSigner } from '../utils/ethers.js'
+
 
 export default function Venta() {
     const dispatch = useDispatch();
 
     const { inversionesContract, accountAddress } = useSelector((state) => state.blockchain)
+
+    const blockchain = useSelector((state) => state.blockchain)
+    const [is, setIs] = useState(false)
+
     let prices = []
     const [link, setLink] = useState('');
     let [copyButtonStatus, setCopyButtonStatus] = useState(false);
     const [cartLoading, setCartLoading] = useState(false);
-
     const { address } = useParams();
 
     const Inversiones = [
@@ -55,14 +59,14 @@ export default function Venta() {
 
     ]
 
-    const changeLoadingCard = (is)=>{
+    const changeLoadingCard = (is) => {
         setCartLoading(is);
     }
-  
 
 
 
-    
+
+
     const copiar = () => {
         const aux = window.location.href;
         const a = aux.split('nn');
@@ -77,16 +81,43 @@ export default function Venta() {
     };
 
 
-   
 
-  
 
-  
-    const conectar = async() => {
+
+
+    const { isOpen, open, close, setDefaultChain } = useWeb3Modal()
+    const { address: account, isConnecting, isDisconnected, isConnected } = useAccount()
+
+    const { connect, connectors, error, isLoading, pendingConnector } = useConnect()
+    const { disconnect } = useDisconnect()
+
+    const getSign = async () => {
         const signer = await getEthersSigner(56)
-        const provider =  getEthersProvider(56)
-        dispatch(fetchBlockchain(accountAddress, signer, provider))
+        const provider = getEthersProvider(56)
+        dispatch(fetchBlockchain(account, signer, provider))
     }
+
+
+
+    useEffect(() => {
+        if (isConnected && blockchain.accountAddress === null && is === false) {
+            setTimeout(() => {
+                getSign();
+                setIs(true)
+            }, 2000);
+        } else if (!isConnected) {
+            setIs(false)
+        }
+    }, [isConnected])
+
+    const abrir = () => {
+        if (isConnected && blockchain.accountAddress === null) {
+            console.log("No")
+        } else {
+            open()
+        }
+    }
+
 
     return (<>
         {accountAddress ? (<div className='w-full h-full  overflow-hidden'>
@@ -122,7 +153,7 @@ export default function Venta() {
                     </div>
 
                     <div className='w-full h-full flex justify-center overflow-auto'>
-                    
+
                         <div className='grid grid-cols-2  xl:grid-cols-3 2xl:grid-cols-3 gap-y-6 gap-x-6 md:gap-x-20 justify-start mt-4 '>
                             {
                                 Inversiones.map((token, index) => (
@@ -151,9 +182,12 @@ export default function Venta() {
         </div>) :
             <div className='w-full h-full flex justify-center items-center'>
                 <button
-                    onClick={() => conectar()}
+                    onClick={() => abrir()}
                     className=" w-[200px] h-auto text-lg px-4 py-2 text-white bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full hover:from-orange-500 hover:to-yellow-400 transition-all duration-200 flex items-center justify-center space-x-2"
-                >Conectar</button>
+                >
+                    {(isConnected && blockchain.accountAddress === null) ? 'conectando...' : 'Conectar'}
+
+                </button>
             </div>}
 
     </>

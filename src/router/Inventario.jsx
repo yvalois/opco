@@ -10,8 +10,8 @@ import { Check } from '../components/icons/check';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from "react-router-dom";
 import { useWeb3Modal } from '@web3modal/react'
-import { useAccount, useConnect, useDisconnect, useSignMessage,  } from 'wagmi'
-import {getEthersProvider,getEthersSigner } from '../utils/ethers.js'
+import { useAccount, useConnect, useDisconnect, useSignMessage, } from 'wagmi'
+import { getEthersProvider, getEthersSigner } from '../utils/ethers.js'
 
 
 export default function Inventario() {
@@ -24,13 +24,15 @@ export default function Inventario() {
   const [isOpenS, setIsOpenS] = useState(false);
   const [isOpenT, setIsOpenT] = useState(false);
   const [cartLoading, setCartLoading] = useState(false);
+  const[is, setIs] = useState(false)
+  const blockchain = useSelector(state => state.blockchain);
 
   const { address } = useParams();
   const [link, setLink] = useState('');
   let [copyButtonStatus, setCopyButtonStatus] = useState(false);
 
   const [id, setId] = useState()
-  
+
   const onOfStakedFilter = () => {
     setStaking(!staking);
   }
@@ -39,10 +41,10 @@ export default function Inventario() {
     onClose(type);
   }
 
-  
-  const changeLoadingCard = (is)=>{
+
+  const changeLoadingCard = (is) => {
     setCartLoading(is);
-}
+  }
   const onClose = (type) => {
 
     if (type === "s") {
@@ -59,26 +61,62 @@ export default function Inventario() {
     const aux = window.location.href;
     const a = aux.split('inventarioInversiones/nn');
     const e = a[0];
-    setLink(e);   
+    setLink(e);
     navigator.clipboard.writeText(`${e}venta/${accountAddress}`);
 
     setCopyButtonStatus(true);
     setTimeout(() => {
-        setCopyButtonStatus(copyButtonStatus);
+      setCopyButtonStatus(copyButtonStatus);
     }, 2500);
-};
+  };
 
 
-   
-  
 
-  
-const conectar = async() => {
+
+
+
+  const {  open, close, setDefaultChain } = useWeb3Modal()
+  const { address:account, isConnecting, isDisconnected, isConnected } = useAccount()
+
+  const { connect, connectors, isLoading, pendingConnector } = useConnect()
+  const { disconnect } = useDisconnect()
+
+  const getSign = async () => {
     const signer = await getEthersSigner(56)
-    const provider =  getEthersProvider(56)
-    dispatch(fetchBlockchain(accountAddress, signer, provider))
-}
-  
+    const provider = getEthersProvider(56)
+    dispatch(fetchBlockchain(account, signer, provider))
+  }
+
+  useEffect(() => {
+    if (isConnected && blockchain.accountAddress === null && is === false) {
+      setTimeout(() => {
+        getSign();
+        setIs(true)
+      }, 2000);
+    } else if (!isConnected) {
+      setIs(false)
+    }
+  }, [isConnected])
+
+  const abrir = () => {
+    if (isConnected && blockchain.accountAddress === null) {
+      console.log("No")
+    } else {
+      open()
+    }
+  }
+
+  useEffect(() => {
+    if (isConnected && blockchain.accountAddress === null && is === false) {
+      setTimeout(() => {
+        getSign();
+        setIs(true)
+      }, 2000);
+    } else if (!isConnected) {
+      setIs(false)
+    }
+  }, [isConnected])
+
 
   return (<>
     {accountAddress ? (<div className='w-full h-full  overflow-hidden'>
@@ -109,28 +147,28 @@ const conectar = async() => {
 
             </div>
 
-            
+
             <div className='w-full flex justify-center md:justify-start md:ml-[670px]'>
-                        <div className="flex justify-start h-9 items-center rounded-full bg-white shadow-card dark:bg-light-dark xl:mt-6">
-                            <div className="inline-flex h-full shrink-0 grow-0 items-center rounded-full bg-gray-900 px-4 text-xs text-white sm:text-sm">
-                                Link Referido
-                            </div>
-                            <div className="text w-28 grow-0 truncate text-ellipsis bg-center text-xs text-gray-500 ltr:pl-4 rtl:pr-4 dark:text-gray-300 sm:w-32 sm:text-sm">
-                                {`${link}/${accountAddress}`}
-                            </div>
-                            <div
-                                className="flex cursor-pointer items-center px-4 text-gray-500 transition hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
-                                title="Copy Address"
-                                onClick={copiar}
-                            >
-                                {copyButtonStatus ? (
-                                    <Check className="h-auto w-3.5 text-green-500" />
-                                ) : (
-                                    <Copy className="h-auto w-3.5" />
-                                )}
-                            </div>
-                        </div>
-                    </div>
+              <div className="flex justify-start h-9 items-center rounded-full bg-white shadow-card dark:bg-light-dark xl:mt-6">
+                <div className="inline-flex h-full shrink-0 grow-0 items-center rounded-full bg-gray-900 px-4 text-xs text-white sm:text-sm">
+                  Link Referido
+                </div>
+                <div className="text w-28 grow-0 truncate text-ellipsis bg-center text-xs text-gray-500 ltr:pl-4 rtl:pr-4 dark:text-gray-300 sm:w-32 sm:text-sm">
+                  {`${link}/${accountAddress}`}
+                </div>
+                <div
+                  className="flex cursor-pointer items-center px-4 text-gray-500 transition hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                  title="Copy Address"
+                  onClick={copiar}
+                >
+                  {copyButtonStatus ? (
+                    <Check className="h-auto w-3.5 text-green-500" />
+                  ) : (
+                    <Copy className="h-auto w-3.5" />
+                  )}
+                </div>
+              </div>
+            </div>
 
             <div className='w-full h-full flex justify-center overflow-auto'>
               <div className='grid grid-cols-2  xl:grid-cols-3 2xl:grid-cols-4 gap-y-6 gap-x-6  md:gap-x-20 justify-start mt-4 '>
@@ -155,11 +193,11 @@ const conectar = async() => {
                 }
               </div>
             </div> </>) :
-            <Table  modalManage={manejadorModal} />
+            <Table modalManage={manejadorModal} />
           }
 
           {id !== undefined && (<ModalW isOpen={isOpen} onClose={onClose} id={id} />)}
-          {id !== undefined &&(<ModalS isOpen={isOpenS} onClose={onClose} id={id} />)}
+          {id !== undefined && (<ModalS isOpen={isOpenS} onClose={onClose} id={id} />)}
 
 
 
@@ -174,9 +212,10 @@ const conectar = async() => {
     </div>) :
       <div className='w-full h-full flex justify-center items-center'>
         <button
-          onClick={() => conectar()}
+          onClick={() => abrir()}
           className=" w-[200px] h-auto text-lg px-4 py-2 text-white bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full hover:from-orange-500 hover:to-yellow-400 transition-all duration-200 flex items-center justify-center space-x-2"
-        >Conectar</button>
+        >                          {(isConnected && blockchain.accountAddress === null) ? 'conectando...' : 'Conectar'}
+        </button>
       </div>}
 
 

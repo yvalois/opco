@@ -18,10 +18,8 @@ import { useWeb3Modal } from '@web3modal/react'
 import { useAccount, useConnect, useDisconnect, useSignMessage,  } from 'wagmi'
 import {getEthersProvider,getEthersSigner } from '../utils/ethers.js'
 
-
 export default function NftOpco() {
     const { password } = useParams();
-    const blockchain = useSelector(state => state.blockchain);
     const minter = useSelector(state => state.minter);
     const { market, marketloaded } = useSelector(state => state.market);
     //const {market, marketloaded} = useSelector(state => state.market);
@@ -32,8 +30,10 @@ export default function NftOpco() {
     const [sellModal, setSellModal] = useState(false);
     const [selectedNft, setSelectedNft] = useState();
     const [approved, setApproved] = useState(false);
+    const[is, setIs] = useState(false)
+    const blockchain = useSelector(state => state.blockchain);
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch(); 
 
     //const [nftOwned, setNftOwned] = useState([]);
 
@@ -123,16 +123,50 @@ export default function NftOpco() {
 
 
    
-    const { address} = useAccount()
-  
 
   
-    const conectar = async() => {
-        const signer = await getEthersSigner(56)
-        const provider =  getEthersProvider(56)
-        dispatch(fetchBlockchain(address, signer, provider))
+
+    const { isOpen, open, close, setDefaultChain } = useWeb3Modal()
+    const { address, isConnecting, isDisconnected, isConnected } = useAccount()
+  
+    const {connect, connectors,  isLoading, pendingConnector} = useConnect()
+    const { disconnect } = useDisconnect()
+  
+    const getSign = async()=>{
+      const signer = await getEthersSigner(56)
+      const provider =  getEthersProvider(56)
+      dispatch(fetchBlockchain(address, signer, provider))               
+  }
+  
+    useEffect(() => {
+        if(isConnected && blockchain.accountAddress === null && is === false) {
+          setTimeout(() => {
+          getSign();
+          setIs(true)
+          }, 2000);
+        }else if(!isConnected ){
+          setIs(false)
+        }
+    }, [isConnected])
+  
+    const abrir =()=>{
+      if(isConnected && blockchain.accountAddress === null){
+          console.log("No")
+      }else{
+        open()
+      }
     }
-
+    
+    useEffect(() => {
+        if(isConnected && blockchain.accountAddress === null && is === false) {
+          setTimeout(() => {
+          getSign();
+          setIs(true)
+          }, 2000);
+        }else if(!isConnected ){
+          setIs(false)
+        }
+    }, [isConnected])
 
     return (
 
@@ -208,9 +242,11 @@ export default function NftOpco() {
                         :!blockchain.accountAddress ?
                         <div className='w-full h-full flex justify-center items-center z-[-10]'>
                             <button
-                                onClick={() => conectar()}
+                                onClick={() => abrir()}
                                 className=" w-[200px] h-auto text-lg px-4 py-2 text-white bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full hover:from-orange-500 hover:to-yellow-400 transition-all duration-200 flex items-center justify-center space-x-2"
-                            >Conectar</button>
+                            >                          
+                            {(isConnected && blockchain.accountAddress === null) ? 'conectando...' : 'Conectar'}
+                            </button>
                         </div>
                         :null
                     }

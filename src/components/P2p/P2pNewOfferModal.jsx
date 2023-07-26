@@ -9,6 +9,8 @@ import LoaderFullScreen from '../loaderFullScreen';
 import { useWeb3Modal } from '@web3modal/react'
 import { useAccount, useConnect, useDisconnect, useSignMessage,  } from 'wagmi'
 import {getEthersProvider,getEthersSigner } from '../../utils/ethers.js'
+import { useSelector } from 'react-redux';
+
 export const P2pNewOfferModal = ({ offerModal, setOfferModal, tokenBalance, contractP2p, accountAddress, tokenContract }) => {
     const dispatch = useDispatch();
     const [precios, setPrecios] = useState(0);
@@ -17,7 +19,8 @@ export const P2pNewOfferModal = ({ offerModal, setOfferModal, tokenBalance, cont
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
-
+    const[is, setIs] = useState(false)
+    const blockchain = useSelector(state => state.blockchain);
     const [checkApproved, setCheckApproved] = useState(false);
     const [approvedTokens, setApprovedTokens] = useState(0);
 
@@ -28,15 +31,47 @@ export const P2pNewOfferModal = ({ offerModal, setOfferModal, tokenBalance, cont
         setApprovedTokens(approvedAmountWei);
     }
 
-    const { address} = useAccount()
+    const { isOpen, open, close, setDefaultChain } = useWeb3Modal()
+    const { address, isConnecting, isDisconnected, isConnected } = useAccount()
   
-
+    const {connect, connectors,  isLoading, pendingConnector} = useConnect()
+    const { disconnect } = useDisconnect()
   
-    const conectar = async() => {
-        const signer = await getEthersSigner(56)
-        const provider =  getEthersProvider(56)
-        dispatch(fetchBlockchain(address, signer, provider))
+    const getSign = async()=>{
+      const signer = await getEthersSigner(56)
+      const provider =  getEthersProvider(56)
+      dispatch(fetchBlockchain(address, signer, provider))               
+  }
+  
+    useEffect(() => {
+        if(isConnected && blockchain.accountAddress === null && is === false) {
+          setTimeout(() => {
+          getSign();
+          setIs(true)
+          }, 2000);
+        }else if(!isConnected ){
+          setIs(false)
+        }
+    }, [isConnected])
+  
+    const abrir =()=>{
+      if(isConnected && blockchain.accountAddress === null){
+          console.log("No")
+      }else{
+        open()
+      }
     }
+    
+    useEffect(() => {
+        if(isConnected && blockchain.accountAddress === null && is === false) {
+          setTimeout(() => {
+          getSign();
+          setIs(true)
+          }, 2000);
+        }else if(!isConnected ){
+          setIs(false)
+        }
+    }, [isConnected])
 
     const approve = async () => {
         setLoading(true);
@@ -56,21 +91,6 @@ export const P2pNewOfferModal = ({ offerModal, setOfferModal, tokenBalance, cont
         }
     }
 
-    const connect = async () => {
-        setLoading(true);
-        try {
-            conectar();
-            setLoading(false);
-        }
-        catch (e) {
-            console.log(e);
-            setLoading(false);
-            if (e.reason) {
-                setErrorMsg(e.reason);
-                setError(true);
-            }
-        }
-    }
 
 
 
@@ -104,7 +124,7 @@ export const P2pNewOfferModal = ({ offerModal, setOfferModal, tokenBalance, cont
                 const MinAmount = ethers.utils.parseEther(minimo.toString());
                 contractP2p.adSellOffer(Amount.toString(), Price, MinAmount);
                 contractP2p.on('Sell', (address, amount, price) => {
-                    conectar();
+                    getSign();
                     dispatch(fetchP2p());
                     setLoading(false);
                     closeOfferModal();
@@ -198,8 +218,9 @@ export const P2pNewOfferModal = ({ offerModal, setOfferModal, tokenBalance, cont
                                 }
                                 {accountAddress &&
                                     <button className=' h-auto rounded-md bg-gray-700 px-4 py-2 text-whitew-full sm:w-auto'
-                                    //onClick={connect}
-                                    >Conectar</button>
+                                    onClick={abrir}
+                                    >                          {(isConnected && blockchain.accountAddress === null) ? 'conectando...' : 'Conectar'}
+</button>
                                 }
                             </div>
                         </div>

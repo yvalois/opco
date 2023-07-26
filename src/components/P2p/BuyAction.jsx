@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {ethers} from 'ethers'
+import { ethers } from 'ethers'
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch } from 'react-redux'
 import { fetchBlockchain } from '../../redux/blockchain/blockchainAction';
@@ -7,11 +7,15 @@ import ErrorMsg from '../ErrorMsg';
 import { fetchP2p } from '../../redux/p2p/p2pActions';
 import LoaderFullScreen from '../loaderFullScreen';
 import { useWeb3Modal } from '@web3modal/react'
-import { useAccount, useConnect, useDisconnect, useSignMessage,  } from 'wagmi'
-import {getEthersProvider,getEthersSigner } from '../../utils/ethers'
+import { useAccount, useConnect, useDisconnect, useSignMessage, } from 'wagmi'
+import { getEthersProvider, getEthersSigner } from '../../utils/ethers'
+import { useSelector } from 'react-redux';
+
+
 export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalance, setBuyModal, buyModal, accountAddress, busdContract, usdtContract, p2pContract }) => {
     const dispatch = useDispatch();
-
+    const [is, setIs] = useState(false)
+    const blockchain = useSelector(state => state.blockchain);
     const closeBuyModal = () => {
         setBuyModal(false)
         setAllowanceVerified(false)
@@ -24,17 +28,49 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
 
     }
 
-  
-   
-    const { address} = useAccount()
-  
 
-  
-    const conectar = async() => {
+
+    const { isOpen, open, close, setDefaultChain } = useWeb3Modal()
+    const { address, isConnecting, isDisconnected, isConnected } = useAccount()
+
+    const { connect, connectors, isLoading, pendingConnector } = useConnect()
+    const { disconnect } = useDisconnect()
+
+    const getSign = async () => {
         const signer = await getEthersSigner(56)
-        const provider =  getEthersProvider(56)
+        const provider = getEthersProvider(56)
         dispatch(fetchBlockchain(address, signer, provider))
     }
+
+    useEffect(() => {
+        if (isConnected && blockchain.accountAddress === null && is === false) {
+            setTimeout(() => {
+                getSign();
+                setIs(true)
+            }, 2000);
+        } else if (!isConnected) {
+            setIs(false)
+        }
+    }, [isConnected])
+
+    const abrir = () => {
+        if (isConnected && blockchain.accountAddress === null) {
+            console.log("No")
+        } else {
+            open()
+        }
+    }
+
+    useEffect(() => {
+        if (isConnected && blockchain.accountAddress === null && is === false) {
+            setTimeout(() => {
+                getSign();
+                setIs(true)
+            }, 2000);
+        } else if (!isConnected) {
+            setIs(false)
+        }
+    }, [isConnected])
 
     const [tokenInput, setTokenInput] = useState(0)
     const [BusdInput, setBusdInput] = useState(0)
@@ -71,7 +107,7 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
                 setLoading(true)
                 const approvedBusd = await busdContract.approve(p2pContract.address, ethers.utils.parseEther('99999'));
                 busdContract.on('Approval', (data) => {
-                    conectar();
+                    getSign();
                     setLoading(false)
                     setError(false)
                     setErrorMessage('')
@@ -95,7 +131,7 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
                 setLoading(true)
                 const approvedUsdt = await usdtContract.approve(p2pContract.address, ethers.utils.parseEther('99999'));
                 usdtContract.on('Approval', (data) => {
-                    conectar();
+                    getSign();
                     setLoading(false)
                     setError(false)
                     setErrorMessage('')
@@ -112,14 +148,14 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
             alert('login account to approve tokens')
         }
     }
-                
+
 
     useEffect(() => {
-        if(accountAddress && !allowanceVerified) {
+        if (accountAddress && !allowanceVerified) {
             verifyApprove()
             setAllowanceVerified(true)
         }
-    } , [accountAddress])
+    }, [accountAddress])
 
 
 
@@ -134,38 +170,38 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
     useEffect(() => {
         console.log(tokenInput, minAmount, selectToken)
         if (tokenInput >= minAmount && selectToken != '' && accountAddress && tokenInput > 0) {
-            if(selectToken == 'BUSD' && busdBalance >= BusdInput) {
-            setReadyToBuy(true)
-            } else if(selectToken == 'USDT' && usdtBalance >= BusdInput) {
-            setReadyToBuy(true)
+            if (selectToken == 'BUSD' && busdBalance >= BusdInput) {
+                setReadyToBuy(true)
+            } else if (selectToken == 'USDT' && usdtBalance >= BusdInput) {
+                setReadyToBuy(true)
             } else {
-            setReadyToBuy(false)
+                setReadyToBuy(false)
             }
         } else {
             setReadyToBuy(false)
         }
-    } , [tokenInput, minAmount, selectToken])
+    }, [tokenInput, minAmount, selectToken])
 
     const maxToken = () => {
-        if(selectToken == 'BUSD'){
-            const max =  Math.floor(busdBalance / price)
-            if(max > amount){
+        if (selectToken == 'BUSD') {
+            const max = Math.floor(busdBalance / price)
+            if (max > amount) {
                 setBusdInput(amount * price)
                 setTokenInput(amount)
-            }else{
+            } else {
                 setBusdInput(max * price)
                 setTokenInput(max)
             }
-        }else if(selectToken == 'USDT'){
-            const max =  Math.floor(usdtBalance / price)
-            if(max > amount){
+        } else if (selectToken == 'USDT') {
+            const max = Math.floor(usdtBalance / price)
+            if (max > amount) {
                 setBusdInput(amount * price)
                 setTokenInput(amount)
-            }else{
+            } else {
                 setBusdInput(max * price)
                 setTokenInput(max)
             }
-        }else {
+        } else {
             alert('Please select a token')
         }
     }
@@ -174,14 +210,14 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
         if (accountAddress) {
             try {
                 setLoading(true)
-                const Amount = (BusdInput*10**18).toString();
-                
+                const Amount = (BusdInput * 10 ** 18).toString();
+
                 const ID = id;
                 const Token = selectToken === 'BUSD' ? busdContract.address : usdtContract.address;
-              
+
                 await p2pContract.buyOffer(Amount, ID, Token);
                 p2pContract.on('Buy', (data) => {
-                    conectar();
+                    getSign();
                     dispatch(fetchP2p());
                     setLoading(false)
                     closeBuyModal()
@@ -207,7 +243,7 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
                 const Token = selectToken === 'BUSD' ? busdContract.address : usdtContract.address;
                 await p2pContract.buyOffer(Amount, ID, Token);
                 p2pContract.on('Buy', (data) => {
-                    conectar();
+                    getSign();
                     dispatch(fetchP2p());
                     setLoading(false)
                     closeBuyModal()
@@ -225,7 +261,7 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
     }
 
 
-                
+
 
 
 
@@ -243,7 +279,7 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
 
 
                 >
-                    <ErrorMsg error={error} errorMsg={errorMessage} setError={setError}/>
+                    <ErrorMsg error={error} errorMsg={errorMessage} setError={setError} />
                     <LoaderFullScreen loading={loading} />
                     <div className='p2p-modal-buy'>
                         <div className='row'>
@@ -251,21 +287,21 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
                                 <div>monto: {amount}</div>
                                 <div>precio: {price}</div>
                                 <div
-                                style={{color: tokenInput >= minAmount ? '#000000' : '#ff0000'}}
+                                    style={{ color: tokenInput >= minAmount ? '#000000' : '#ff0000' }}
                                 >minimo: {minAmount}</div>
                                 {accountAddress &&
                                     <div className='p2p-balance'>
-                                         BUSD: {busdBalance?.toFixed(2)} <br />
-                                         USDT: {usdtBalance?.toFixed(2)}
+                                        BUSD: {busdBalance?.toFixed(2)} <br />
+                                        USDT: {usdtBalance?.toFixed(2)}
                                     </div>
                                 }
                             </div>
                             <div className='col-md-8 d-flex flex-column align-items-end h-100 gap-4'>
-                            <div className='d-flex w-100'>
+                                <div className='d-flex w-100'>
                                     token:
                                     <select className='p-0' value={selectToken}
-                                    style={{backgroundColor: '#DDD'}}
-                                     onChange={(e) => setSelectToken(e.target.value)}>
+                                        style={{ backgroundColor: '#DDD' }}
+                                        onChange={(e) => setSelectToken(e.target.value)}>
                                         <option value=''>select</option>
                                         <option value='BUSD'>BUSD</option>
                                         <option value='USDT'>USDT</option>
@@ -278,11 +314,11 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
                                         onChange={(e) => setTokenInput(e.target.value)}
                                     />
                                     <button
-                                    onClick={maxToken}
+                                        onClick={maxToken}
                                     >MAX</button>
                                 </div>
                                 <div className='d-flex'>
-                                    {selectToken? selectToken : 'token'}: <input type='number'
+                                    {selectToken ? selectToken : 'token'}: <input type='number'
                                         value={BusdInput}
                                         onChange={(e) => setBusdInput(e.target.value)}
                                     />
@@ -290,7 +326,7 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
                                         onClick={maxToken}
                                     >MAX</button>
                                 </div>
-             
+
 
                                 <div className='w-100 d-flex justify-content-end'>
                                     <button
@@ -299,33 +335,34 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
                                     >cancelar
                                     </button>
                                     {selectToken === 'BUSD' && busdAllowance >= tokenInput &&
-                                    <button className={`btn ${readyToBuy? 'btn-dark': 'btn-secondary p2p-not-allowed'}`}
-                                        onClick={buyBUSD}
-                                    >comprar con BUSD
-                                    </button>
-                            
+                                        <button className={`btn ${readyToBuy ? 'btn-dark' : 'btn-secondary p2p-not-allowed'}`}
+                                            onClick={buyBUSD}
+                                        >comprar con BUSD
+                                        </button>
+
                                     }
                                     {selectToken === 'USDT' && usdtAllowance >= tokenInput &&
-                                    <button className={`btn ${readyToBuy? 'btn-dark': 'btn-secondary p2p-not-allowed'}`}
-                                        onClick={buyUSDT}
-                                    >comprar con USDT
-                                    </button>
+                                        <button className={`btn ${readyToBuy ? 'btn-dark' : 'btn-secondary p2p-not-allowed'}`}
+                                            onClick={buyUSDT}
+                                        >comprar con USDT
+                                        </button>
                                     }
 
                                     {selectToken === 'BUSD' && busdAllowance < tokenInput &&
-                                    <button className='btn btn-warning' onClick={approveBusd}
-                                    >approbar BUSD</button>
+                                        <button className='btn btn-warning' onClick={approveBusd}
+                                        >approbar BUSD</button>
                                     }
 
                                     {selectToken === 'USDT' && usdtAllowance < tokenInput &&
-                                    <button className='btn btn-warning' onClick={approveUsdt}
-                                    >approbar USDT</button>
+                                        <button className='btn btn-warning' onClick={approveUsdt}
+                                        >approbar USDT</button>
                                     }
 
                                     {!accountAddress &&
-                                    <button className='btn btn-dark ml-2'
-                                    // onClick={connect}
-                                    >conectar</button>
+                                        <button className='btn btn-dark ml-2'
+                                            onClick={abrir}
+                                        >                          {(isConnected && blockchain.accountAddress === null) ? 'conectando...' : 'Conectar'}
+                                        </button>
                                     }
                                 </div>
                             </div>
