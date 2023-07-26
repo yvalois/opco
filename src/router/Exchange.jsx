@@ -321,7 +321,7 @@ export default function Exchange() {
             const tx = await blockchain.exchangeContract.sellToken((_amount.toString()), adrressBUSD);
             await tx.wait()
             setSuccess(true);
-            conectar()
+            getSign()
             setBusdPrice(0);
             setAoexPrice(0);
             setAoexCost(0);
@@ -359,7 +359,7 @@ export default function Exchange() {
       const tx = await blockchain.busdContract.approve(blockchain.exchangeContract.address, ethers.utils.parseEther('999999999999'));
       await tx.wait()
       setSuccess(true);
-      conectar()
+      getSign()
 
 
     } catch (err) {
@@ -377,7 +377,7 @@ export default function Exchange() {
       const tx = await blockchain.tokenContract.approve(blockchain.exchangeContract.address, ethers.utils.parseEther('999999999999'));
       await tx.wait();
       setSuccess(true);
-      conectar()
+      getSign()
 
 
     } catch (err) {
@@ -609,7 +609,7 @@ export default function Exchange() {
                 <button className='mt-5 text-md font-semibold bg-black text-white w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
                  hover:text-black'
                   onClick={() => abrir()}
-                >                          {(isConnected && blockchain.accountAddress === null) ? 'conectando...' : 'Conectar'}
+                >                          {(isConnected && blockchain.accountAddress === null) ? 'conectando...' : 'getSign'}
                 </button>
                 :
                 <>
