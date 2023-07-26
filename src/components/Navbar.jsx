@@ -70,19 +70,12 @@ export default function Navbar({isOpen2, setIsOpen2}) {
     const provider =  getEthersProvider(56)
     dispatch(fetchBlockchain(address, signer, provider))
     setCargando(false)
-
 }
 
-  useEffect(() => {
-    getSign()
-  }, [address])
 
   useEffect(() => {
       if(isConnected && blockchain.accountAddress === null) {
-        setCargando(true)
         getSign()
-      }else{
-        setCargando(false)
       }
   }, [isConnected])
 
@@ -151,7 +144,7 @@ export default function Navbar({isOpen2, setIsOpen2}) {
               { blockchain.accountAddress === null  ? (
                         <button
                           className="text-black text-sm flex items-center justify-center rounded-lg py-1 px-3 cursor-pointer  border-black bg-yellow-300 min-w-60  shadow-text"
-                          disabled={!cargando}
+                          disabled={cargando}  
                           onClick={() => {
                             open()
                           }}>
