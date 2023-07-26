@@ -28,12 +28,14 @@ import {getEthersProvider,getEthersSigner } from '../utils/ethers.js'
 export default function Navbar({isOpen2, setIsOpen2}) {
 
   const blockchain = useSelector(state => state.blockchain);
+  const {accountAddress} = useSelector(state => state.blockchain);
+
   const { market, marketloaded } = useSelector(state => state.market);
 
 
   const dispatch = useDispatch();
-  const [accountAddress, setAccountAddress] = useState("");
-  const[cargando, setCargando] = useState(false)
+  const [account, setAccountAddress] = useState("");
+  const [is, setIs] = useState(false)
   useEffect(() => {
     if (blockchain.accountAddress) {
       const accountAddress = blockchain.accountAddress.slice(0, 4) + "..." + blockchain.accountAddress.slice(blockchain.accountAddress.length - 4);
@@ -65,21 +67,25 @@ export default function Navbar({isOpen2, setIsOpen2}) {
   const { disconnect } = useDisconnect()
 
   const getSign = async()=>{
-    setCargando(true)
     const signer = await getEthersSigner(56)
     const provider =  getEthersProvider(56)
     dispatch(fetchBlockchain(address, signer, provider))
-    setCargando(false)
 }
 
 
+
   useEffect(() => {
-      if(isConnected && blockchain.accountAddress === null) {
-        getSign()
+      if(isConnected && blockchain.accountAddress === null && is === false) {
+        setTimeout(() => {
+        getSign();
+        setIs(true)
+        }, 2000);
+      }else if(!isConnected ){
+        setIs(false)
       }
   }, [isConnected])
 
-
+  
   
   return (
 
@@ -144,11 +150,11 @@ export default function Navbar({isOpen2, setIsOpen2}) {
               { blockchain.accountAddress === null  ? (
                         <button
                           className="text-black text-sm flex items-center justify-center rounded-lg py-1 px-3 cursor-pointer  border-black bg-yellow-300 min-w-60  shadow-text"
-                          disabled={cargando}  
+                          disabled={isConnected && blockchain.accountAddress === null}
                           onClick={() => {
                             open()
                           }}>
-                          {(isConnected && blockchain.accountAddress === null) ? 'cargando...' : 'Conectar'}
+                          {(isConnected && blockchain.accountAddress === null) ? 'conectando...' : 'Conectar'}
                         </button>
               ) : (
                 <>
@@ -157,7 +163,7 @@ export default function Navbar({isOpen2, setIsOpen2}) {
                       <p
                         className="text-white text-sm pb-0 mb-0"
                       >
-                        {accountAddress}
+                        {account}
                       </p>
                       <p
                         className="text-white text-sm pb-0 mb-0"
