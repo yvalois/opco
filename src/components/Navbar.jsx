@@ -75,16 +75,19 @@ const {onSuccess, switchNetwork } = useSwitchNetwork({
 })
 
   useEffect(() => {
-      if(isConnected && accountAddress === null && is === false && chain?.unsupported !== undefined && !chain?.unsupported) {
+      if(isConnected && accountAddress === null && is === false && chain?.unsupported !== undefined && chain.unsupported === false) {
         getSign();
         setIs(true)
-      }else if(isConnected && accountAddress === null  && chain?.unsupported !== undefined && chain?.unsupported){
-        switchNetwork();
+      }else if(isConnected && accountAddress === null  && chain?.unsupported !== undefined && chain.unsupported === true && is === true){
         setIs(false)
+        setTimeout(() => {
+          switchNetwork();
+        }, 3000);
+
       }else if(!isConnected ){      
         setIs(false)
       }
-  }, [isConnected, accountAddress, account, onSuccess])
+  }, [isConnected, accountAddress, account, onSuccess, chain, is, getSign, switchNetwork])
 
   const abrir =()=>{
     if(isConnected && accountAddress === null){
@@ -210,7 +213,3 @@ const {onSuccess, switchNetwork } = useSwitchNetwork({
 
   );
 }
-
-
-
-

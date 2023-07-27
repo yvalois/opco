@@ -19,7 +19,7 @@ export function publicClientToProvider(publicClient) {
 }
 
 /** Action to convert a viem Public Client to an ethers.js Provider. */
-export function getEthersProvider({ chainId } = {}) {
+export function getEthersProvider( chainId ) {
   const publicClient = getPublicClient({ chainId })
   return publicClientToProvider(publicClient)
 }
@@ -38,8 +38,7 @@ export function walletClientToSigner(walletClient) {
  
 /** Action to convert a viem Wallet Client to an ethers.js Signer. */
 export async function getEthersSigner(chainId) {
-  const walletClient = await getWalletClient({chainId})
-
+  const walletClient = await getWalletClient({chainId})  
   if (!walletClient) return undefined
   return walletClientToSigner(walletClient)
 }
