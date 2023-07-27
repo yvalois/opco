@@ -64,35 +64,35 @@ export default function Navbar({isOpen2, setIsOpen2}) {
   const { disconnect } = useDisconnect()
   const {chain} = useNetwork()
 
+  const switchChain =async()=>{
+    const walletClient = await getWalletClient(chain?.id)
+    await walletClient?.switchChain({ id: 56 })
+
+  }
+
   const getSign = async()=>{
     const signer = await getEthersSigner(chain?.id)
     const provider =  getEthersProvider(chain?.id)
     dispatch(fetchBlockchain(address, signer, provider))               
 }
 
-const {onSuccess, switchNetwork } = useSwitchNetwork({
-  chainId: 56,
-  throwForSwitchChainNotSupported: true,
-})
-  const switchChain =async()=>{
-    const walletClient = await getWalletClient(chain?.id)
-    await walletClient?.switchChain({ id: 56 })
+// const {onSuccess, switchNetwork } = useSwitchNetwork({
+//   chainId: 56,
+//   throwForSwitchChainNotSupported: true,
+// })
 
-  }
   useEffect(() => {
-      if(isConnected && accountAddress === null && is === false && chain?.unsupported !== undefined && chain.unsupported === false) {
-        getSign();
+      if(isConnected && accountAddress === null && is === false  && chain.id === 56) {
+        //getSign();
+        switchChain()
         setIs(true)
       }else if(isConnected && accountAddress === null  && chain?.unsupported !== undefined && chain.unsupported === true ){
         setIs(false)
-        setTimeout(() => {
-          switchChain()
-        }, 3000);
-
+        switchChain()
       }else if(!isConnected ){      
         setIs(false)
       }
-  }, [isConnected, accountAddress, account, onSuccess, chain, is])
+  }, [isConnected, accountAddress, account,  chain, is])
 
   const abrir =()=>{
     if(isConnected && accountAddress === null){
