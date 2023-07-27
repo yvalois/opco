@@ -83,8 +83,7 @@ export default function Navbar({isOpen2, setIsOpen2}) {
 
   useEffect(() => {
       if(isConnected && accountAddress === null && is === false  && chain.id === 56) {
-        //getSign();
-        switchChain()
+        getSign();
         setIs(true)
       }else if(isConnected && accountAddress === null  && chain?.unsupported !== undefined && chain.unsupported === true ){
         setIs(false)
@@ -190,7 +189,7 @@ export default function Navbar({isOpen2, setIsOpen2}) {
                       </p>
                     </div>
                     <div className="logOut bg-red-500 text-white text-sm font-semibold flex items-center justify-center cursor-pointer h-7 py-0 px-2 rounded-md"
-                      onClick={disconnectBlockchain}
+                      onClick={switchChain}
                     >
                       logout
                     </div>
