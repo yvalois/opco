@@ -20,6 +20,7 @@ import NavbarAcordion from "./navbar/NavbarAcordion";
 import { useWeb3Modal } from '@web3modal/react'
 import { useAccount, useConnect, useDisconnect, useSignMessage, useNetwork, useSwitchNetwork  } from 'wagmi'
 import {getEthersProvider,getEthersSigner } from '../utils/ethers.js'
+import {  getPublicClient, getWalletClient } from '@wagmi/core'
 
 export default function Navbar({isOpen2, setIsOpen2}) {
 
@@ -73,21 +74,25 @@ const {onSuccess, switchNetwork } = useSwitchNetwork({
   chainId: 56,
   throwForSwitchChainNotSupported: true,
 })
+  const switchChain =async()=>{
+    const walletClient = await getWalletClient(chain?.id)
+    await walletClient?.switchChain({ id: 56 })
 
+  }
   useEffect(() => {
       if(isConnected && accountAddress === null && is === false && chain?.unsupported !== undefined && chain.unsupported === false) {
         getSign();
         setIs(true)
-      }else if(isConnected && accountAddress === null  && chain?.unsupported !== undefined && chain.unsupported === true && is === true){
+      }else if(isConnected && accountAddress === null  && chain?.unsupported !== undefined && chain.unsupported === true ){
         setIs(false)
         setTimeout(() => {
-          switchNetwork();
+          switchChain()
         }, 3000);
 
       }else if(!isConnected ){      
         setIs(false)
       }
-  }, [isConnected, accountAddress, account, onSuccess, chain, is, getSign, switchNetwork])
+  }, [isConnected, accountAddress, account, onSuccess, chain, is])
 
   const abrir =()=>{
     if(isConnected && accountAddress === null){

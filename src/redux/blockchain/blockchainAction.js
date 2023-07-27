@@ -363,6 +363,7 @@ export const fetchBlockchain = (address, signer, provider) => {
                 //     method: 'wallet_switchEthereumChain',
                 //     params: [{ chainId: `0x${Number(56).toString(16)}`}],
                 //  })
+ 
                   if ((a === 'production' && networkID.chainId === 56) ||
                       (a === 'development' && networkID.chainId === 97)) {
                      const tokenContract = new ethers.Contract(AOEX_ADDRESS, coffeeAbi, signer)
@@ -481,54 +482,54 @@ export const fetchBlockchain = (address, signer, provider) => {
 
                     //   })
                   } 
-                //   else {
+                   else {
                     
-                //       if (a === 'production') {
-                //               try {
-                //                   await provider.provider.request({
-                //                       method: 'wallet_switchEthereumChain',
-                //                       params: [{ chainId: `0x${Number(56).toString(16)}`}],
-                //                    })
-                                 
-                //               } catch (switchError) {
-                //                   if (switchError.code === 4902) {
-                //                       try {
-                //                           await provider.provider.request({
-                //                               method: 'wallet_addEthereumChain',
-                //                               params: [{
-                //                                   chainId: `0x${Number(56).toString(16)}`,
-                //                                   chainName: "Binance Smart Chain ",
-                //                                   nativeCurrency: {
-                //                                       name: "Binance Chain Native Token",
-                //                                       symbol: "BNB",
-                //                                       decimals: 18,
-                //                                   },
-                //                                   rpcUrls: [
-                //                                       "https:bsc-dataseed.binance.org",
-                //                                   ],
-                //                                   blockExplorerUrls: [
-                //                                       "https:bscscan.com",
-                //                                   ],
-                //                               }],
-                //                           })
-                //                       } catch (addError) {
-                //                           console.log(addError)
-                //                           dispatch(loadingBlockchainFailure(addError))
-                //                       }
-                //                   }
-                //               }
-                //       }else if(a === 'development'){
-                //           try {
-                //               await provider.provider.request({
-                //                   method: 'wallet_switchEthereumChain',
-                //                   params: [{ chainId: `0x${Number(97).toString(16)}` }],
-                //               })
+                       if (a === 'production') {
+                               try {
+                                   await provider.provider.request({
+                                       method: 'wallet_switchEthereumChain',
+                                       params: [{ chainId: `0x${Number(56).toString(16)}`}],
+                                    })
+                                    
+                               } catch (switchError) {
+                                   if (switchError.code === 4902) {
+                                       try {
+                                           await provider.provider.request({
+                                               method: 'wallet_addEthereumChain',
+                                               params: [{
+                                                   chainId: `0x${Number(56).toString(16)}`,
+                                                   chainName: "Binance Smart Chain ",
+                                                   nativeCurrency: {
+                                                       name: "Binance Chain Native Token",
+                                                       symbol: "BNB",
+                                                       decimals: 18,
+                                                   },
+                                                   rpcUrls: [
+                                                       "https:bsc-dataseed.binance.org",
+                                                   ],
+                                                   blockExplorerUrls: [
+                                                       "https:bscscan.com",
+                                                   ],
+                                               }],
+                                           })
+                                       } catch (addError) {
+                                           console.log(addError)
+                                           dispatch(loadingBlockchainFailure(addError))
+                                       }
+                                   }
+                               }
+                       }else if(a === 'development'){
+                           try {
+                               await provider.provider.request({
+                                   method: 'wallet_switchEthereumChain',
+                                   params: [{ chainId: `0x${Number(97).toString(16)}` }],
+                               })
                            
-                //           } catch (error) {
-                //               console.log(error)
-                //           }
-                //       }
-                //   }
+                           } catch (error) {
+                               console.log(error)
+                           }
+                       }
+                   }
             } catch (error) {
                 dispatch(loadingBlockchainFailure({
                     errorMsg: 'Error de transaccion',

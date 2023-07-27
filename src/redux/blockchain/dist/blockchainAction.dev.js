@@ -304,7 +304,7 @@ var fetchBlockchain = function fetchBlockchain(address, signer, provider) {
             networkID = _context3.sent;
 
             if (!(a === 'production' && networkID.chainId === 56 || a === 'development' && networkID.chainId === 97)) {
-              _context3.next = 83;
+              _context3.next = 85;
               break;
             }
 
@@ -487,38 +487,124 @@ var fetchBlockchain = function fetchBlockchain(address, signer, provider) {
             //       }))
             //   })
 
-          case 83:
-            _context3.next = 89;
+            _context3.next = 114;
             break;
 
           case 85:
-            _context3.prev = 85;
-            _context3.t0 = _context3["catch"](3);
-            dispatch(loadingBlockchainFailure({
-              errorMsg: 'Error de transaccion'
+            if (!(a === 'production')) {
+              _context3.next = 105;
+              break;
+            }
+
+            _context3.prev = 86;
+            _context3.next = 89;
+            return regeneratorRuntime.awrap(provider.provider.request({
+              method: 'wallet_switchEthereumChain',
+              params: [{
+                chainId: "0x".concat(Number(56).toString(16))
+              }]
             }));
-            console.log(_context3.t0);
 
           case 89:
-            _context3.next = 97;
+            _context3.next = 103;
             break;
 
           case 91:
             _context3.prev = 91;
-            _context3.t1 = _context3["catch"](2);
-            alert(_context3.t1);
+            _context3.t0 = _context3["catch"](86);
+
+            if (!(_context3.t0.code === 4902)) {
+              _context3.next = 103;
+              break;
+            }
+
+            _context3.prev = 94;
+            _context3.next = 97;
+            return regeneratorRuntime.awrap(provider.provider.request({
+              method: 'wallet_addEthereumChain',
+              params: [{
+                chainId: "0x".concat(Number(56).toString(16)),
+                chainName: "Binance Smart Chain ",
+                nativeCurrency: {
+                  name: "Binance Chain Native Token",
+                  symbol: "BNB",
+                  decimals: 18
+                },
+                rpcUrls: ["https:bsc-dataseed.binance.org"],
+                blockExplorerUrls: ["https:bscscan.com"]
+              }]
+            }));
+
+          case 97:
+            _context3.next = 103;
+            break;
+
+          case 99:
+            _context3.prev = 99;
+            _context3.t1 = _context3["catch"](94);
+            console.log(_context3.t1);
+            dispatch(loadingBlockchainFailure(_context3.t1));
+
+          case 103:
+            _context3.next = 114;
+            break;
+
+          case 105:
+            if (!(a === 'development')) {
+              _context3.next = 114;
+              break;
+            }
+
+            _context3.prev = 106;
+            _context3.next = 109;
+            return regeneratorRuntime.awrap(provider.provider.request({
+              method: 'wallet_switchEthereumChain',
+              params: [{
+                chainId: "0x".concat(Number(97).toString(16))
+              }]
+            }));
+
+          case 109:
+            _context3.next = 114;
+            break;
+
+          case 111:
+            _context3.prev = 111;
+            _context3.t2 = _context3["catch"](106);
+            console.log(_context3.t2);
+
+          case 114:
+            _context3.next = 120;
+            break;
+
+          case 116:
+            _context3.prev = 116;
+            _context3.t3 = _context3["catch"](3);
+            dispatch(loadingBlockchainFailure({
+              errorMsg: 'Error de transaccion'
+            }));
+            console.log(_context3.t3);
+
+          case 120:
+            _context3.next = 128;
+            break;
+
+          case 122:
+            _context3.prev = 122;
+            _context3.t4 = _context3["catch"](2);
+            alert(_context3.t4);
             web3Modal.clearCachedProvider();
             dispatch(loadingBlockchainFailure({
               errorMsg: 'Error de conneccion'
             }));
-            console.log(_context3.t1);
+            console.log(_context3.t4);
 
-          case 97:
+          case 128:
           case "end":
             return _context3.stop();
         }
       }
-    }, null, null, [[2, 91], [3, 85]]);
+    }, null, null, [[2, 122], [3, 116], [86, 91], [94, 99], [106, 111]]);
   };
 };
 
