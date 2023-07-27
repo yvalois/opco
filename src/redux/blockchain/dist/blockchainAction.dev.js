@@ -487,17 +487,18 @@ var fetchBlockchain = function fetchBlockchain(address, signer, provider) {
             //       }))
             //   })
 
-            _context3.next = 114;
+            _context3.next = 115;
             break;
 
           case 85:
             if (!(a === 'production')) {
-              _context3.next = 105;
+              _context3.next = 106;
               break;
             }
 
             _context3.prev = 86;
-            _context3.next = 89;
+            alert("a");
+            _context3.next = 90;
             return regeneratorRuntime.awrap(provider.provider.request({
               method: 'wallet_switchEthereumChain',
               params: [{
@@ -505,21 +506,21 @@ var fetchBlockchain = function fetchBlockchain(address, signer, provider) {
               }]
             }));
 
-          case 89:
-            _context3.next = 103;
+          case 90:
+            _context3.next = 104;
             break;
 
-          case 91:
-            _context3.prev = 91;
+          case 92:
+            _context3.prev = 92;
             _context3.t0 = _context3["catch"](86);
 
             if (!(_context3.t0.code === 4902)) {
-              _context3.next = 103;
+              _context3.next = 104;
               break;
             }
 
-            _context3.prev = 94;
-            _context3.next = 97;
+            _context3.prev = 95;
+            _context3.next = 98;
             return regeneratorRuntime.awrap(provider.provider.request({
               method: 'wallet_addEthereumChain',
               params: [{
@@ -535,28 +536,28 @@ var fetchBlockchain = function fetchBlockchain(address, signer, provider) {
               }]
             }));
 
-          case 97:
-            _context3.next = 103;
+          case 98:
+            _context3.next = 104;
             break;
 
-          case 99:
-            _context3.prev = 99;
-            _context3.t1 = _context3["catch"](94);
+          case 100:
+            _context3.prev = 100;
+            _context3.t1 = _context3["catch"](95);
             console.log(_context3.t1);
             dispatch(loadingBlockchainFailure(_context3.t1));
 
-          case 103:
-            _context3.next = 114;
+          case 104:
+            _context3.next = 115;
             break;
 
-          case 105:
+          case 106:
             if (!(a === 'development')) {
-              _context3.next = 114;
+              _context3.next = 115;
               break;
             }
 
-            _context3.prev = 106;
-            _context3.next = 109;
+            _context3.prev = 107;
+            _context3.next = 110;
             return regeneratorRuntime.awrap(provider.provider.request({
               method: 'wallet_switchEthereumChain',
               params: [{
@@ -564,33 +565,33 @@ var fetchBlockchain = function fetchBlockchain(address, signer, provider) {
               }]
             }));
 
-          case 109:
-            _context3.next = 114;
+          case 110:
+            _context3.next = 115;
             break;
 
-          case 111:
-            _context3.prev = 111;
-            _context3.t2 = _context3["catch"](106);
+          case 112:
+            _context3.prev = 112;
+            _context3.t2 = _context3["catch"](107);
             console.log(_context3.t2);
 
-          case 114:
-            _context3.next = 120;
+          case 115:
+            _context3.next = 121;
             break;
 
-          case 116:
-            _context3.prev = 116;
+          case 117:
+            _context3.prev = 117;
             _context3.t3 = _context3["catch"](3);
             dispatch(loadingBlockchainFailure({
               errorMsg: 'Error de transaccion'
             }));
             console.log(_context3.t3);
 
-          case 120:
-            _context3.next = 128;
+          case 121:
+            _context3.next = 129;
             break;
 
-          case 122:
-            _context3.prev = 122;
+          case 123:
+            _context3.prev = 123;
             _context3.t4 = _context3["catch"](2);
             alert(_context3.t4);
             web3Modal.clearCachedProvider();
@@ -599,12 +600,12 @@ var fetchBlockchain = function fetchBlockchain(address, signer, provider) {
             }));
             console.log(_context3.t4);
 
-          case 128:
+          case 129:
           case "end":
             return _context3.stop();
         }
       }
-    }, null, null, [[2, 122], [3, 116], [86, 91], [94, 99], [106, 111]]);
+    }, null, null, [[2, 123], [3, 117], [86, 92], [95, 100], [107, 112]]);
   };
 };
 

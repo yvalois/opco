@@ -25,7 +25,7 @@ const NavLinkComponent = ({ to, icon: Icon, label, ...props }) => (
   <NavLink
     to={to}
     {...props}
-    className="w-full flex justify-center items-end p-3 pb-3 md:mb-2 rounded  text-white hover:bg-gray-700 no-underline  hover:no-underline"
+    className="w-full flex justify-center my-2 items-end md:p-3 md:pb-3 md:mb-2 rounded  text-white hover:bg-gray-700 no-underline  hover:no-underline"
     activeClassName="w-full flex justify-center bg-gray-900 text-yellow-500 bg-yellow-300"
   >
     <Icon className=" w-6 h-6 mr-3 text-white" />
@@ -45,47 +45,56 @@ export default function SideBar({ setIsOpen }) {
       to="/"
       icon={CgArrowsExchangeAlt}
       label="Exchange"
+      onClick={()=>{setIsOpen(false)}}
     />,
     <NavLinkComponent
       to="/staking"
       icon={RiHandCoinLine}
       label="Recompensas"
+      onClick={()=>{setIsOpen(false)}}
     />,
     <NavLinkComponent
       as="a"
       href="https://opencoffee.io/tienda/"
       icon={AiOutlineShopping}
       label="Tienda Fiat"
+      onClick={()=>{setIsOpen(false)}}
     />,
     <NavLinkComponent
       to="/store"
       icon={RiBitCoinLine}
       label="Tienda Crypto"
+      onClick={()=>{setIsOpen(false)}}
     />,
     <NavLinkComponent
       to="/nft"
       icon={GiCoffeeBeans}
       label="Inventario Nft"
+      onClick={()=>{setIsOpen(false)}}
     />,
     <NavLinkComponent
       to="/market"
       icon={FaWindowRestore}
       label="Market Nft"
+      onClick={()=>{setIsOpen(false)}}
     />,
     <NavLinkComponent
       to="/links"
       icon={BsBook}
       label="Cursos"
+      onClick={()=>{setIsOpen(false)}}
     />,
     <NavLinkComponent
       to="/token-market"
       icon={BsBank}
       label="Opco Market"
+      onClick={()=>{setIsOpen(false)}}
     />,
     <NavLinkComponent
       to="/retire"
       icon={BsWallet}
       label="Retiros"
+      onClick={()=>{setIsOpen(false)}}
     />,
     (<NavLinkComponent
       as="a"
@@ -94,18 +103,21 @@ export default function SideBar({ setIsOpen }) {
       label="Whatsapp"
       target="_blank"
       rel="noopener noreferrer"
+      onClick={()=>{setIsOpen(false)}}
     />),
 
     <NavLinkComponent
       to="/venta/nn"
       icon={GoBriefcase}
       label="Inversiones"
+      onClick={()=>{setIsOpen(false)}}
     />,
     (inversionesBalance.length > 0 || inversionesStakingBalance.length > 0 || isOwner) && 
     (<NavLinkComponent
       to="/inventarioInversiones/nn"
       icon={PiVaultBold}
       label="Staking"
+      onClick={()=>{setIsOpen(false)}}
     />)
     ,
     isOwner && (
@@ -113,9 +125,12 @@ export default function SideBar({ setIsOpen }) {
         to="/administrador"
         icon={FaRegAddressBook}
         label="Administrador"
+        onClick={()=>{setIsOpen(false)}}
       />
     ),
+    null,
     null
+    
   ];
 
   
@@ -126,8 +141,10 @@ export default function SideBar({ setIsOpen }) {
     <div className="h-full w-full  md:w-64 bg-gray-900 md:p-4 flex flex-col  md:items-start md:space-y-2 overflow-auto">
 
       {routes.map((route, index) => (
-        <div key={index} className="w-full h-full flex overflow-y-auto ">
-          {route}
+        <div key={index} className="w-full h-full flex overflow-y-auto">
+          {
+          route
+          }
         </div>
       ))}
 

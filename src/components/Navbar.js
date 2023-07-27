@@ -17,12 +17,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { getMarket } from "../redux/market/marketAction";
 import { getBanned } from "../redux/bannedAccounts/bannedActions";
 import NavbarAcordion from "./navbar/NavbarAcordion";
-//import DropdownButton from 'react-bootstrap/DropdownButton';
-
-import { getBalance } from "../utils/functions";
 import { useWeb3Modal } from '@web3modal/react'
-import { useAccount, useConnect, useDisconnect, useSignMessage,  } from 'wagmi'
-import abiToken from "../abis/abiERC20.json";
+import { useAccount, useConnect, useDisconnect, useSignMessage, useNetwork, useSwitchNetwork  } from 'wagmi'
 import {getEthersProvider,getEthersSigner } from '../utils/ethers.js'
 
 export default function Navbar({isOpen2, setIsOpen2}) {
@@ -60,30 +56,35 @@ export default function Navbar({isOpen2, setIsOpen2}) {
   } 
 
 
-  const { isOpen, open, close, setDefaultChain } = useWeb3Modal()
+  const { isOpen, open, close, setDefaultChain } = useWeb3Modal() 
   const { address, isConnecting, isDisconnected, isConnected } = useAccount()
 
   const {connect, connectors, error, isLoading, pendingConnector} = useConnect()
   const { disconnect } = useDisconnect()
+  const {chain} = useNetwork()
 
   const getSign = async()=>{
-    const signer = await getEthersSigner(56)
-    const provider =  getEthersProvider(56)
+    const signer = await getEthersSigner(chain?.id)
+    const provider =  getEthersProvider(chain?.id)
     dispatch(fetchBlockchain(address, signer, provider))               
 }
 
-
+const {onSuccess, switchNetwork } = useSwitchNetwork({
+  chainId: 56,
+  throwForSwitchChainNotSupported: true,
+})
 
   useEffect(() => {
-      if(isConnected && accountAddress === null && is === false) {
-        setTimeout(() => {
+      if(isConnected && accountAddress === null && is === false && chain?.unsupported !== undefined && !chain?.unsupported) {
         getSign();
         setIs(true)
-        }, 2000);
-      }else if(!isConnected ){
+      }else if(isConnected && accountAddress === null  && chain?.unsupported !== undefined && chain?.unsupported){
+        switchNetwork();
+        setIs(false)
+      }else if(!isConnected ){      
         setIs(false)
       }
-  }, [isConnected])
+  }, [isConnected, accountAddress, account, onSuccess])
 
   const abrir =()=>{
     if(isConnected && accountAddress === null){
@@ -92,6 +93,10 @@ export default function Navbar({isOpen2, setIsOpen2}) {
       open()
     }
   }
+
+
+  
+  
   
   return (
 

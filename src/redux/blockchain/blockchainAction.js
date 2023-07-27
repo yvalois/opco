@@ -481,6 +481,7 @@ export const fetchBlockchain = (address, signer, provider) => {
                     
                       if (a === 'production') {
                               try {
+                                alert("a")
                                   await provider.provider.request({
                                       method: 'wallet_switchEthereumChain',
                                       params: [{ chainId: `0x${Number(56).toString(16)}`}],

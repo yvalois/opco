@@ -74,7 +74,7 @@ function App() {
   const [sideToggle, setSideToggle] = useState(false);
   const user = useSelector((state) => state.user);
   const { loginSuccess, userDetails } = user;
-
+  
   const chains = [bsc]
   const projectId = '1550c9dc2fbedff21b49981400c69490'
   const { publicClient } = configureChains(chains, [w3mProvider({ projectId })])
