@@ -67,8 +67,8 @@ export default function Navbar({isOpen2, setIsOpen2}) {
   const getSign = async()=>{
     const signer = await getEthersSigner(chain?.id)
     const provider =  getEthersProvider(chain?.id)
-    dispatch(fetchBlockchain(address, signer, provider))  
     window.localStorage.clear()             
+    dispatch(fetchBlockchain(address, signer, provider))  
 }
 
 
