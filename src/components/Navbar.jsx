@@ -64,25 +64,21 @@ export default function Navbar({isOpen2, setIsOpen2}) {
   const { disconnect } = useDisconnect()
   const {chain} = useNetwork()
 
-  const switchChain =async()=>{
+  const getSign = async()=>{
+    const signer = await getEthersSigner(chain?.id)
+    const provider =  getEthersProvider(chain?.id)
+    dispatch(fetchBlockchain(address, signer, provider))  
+    window.localStorage.clear()             
+}
+
+
+  const switchChain = async()=> {
     const walletClient = await getWalletClient(chain?.id)
     await walletClient?.switchChain({ id: 56 })
 
   }
-
-  const getSign = async()=>{
-    const signer = await getEthersSigner(chain?.id)
-    const provider =  getEthersProvider(chain?.id)
-    dispatch(fetchBlockchain(address, signer, provider))               
-}
-
-// const {onSuccess, switchNetwork } = useSwitchNetwork({
-//   chainId: 56,
-//   throwForSwitchChainNotSupported: true,
-// })
-
   useEffect(() => {
-      if(isConnected && accountAddress === null && is === false  && chain.id === 56) {
+      if(isConnected && accountAddress === null && is === false && chain?.unsupported !== undefined && chain.unsupported === false) {
         getSign();
         setIs(true)
       }else if(isConnected && accountAddress === null  && chain?.unsupported !== undefined && chain.unsupported === true ){
@@ -189,7 +185,7 @@ export default function Navbar({isOpen2, setIsOpen2}) {
                       </p>
                     </div>
                     <div className="logOut bg-red-500 text-white text-sm font-semibold flex items-center justify-center cursor-pointer h-7 py-0 px-2 rounded-md"
-                      onClick={switchChain}
+                      onClick={disconnectBlockchain}
                     >
                       logout
                     </div>
