@@ -113,12 +113,10 @@ function Navbar(_a) {
         }
     }, [isConnected, accountAddress, account]);
     var abrir = function () {
-        if (isConnected && accountAddress === null) {
-            console.log("No");
-        }
-        else {
+        if (!isConnected) {
             open();
         }
+
     };
     return (React.createElement("section", { className: "bg-gray-200 p-0 m-0 fixed top-0 w-screen z-10" },
         React.createElement("nav", { className: "navbar navbar-dropdown navbar-fixed-top navbar-expand-lg bg-black" },

@@ -87,35 +87,14 @@ export default function Inventario() {
     dispatch(fetchBlockchain(account, signer, provider))
   }
 
-  useEffect(() => {
-    if (isConnected && accountAddress === null && is === false) {
-      setTimeout(() => {
-        getSign();
-        setIs(true)
-      }, 2000);
-    } else if (!isConnected) {
-      setIs(false)
-    }
-  }, [isConnected])
+
 
   const abrir = () => {
-    if (isConnected && accountAddress === null) {
-      console.log("No")
-    } else {
+    if (!isConnected) {
       open()
     }
   }
 
-  useEffect(() => {
-    if (isConnected && accountAddress === null && is === false) {
-      setTimeout(() => {
-        getSign();
-        setIs(true)
-      }, 2000);
-    } else if (!isConnected) {
-      setIs(false)
-    }
-  }, [isConnected])
 
 
   return (<>

@@ -43,35 +43,13 @@ export const P2pNewOfferModal = ({ offerModal, setOfferModal, tokenBalance, cont
       dispatch(fetchBlockchain(address, signer, provider))               
   }
   
-    useEffect(() => {
-        if(isConnected && accountAddress === null && is === false) {
-          setTimeout(() => {
-          getSign();
-          setIs(true)
-          }, 2000);
-        }else if(!isConnected ){
-          setIs(false)
-        }
-    }, [isConnected])
+
   
     const abrir =()=>{
-      if(isConnected && accountAddress === null){
-          console.log("No")
-      }else{
-        open()
+      if(!isConnected){
+          open()
       }
     }
-    
-    useEffect(() => {
-        if(isConnected && accountAddress === null && is === false) {
-          setTimeout(() => {
-          getSign();
-          setIs(true)
-          }, 2000);
-        }else if(!isConnected ){
-          setIs(false)
-        }
-    }, [isConnected])
 
     const approve = async () => {
         setLoading(true);

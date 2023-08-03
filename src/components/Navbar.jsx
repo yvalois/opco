@@ -65,14 +65,13 @@ export default function Navbar({isOpen2, setIsOpen2}) {
   const {chain} = useNetwork()
 
   const getSign = async()=>{
-    count = count + 1
-    console.log(count)
+
     const signer = await getEthersSigner(chain?.id)
     const provider =  getEthersProvider(chain?.id)
     dispatch(fetchBlockchain(address, signer, provider))
     window.localStorage.removeItem("wc@2:core:0.3//keychain")
 } 
-  let count= 0
+
 
 
   const switchChain = async()=> {
@@ -93,9 +92,7 @@ export default function Navbar({isOpen2, setIsOpen2}) {
   }, [isConnected, accountAddress, account,  chain, is])
 
   const abrir =()=>{
-    if(isConnected && accountAddress === null){
-        console.log("No")
-    }else{
+    if(!isConnected ){
       open()
     }
   }

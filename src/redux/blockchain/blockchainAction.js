@@ -172,7 +172,7 @@ export const updateStakingTokens = (inversioneStakingContract, accountAddress) =
             currentReward: valorConvertido,
 
         }
-        inversionesStakingBalance.push(info)
+        inversionesStakingBalance.push(info)    
     }
     dispatch(updateTokenS(inversionesStakingBalance))
 }
