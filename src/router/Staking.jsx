@@ -35,8 +35,8 @@ export default function Staking() {
   const [isLoading, setIsLoading] = useState(false);
   const [cartLoading, setCartLoading] = useState(false);
 
-  const changeLoadingCard = (is)=>{
-      setCartLoading(is);
+  const changeLoadingCard = (is) => {
+    setCartLoading(is);
   }
 
   const stake = async (poolId, amount) => {
@@ -259,9 +259,9 @@ export default function Staking() {
 
             <div className="w-full h-auto flex justify-center" >
 
-               {pools?.length > 0 ?
+              {pools?.length > 0 ?
                 <>
-                  { stakedOn ? <div className=" grid  gap-2 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+                  {stakedOn ? <div className=" grid  gap-2 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
                     {myStaked.map((pool, index) => (
 
                       <div className="flex items-center justify-around w-[400px] h-[250px] rounded-3xl text-[15px] bg-[##EEEEEE] shadow-2xl border m-2 bg-white" >
@@ -348,7 +348,7 @@ export default function Staking() {
 
                       </div>
                     ))}
-                    </div> : null}
+                  </div> : null}
 
 
 
@@ -430,7 +430,7 @@ export default function Staking() {
                 <div className=" bg-white flex items-center justify-around w-[400px] h-[250px] rounded-3xl text-[15px] bg-[##EEEEEE] shadow-2xl border">
                   no hay pools activos
                 </div>
-              } 
+              }
 
 
             </div>
