@@ -141,7 +141,7 @@ export default function SideBar({ setIsOpen }) {
     <div className="h-full w-full  md:w-64 bg-gray-900 md:p-4 flex flex-col  md:items-start  overflow-auto">
 
       {routes.map((route, index) => (
-        <div key={index} className="w-full h-auto flex overflow-y-hidden">
+        <div key={index} className="w-full sm:h-4/5 2xl:h-auto flex overflow-y-hidden">
           {
           route
           }

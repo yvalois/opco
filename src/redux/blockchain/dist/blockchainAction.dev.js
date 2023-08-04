@@ -287,7 +287,7 @@ exports.updateStakingTokens = updateStakingTokens;
 
 var fetchBlockchain = function fetchBlockchain(address, signer, provider) {
   return function _callee3(dispatch) {
-    var a, networkID, tokenContract, busdContract, usdtContract, exchangeContract, stakingContract, priceSetterContract, opcoStoreContract, marketContract, p2pContract, opcoContract, inversionesContract, inversioneStakingContract, tokenBalance, exchangeBalance, bnbBalance, busdBalance, usdtBalance, accountAddress, tokenBalanceFormatted, exchangeBalanceFormatted, busdBalanceFormatted, usdtBalanceFormatted, bnbBalanceFormatted, tokenPriceWeth, tokenPrice, exchangeOwner, isOwner, inversionesBalance, inversionesStakingBalance, inversionesBalances, inversionesStakingBalances, i, tipo, name, info, _i, restTime, reward, valorConvertido, _info;
+    var a, networkID, tokenContract, busdContract, usdtContract, exchangeContract, stakingContract, priceSetterContract, opcoStoreContract, marketContract, p2pContract, opcoContract, inversionesContract, inversioneStakingContract, tokenBalance, bnbBalance, exchangeBalance, busdBalance, usdtBalance, accountAddress, tokenBalanceFormatted, exchangeBalanceFormatted, busdBalanceFormatted, usdtBalanceFormatted, bnbBalanceFormatted, tokenPriceWeth, tokenPrice, exchangeOwner, isOwner, inversionesBalance, inversionesStakingBalance, inversionesBalances, inversionesStakingBalances, i, tipo, name, info, _i, restTime, reward, valorConvertido, _info;
 
     return regeneratorRuntime.async(function _callee3$(_context3) {
       while (1) {
@@ -326,15 +326,15 @@ var fetchBlockchain = function fetchBlockchain(address, signer, provider) {
           case 22:
             tokenBalance = _context3.sent;
             _context3.next = 25;
-            return regeneratorRuntime.awrap(tokenContract.balanceOf(EXCHANGE_ADDRESS));
-
-          case 25:
-            exchangeBalance = _context3.sent;
-            _context3.next = 28;
             return regeneratorRuntime.awrap(provider.getBalance(address));
 
-          case 28:
+          case 25:
             bnbBalance = _context3.sent;
+            _context3.next = 28;
+            return regeneratorRuntime.awrap(tokenContract.balanceOf(EXCHANGE_ADDRESS));
+
+          case 28:
+            exchangeBalance = _context3.sent;
             _context3.next = 31;
             return regeneratorRuntime.awrap(busdContract.balanceOf(address));
 
@@ -586,20 +586,19 @@ var fetchBlockchain = function fetchBlockchain(address, signer, provider) {
             console.log(_context3.t3);
 
           case 120:
-            _context3.next = 128;
+            _context3.next = 127;
             break;
 
           case 122:
             _context3.prev = 122;
             _context3.t4 = _context3["catch"](2);
-            alert(_context3.t4);
             web3Modal.clearCachedProvider();
             dispatch(loadingBlockchainFailure({
               errorMsg: 'Error de conneccion'
             }));
             console.log(_context3.t4);
 
-          case 128:
+          case 127:
           case "end":
             return _context3.stop();
         }

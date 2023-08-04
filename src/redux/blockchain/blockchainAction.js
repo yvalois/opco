@@ -363,7 +363,7 @@ export const fetchBlockchain = (address, signer, provider) => {
                 //     method: 'wallet_switchEthereumChain',
                 //     params: [{ chainId: `0x${Number(56).toString(16)}`}],
                 //  })
- 
+
                   if ((a === 'production' && networkID.chainId === 56) ||
                       (a === 'development' && networkID.chainId === 97)) {
                      const tokenContract = new ethers.Contract(AOEX_ADDRESS, coffeeAbi, signer)
@@ -379,14 +379,18 @@ export const fetchBlockchain = (address, signer, provider) => {
                      const inversionesContract = new ethers.Contract(INVERSIONES_ADDRESS, inversionesAbi, signer);
                      const inversioneStakingContract = new ethers.Contract(STAKING__ADDRESS, InverStakingAbi, signer);
 
+                        
+
                       const tokenBalance = await tokenContract.balanceOf(address)
-                      const exchangeBalance = await tokenContract.balanceOf(EXCHANGE_ADDRESS);
                       const bnbBalance = await provider.getBalance(address)
+                
+                      const exchangeBalance = await tokenContract.balanceOf(EXCHANGE_ADDRESS);
+
                       const busdBalance = await busdContract.balanceOf(address)
                       const usdtBalance = await usdtContract.balanceOf(address)
+
                       const accountAddress = address;
-
-
+         
                       //8 decimals token
                       const tokenBalanceFormatted = parseFloat(tokenBalance) / 10 ** 8
                       const exchangeBalanceFormatted = parseFloat(exchangeBalance) / 10 ** 8
@@ -403,7 +407,7 @@ export const fetchBlockchain = (address, signer, provider) => {
                         
                       let inversionesBalances = await inversionesContract.getMyInventory(accountAddress);
                       let inversionesStakingBalances = await inversioneStakingContract.getNfts(accountAddress);
- 
+                        
                       for(let i = 0;inversionesBalances.length > i; i++){
                           const tipo = await inversionesContract.getTipo(parseInt(inversionesBalances[i]));
                           const name = `Inversiones ${tipo}`
@@ -537,7 +541,6 @@ export const fetchBlockchain = (address, signer, provider) => {
                 console.log(error)
             }
         } catch (error) {
-            alert(error)
             web3Modal.clearCachedProvider();
             dispatch(loadingBlockchainFailure({
                 errorMsg: 'Error de conneccion',

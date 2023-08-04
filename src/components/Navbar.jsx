@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import "../style/style_navbar.css";
-import { disconnectBlockchainAction, fetchBlockchain} from "../redux/blockchain/blockchainAction";
+import { disconnectBlockchainAction, fetchBlockchain } from "../redux/blockchain/blockchainAction";
 import cafe from "../images/logo/logo.png";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useEffect, useState } from "react";
@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { BiStoreAlt } from "react-icons/bi";
 import { GrDocumentStore } from "react-icons/gr";
 import { RiExchangeBoxLine } from "react-icons/ri";
-import { FaTwitter, FaFacebookF, FaYoutube, FaWhatsapp  } from "react-icons/fa";
+import { FaTwitter, FaFacebookF, FaYoutube, FaWhatsapp } from "react-icons/fa";
 import { FiInstagram } from "react-icons/fi";
 import { logOutAction } from "../redux/blockchain/dataActions";
 import whatsapp from "../images/logo/whatsapp-logo.png";
@@ -18,14 +18,14 @@ import { getMarket } from "../redux/market/marketAction";
 import { getBanned } from "../redux/bannedAccounts/bannedActions";
 import NavbarAcordion from "./navbar/NavbarAcordion";
 import { useWeb3Modal } from '@web3modal/react'
-import { useAccount, useConnect, useDisconnect, useSignMessage, useNetwork, useSwitchNetwork  } from 'wagmi'
-import {getEthersProvider,getEthersSigner } from '../utils/ethers.js'
-import {  getPublicClient, getWalletClient } from '@wagmi/core'
+import { useAccount, useConnect, useDisconnect, useSignMessage, useNetwork, useSwitchNetwork } from 'wagmi'
+import { getEthersProvider, getEthersSigner } from '../utils/ethers.js'
+import { getPublicClient, getWalletClient } from '@wagmi/core'
 
-export default function Navbar({isOpen2, setIsOpen2}) {
+export default function Navbar({ isOpen2, setIsOpen2 }) {
 
   const blockchain = useSelector(state => state.blockchain);
-  const {accountAddress} = useSelector(state => state.blockchain);
+  const { accountAddress } = useSelector(state => state.blockchain);
 
   const { market, marketloaded } = useSelector(state => state.market);
 
@@ -54,53 +54,56 @@ export default function Navbar({isOpen2, setIsOpen2}) {
     dispatch(logOutAction());
     dispatch(disconnectMinterAction());
     disconnect()
-  } 
+  }
 
 
-  const { isOpen, open, close, setDefaultChain } = useWeb3Modal() 
+  const { isOpen, open, close, setDefaultChain } = useWeb3Modal()
   const { address, isConnecting, isDisconnected, isConnected } = useAccount()
 
-  const {connect, connectors, error, isLoading, pendingConnector} = useConnect()
+  const { connect, connectors, error, isLoading, pendingConnector } = useConnect()
   const { disconnect } = useDisconnect()
-  const {chain} = useNetwork()
+  const { chain } = useNetwork()
 
-  const getSign = async()=>{
-
+  const getSign = async () => {
     const signer = await getEthersSigner(chain?.id)
-    const provider =  getEthersProvider(chain?.id)
+    const provider = getEthersProvider(chain?.id)
     dispatch(fetchBlockchain(address, signer, provider))
     window.localStorage.removeItem("wc@2:core:0.3//keychain")
-} 
+  }
 
 
 
-  const switchChain = async()=> {
+  const switchChain = async () => {
     const walletClient = await getWalletClient(chain?.id)
     await walletClient?.switchChain({ id: 56 })
 
   }
   useEffect(() => {
-      if(isConnected && accountAddress === null && is === false && chain?.unsupported !== undefined && chain.unsupported === false) {
-        getSign();
-        setIs(true)
-      }else if(isConnected && accountAddress === null  && chain?.unsupported !== undefined && chain.unsupported === true ){
-        setIs(false)
+    if (isConnected && accountAddress === null && is === false && chain?.unsupported !== undefined && chain.unsupported === false) {
+      setTimeout(() => {
+      getSign();
+      }, 2000);
+      setIs(true)
+    } else if (isConnected && accountAddress === null && chain?.unsupported !== undefined && chain.unsupported === true) {
+      setTimeout(() => {
         switchChain()
-      }else if(!isConnected ){      
-        setIs(false)
-      }
-  }, [isConnected, accountAddress, account,  chain, is])
+        }, 2000);
+      setIs(false)
+    } else if (!isConnected) {
+      setIs(false)
+    }
+  }, [isConnected, accountAddress, account, chain, is])
 
-  const abrir =()=>{
-    if(!isConnected ){
+  const abrir = () => {
+    if (!isConnected) {
       open()
     }
   }
 
 
-  
-  
-  
+
+
+
   return (
 
     <section className="bg-gray-200 p-0 m-0 fixed top-0 w-screen z-10">
@@ -122,7 +125,7 @@ export default function Navbar({isOpen2, setIsOpen2}) {
             </span>
           </div>
 
-        <div className="flex w-auto space-x-2">
+          <div className="flex w-auto space-x-2">
             <div className="flex items-center justify-center space-x-2 ">
               <a
                 className="iconfont-wrapper hidden xl:block"
@@ -159,52 +162,52 @@ export default function Navbar({isOpen2, setIsOpen2}) {
 
 
 
-          <div className="flex space-x-4">
-            <div className="flex items-center ml-2">
-              { accountAddress === null  ? (
-                        <button
-                          className="text-black text-sm flex items-center justify-center rounded-lg py-1 px-3 cursor-pointer  border-black bg-yellow-300 min-w-60  shadow-text"
-                          onClick={() => {
-                            abrir()
-                          }}>
-                          {(isConnected && accountAddress === null) ? 'conectando...' : 'Conectar'}
-                        </button>
-              ) : (
-                <>
-                  <div className="connection flex items-center space-x-2">+
-                    <div>
-                      <p
-                        className="text-white text-sm pb-0 mb-0"
+            <div className="flex space-x-4">
+              <div className="flex items-center ml-2">
+                {accountAddress === null ? (
+                  <button
+                    className="text-black text-sm flex items-center justify-center rounded-lg py-1 px-3 cursor-pointer  border-black bg-yellow-300 min-w-60  shadow-text"
+                    onClick={() => {
+                      abrir()
+                    }}>
+                    {(isConnected && accountAddress === null) ? 'conectando...' : 'Conectar'}
+                  </button>
+                ) : (
+                  <>
+                    <div className="connection flex items-center space-x-2">+
+                      <div>
+                        <p
+                          className="text-white text-sm pb-0 mb-0"
+                        >
+                          {account}
+                        </p>
+                        <p
+                          className="text-white text-sm pb-0 mb-0"
+                        >
+                          OPCO:{blockchain?.tokenBalance?.toFixed(2)}
+                        </p>
+                      </div>
+                      <div className="logOut bg-red-500 text-white text-sm font-semibold flex items-center justify-center cursor-pointer h-7 py-0 px-2 rounded-md"
+                        onClick={disconnectBlockchain}
                       >
-                        {account}
-                      </p>
-                      <p
-                        className="text-white text-sm pb-0 mb-0"
-                      >
-                        OPCO:{blockchain?.tokenBalance?.toFixed(2)}
-                      </p>
+                        logout
+                      </div>
                     </div>
-                    <div className="logOut bg-red-500 text-white text-sm font-semibold flex items-center justify-center cursor-pointer h-7 py-0 px-2 rounded-md"
-                      onClick={disconnectBlockchain}
-                    >
-                      logout
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
+                  </>
+                )}
+              </div>
 
-            <button
-              className="navbar-toggler ms-auto lg:hidden"
-              type="button"
-              onClick={() => {
-                setIsOpen2(!isOpen2);
-              }}
-            >
-              <AiOutlineMenu className="text-white" />
-            </button>
-          </div>
+              <button
+                className="navbar-toggler ms-auto lg:hidden"
+                type="button"
+                onClick={() => {
+                  setIsOpen2(!isOpen2);
+                }}
+              >
+                <AiOutlineMenu className="text-white" />
+              </button>
             </div>
+          </div>
 
         </div>
       </nav>
