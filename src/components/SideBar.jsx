@@ -25,7 +25,7 @@ const NavLinkComponent = ({ to, icon: Icon, label, ...props }) => (
   <NavLink
     to={to}
     {...props}
-    className="w-full flex justify-center my-2 items-end md:p-3 md:pb-3 md:mb-2 rounded  text-white hover:bg-gray-700 no-underline  hover:no-underline"
+    className="w-full flex justify-center my-1 xl:my-4 items-end md:p-3 md:pb-3 md:mb-2 rounded  text-white hover:bg-gray-700 no-underline  hover:no-underline"
     activeClassName="w-full flex justify-center bg-gray-900 text-yellow-500 bg-yellow-300"
   >
     <Icon className=" w-6 h-6 mr-3 text-white" />
@@ -120,7 +120,7 @@ export default function SideBar({ setIsOpen }) {
       onClick={()=>{setIsOpen(false)}}
     />)
     ,
-    isOwner && (
+    !isOwner && (
       <NavLinkComponent
         to="/administrador"
         icon={FaRegAddressBook}
@@ -128,6 +128,7 @@ export default function SideBar({ setIsOpen }) {
         onClick={()=>{setIsOpen(false)}}
       />
     ),  
+    null,
     
   ];
 
@@ -137,7 +138,7 @@ export default function SideBar({ setIsOpen }) {
   return (
 
     <div className="h-full w-full  md:w-64 bg-gray-900 md:p-4 flex flex-col  md:items-start  overflow-auto">
-    <div className='w-full h-3/5'>
+    <div className='w-full h-2/5'>
     {routes.map((route, index) => (
         <div key={index} className="w-full h-auto flex overflow-y-hidden">
           {
