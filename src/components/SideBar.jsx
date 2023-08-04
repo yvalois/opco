@@ -120,7 +120,7 @@ export default function SideBar({ setIsOpen }) {
       onClick={()=>{setIsOpen(false)}}
     />)
     ,
-    !isOwner && (
+    isOwner && (
       <NavLinkComponent
         to="/administrador"
         icon={FaRegAddressBook}
