@@ -127,9 +127,7 @@ export default function SideBar({ setIsOpen }) {
         label="Administrador"
         onClick={()=>{setIsOpen(false)}}
       />
-    ),
-    null,
-    null
+    ),  
     
   ];
 
@@ -139,14 +137,16 @@ export default function SideBar({ setIsOpen }) {
   return (
 
     <div className="h-full w-full  md:w-64 bg-gray-900 md:p-4 flex flex-col  md:items-start  overflow-auto">
-
-      {routes.map((route, index) => (
-        <div key={index} className="w-full sm:h-4/5 2xl:h-auto flex overflow-y-hidden">
+    <div className='w-full h-3/5'>
+    {routes.map((route, index) => (
+        <div key={index} className="w-full h-auto flex overflow-y-hidden">
           {
           route
           }
         </div>
       ))}
+
+    </div>
 
 
       <div className="w-full flex justify-center items-center space-x-2">

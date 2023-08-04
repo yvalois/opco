@@ -125,7 +125,7 @@ export default function Navbar({ isOpen2, setIsOpen2 }) {
             </span>
           </div>
 
-          <div className="flex w-auto space-x-2">
+          <div className="flex w-auto mr-4">
             <div className="flex items-center justify-center space-x-2 ">
               <a
                 className="iconfont-wrapper hidden xl:block"
@@ -162,8 +162,8 @@ export default function Navbar({ isOpen2, setIsOpen2 }) {
 
 
 
-            <div className="flex space-x-4">
-              <div className="flex items-center ml-2">
+            <div className="flex ml-2">
+              <div className="flex items-center">
                 {accountAddress === null ? (
                   <button
                     className="text-black text-sm flex items-center justify-center rounded-lg py-1 px-3 cursor-pointer  border-black bg-yellow-300 min-w-60  shadow-text"
