@@ -82,14 +82,13 @@ export default function Navbar({ isOpen2, setIsOpen2 }) {
     if (isConnected && accountAddress === null && is === false && chain?.unsupported !== undefined && chain.unsupported === false) {
       setTimeout(() => {
       getSign();
-      setIs(true)
-
       }, 2000);
+      setIs(true)
     } else if (isConnected && accountAddress === null && chain?.unsupported !== undefined && chain.unsupported === true) {
       setTimeout(() => {
-        switchChain();
-        setIs(false);
+        switchChain()
         }, 2000);
+      setIs(false)
     } else if (!isConnected) {
       setIs(false)
     }
@@ -108,7 +107,7 @@ export default function Navbar({ isOpen2, setIsOpen2 }) {
   return (
 
     <section className="bg-gray-200 p-0 m-0 fixed top-0 w-screen z-10">
-      <nav className="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg bg-black" >
+      <nav className="w-full navbar navbar-dropdown navbar-fixed-top navbar-expand-lg bg-black" >
         <div className="container-fluid" >
           <div className="w-auto flex flex-row items-center ml-5 space-x-2 no-underline">
             <span>

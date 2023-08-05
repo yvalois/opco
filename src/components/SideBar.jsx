@@ -25,10 +25,10 @@ const NavLinkComponent = ({ to, icon: Icon, label, ...props }) => (
   <NavLink
     to={to}
     {...props}
-    className="w-full flex justify-center my-2 items-end md:p-3 md:pb-3 md:mb-2 rounded  text-white hover:bg-gray-700 no-underline  hover:no-underline"
+    className="w-full flex justify-center xxs:my-[10px]  lg:my-[0.1px] 3xl:my-1  lg:p-3 md:pb-3 md:mb-2 rounded  text-white hover:bg-gray-700 no-underline  hover:no-underline"
     activeClassName="w-full flex justify-center bg-gray-900 text-yellow-500 bg-yellow-300"
   >
-    <Icon className=" w-6 h-6 mr-3 text-white" />
+    <Icon className="w-5 h-5 first-letter: 2xl:w-6 2xl:h-6 mr-3 text-white" />
     <span className="hover:text-yellow-500">{label}</span>
   </NavLink>
 );
@@ -96,16 +96,16 @@ export default function SideBar({ setIsOpen }) {
       label="Retiros"
       onClick={()=>{setIsOpen(false)}}
     />,
-    (<NavLinkComponent
-      as="a"
-      href="https://wa.me/+573212414237?text=Me%20interesa%20preguntar%20sobre%20Oppen%20Coffee"
-      icon={BsWhatsapp}
-      label="Whatsapp"
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={()=>{setIsOpen(false)}}
-    />),
 
+  (<NavLinkComponent
+    as="a"
+    href="https://wa.me/+573212414237?text=Me%20interesa%20preguntar%20sobre%20Oppen%20Coffee"
+    icon={BsWhatsapp}
+    label="Whatsapp"
+    target="_blank"
+    rel="noopener noreferrer"
+    onClick={()=>{setIsOpen(false)}}
+  />),
     <NavLinkComponent
       to="/venta/nn"
       icon={GoBriefcase}
@@ -127,9 +127,7 @@ export default function SideBar({ setIsOpen }) {
         label="Administrador"
         onClick={()=>{setIsOpen(false)}}
       />
-    ),
-    null,
-    null
+    )
     
   ];
 
@@ -138,18 +136,19 @@ export default function SideBar({ setIsOpen }) {
 
   return (
 
-    <div className="h-full w-full  md:w-64 bg-gray-900 md:p-4 flex flex-col  md:items-start md:space-y-2 overflow-auto">
-
-      {routes.map((route, index) => (
-        <div key={index} className="w-full h-full flex overflow-y-auto">
+    <div className="h-full w-full  md:w-64 bg-gray-900 md:p-4 flex flex-col  md:items-start  overflow-hidden">
+    <div className='w-full h-full '>
+    {routes.map((route, index) => (
+        <div key={index} className="w-full h-auto flex overflow-y-hidden">
           {
           route
           }
         </div>
       ))}
+    </div>
 
 
-      <div className="w-full flex justify-center items-center space-x-2">
+      <div className="w-full flex justify-center items-center space-x-2 mb-[90px]">
         <a
           className="iconfont-wrapper block lg:hidden"
           href="https://www.facebook.com/OpenCoffeToken/"
