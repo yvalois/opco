@@ -9,17 +9,17 @@ export default function AdminSidebar() {
       
     ]
     return (
-        <>
+        <div className="mt-8">
             <div className="sideBar-admin-tittle">
                 Contratos
             </div>
-            <div>
+            <div className="w-full h-auto ">
                 {items.map((item, index)=>(
                     <div className="admin-sidebar-option" key={index}>
                         {item}
                     </div>
                 ))}
             </div>
-        </>
+        </div>
     )
 }

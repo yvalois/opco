@@ -16,7 +16,7 @@ export default function AdminReward() {
                 <NavLink to='/administrador/admin-rewards/existingpool'>
                 <div className=" w-100 text-center py-2 addmin-staking-access">
                     Editar Pools
-                </div >
+                </div>
                 </NavLink>
                 <NavLink to='/administrador/admin-rewards/data'>
                 <div className=" w-100 text-center py-2 addmin-staking-access">

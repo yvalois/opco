@@ -58,7 +58,7 @@
 
 .Admin-exchange-tittle{
     text-align: center;
-    padding: 10px 0;
+
 }
 
 .admin-menu-options a{
@@ -78,4 +78,13 @@
 
 .addmin-staking-access{
     background-color: #FFE161;
+}
+
+@media (max-width: 700px) {
+    .admin-sidebar{
+        height: auto;
+        border-radius: 5px;
+        background-color: #FFE161;
+        padding: 0!important;
+    }
 }

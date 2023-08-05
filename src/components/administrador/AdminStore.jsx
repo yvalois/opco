@@ -101,9 +101,9 @@ export default function AdminStore() {
     }
 
     return (
-        <div>
+        <div className='mt-8'>
             <div className="Admin-exchange-tittle">
-                Adminstrador tienda {router.OPCO_ADDRESS}
+                Adminstrador tienda <p className='text-sm md:text-[16px]'> {router.OPCO_ADDRESS} </p>
             </div>
             <div>
                 <div className='border d-flex justify-content-around my-2'>
