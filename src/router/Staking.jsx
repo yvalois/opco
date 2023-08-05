@@ -109,7 +109,7 @@ export default function Staking() {
     setIsLoading(true);
     try {
       //Cambia logica y parametros
-      await stakin.userClaimReward(poolId, index, 0);
+      await stakin.userClaimReward(poolId, index);
       stakin.on("Claim", (addr, ammount, apr, mtime) => {
         console.log(addr, ammount, apr, mtime);
         dispatch(fetchBalance());
@@ -320,10 +320,10 @@ export default function Staking() {
                                 <button
                                   className="w-[130px] my-[1px] mx-[5px] border-none rounded-lg bg-[#000AE5] text-white cursor-pointer"
                                   onClick={() => claimReward(pool.poolId, pool.index)}
-                                >reclamar</button>
+                                >Reclamar</button>
                                 <button className="w-[130px] my-[1px] mx-[5px] border-none rounded-lg bg-[#5A0004] text-white cursor-pointer"
                                   onClick={() => unstake(pool.poolId, pool.index)}
-                                > devolver </button>
+                                > Devolver </button>
                               </>
                               :
                               <>
@@ -335,10 +335,10 @@ export default function Staking() {
                                 {1 > 0 ?
                                   <button className="w-[130px] my-[1px] mx-[5px] border-none rounded-lg bg-[#5A0004] text-white cursor-pointer"
                                     onClick={() => unstake(pool.poolId, pool.index)}
-                                  > devolver</button>
+                                  > Retirar</button>
                                   :
                                   <button className="w-[130px] my-[1px] mx-[5px] border-none rounded-lg bg-[##DDDDDD] text-black cursor-pointer"
-                                  > devolver </button>
+                                  > Devolver </button>
                                 }
                               </>
                             }

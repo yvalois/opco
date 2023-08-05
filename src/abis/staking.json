@@ -2,49 +2,6 @@
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "_amount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "_token",
-				"type": "address"
-			}
-		],
-		"name": "BalanceTokenWithdrawal",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "BalanceWithdrawal",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_address",
-				"type": "address"
-			}
-		],
-		"name": "changeToken",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_busd",
-				"type": "address"
-			},
-			{
 				"internalType": "address",
 				"name": "_cafe",
 				"type": "address"
@@ -104,13 +61,6 @@
 		"type": "event"
 	},
 	{
-		"inputs": [],
-		"name": "pause",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -122,31 +72,6 @@
 		],
 		"name": "Paused",
 		"type": "event"
-	},
-	{
-		"inputs": [],
-		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "poolId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_stakeApr",
-				"type": "uint256"
-			}
-		],
-		"name": "setPoolApr",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	},
 	{
 		"anonymous": false,
@@ -252,151 +177,25 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "poolId",
-				"type": "uint256"
-			}
-		],
-		"name": "setPoolFalse",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "poolId",
+				"name": "_amount",
 				"type": "uint256"
 			},
-			{
-				"internalType": "uint256",
-				"name": "_tokenLimit",
-				"type": "uint256"
-			}
-		],
-		"name": "setPoolTokenLimit",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "poolId",
-				"type": "uint256"
-			}
-		],
-		"name": "setPoolTrue",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_tokenLimit",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint32",
-				"name": "_timelocked",
-				"type": "uint32"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_stakeApr",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_tokenLimitPerWallet",
-				"type": "uint256"
-			}
-		],
-		"name": "setStakePool",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "poolID",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_stakedTokens",
-				"type": "uint256"
-			}
-		],
-		"name": "setUserStake",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
 			{
 				"internalType": "address",
-				"name": "newOwner",
+				"name": "_token",
 				"type": "address"
 			}
 		],
-		"name": "transferOwnership",
+		"name": "BalanceTokenWithdrawal",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
 		"inputs": [],
-		"name": "unpause",
+		"name": "BalanceWithdrawal",
 		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "poolId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "index",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_token",
-				"type": "uint256"
-			}
-		],
-		"name": "userClaimReward",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "poolId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "index",
-				"type": "uint256"
-			}
-		],
-		"name": "userUnstake",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -490,6 +289,19 @@
 	{
 		"inputs": [
 			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "changeToken",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "uint256",
 				"name": "poolId",
 				"type": "uint256"
@@ -563,7 +375,7 @@
 						"type": "bool"
 					}
 				],
-				"internalType": "struct StakingV2.addressPerPoolstaked[]",
+				"internalType": "struct StakingV3.addressPerPoolstaked[]",
 				"name": "",
 				"type": "tuple[]"
 			}
@@ -618,7 +430,7 @@
 						"type": "bool"
 					}
 				],
-				"internalType": "struct StakingV2.stakingPool[]",
+				"internalType": "struct StakingV3.stakingPool[]",
 				"name": "",
 				"type": "tuple[]"
 			}
@@ -708,7 +520,7 @@
 						"type": "bool"
 					}
 				],
-				"internalType": "struct StakingV2.stakingPoolInfo",
+				"internalType": "struct StakingV3.stakingPoolInfo",
 				"name": "",
 				"type": "tuple"
 			}
@@ -773,7 +585,7 @@
 						"type": "bool"
 					}
 				],
-				"internalType": "struct StakingV2.stakingPoolInfo[]",
+				"internalType": "struct StakingV3.stakingPoolInfo[]",
 				"name": "",
 				"type": "tuple[]"
 			}
@@ -796,31 +608,19 @@
 	},
 	{
 		"inputs": [],
+		"name": "pause",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "paused",
 		"outputs": [
 			{
 				"internalType": "bool",
 				"name": "",
 				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "poolsPerAddress",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -848,6 +648,32 @@
 	{
 		"inputs": [
 			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "poolsPerAddress",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
@@ -862,6 +688,114 @@
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "poolId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_stakeApr",
+				"type": "uint256"
+			}
+		],
+		"name": "setPoolApr",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "poolId",
+				"type": "uint256"
+			}
+		],
+		"name": "setPoolFalse",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "poolId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_tokenLimit",
+				"type": "uint256"
+			}
+		],
+		"name": "setPoolTokenLimit",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "poolId",
+				"type": "uint256"
+			}
+		],
+		"name": "setPoolTrue",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_tokenLimit",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint32",
+				"name": "_timelocked",
+				"type": "uint32"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_stakeApr",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_tokenLimitPerWallet",
+				"type": "uint256"
+			}
+		],
+		"name": "setStakePool",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "poolID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_stakedTokens",
+				"type": "uint256"
+			}
+		],
+		"name": "setUserStake",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -1015,7 +949,7 @@
 	},
 	{
 		"inputs": [],
-		"name": "tokenPrice",
+		"name": "totalStaked",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -1027,16 +961,59 @@
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
-		"name": "totalStaked",
-		"outputs": [
+		"name": "unpause",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "",
+				"name": "poolId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "index",
 				"type": "uint256"
 			}
 		],
-		"stateMutability": "view",
+		"name": "userClaimReward",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "poolId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "userUnstake",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ]
