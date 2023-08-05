@@ -70,7 +70,7 @@ export const fetchData = () => {
     return async (dispatch) => {
         dispatch(loadingData());
         try {
-      
+            //cambia nombre de funcionas y un poco de logica de como se hacen los gets
             const Pools = [];
             const Data = [];
             const AccountPools = [];

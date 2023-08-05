@@ -108,6 +108,7 @@ export default function Staking() {
   const claimReward = async (poolId, index) => {
     setIsLoading(true);
     try {
+      //Cambia logica y parametros
       await stakin.userClaimReward(poolId, index, 0);
       stakin.on("Claim", (addr, ammount, apr, mtime) => {
         console.log(addr, ammount, apr, mtime);
@@ -131,6 +132,7 @@ export default function Staking() {
   const unstake = async (poolId, index) => {
     setIsLoading(true);
     try {
+      //Cambio en parametros
       await stakin.userUnstake(poolId, index);
       stakin.on("Unstake", (addr, ammount, apr, mtime) => {
 

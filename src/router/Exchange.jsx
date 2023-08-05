@@ -413,7 +413,7 @@ export default function Exchange() {
         error={error} />
 
 
-      <div className=' flex flex-col justify-center lg:flex-row  items-center space-y-4 lg:space-y-0 lg:space-x-4'>
+      <div className=' flex flex-col justify-center lg:flex-row  items-center space-y-4 lg:space-y-0 lg:space-x-4 mt-12'>
         <img className='w-24 lg:w-auto' src={logo} alt='logo' />
         <h1 className='text-4xl lg:text-10xl text-black font-bold text-center'>
           OPEN COFFEE
