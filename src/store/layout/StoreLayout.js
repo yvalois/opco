@@ -24,7 +24,7 @@ export default function StoreLayout() {
     }, [dispatch]);
 
   return (
-    <div className='w-full h-full flex flex-col items-center overflow-hidden'>
+    <div className='w-full h-full flex flex-col items-center overflow-hidden mt-[60px]'>
         <>
         <Navbar click={() => setSideToggle(true)} />
         <Backdrop show={sideToggle} click={() => setSideToggle(false)} />
