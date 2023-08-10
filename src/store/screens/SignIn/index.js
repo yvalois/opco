@@ -10,15 +10,14 @@ function Index() {
   const navigate = useNavigate()
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
-
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
   const { loading, loginSuccess, error, errorMsg, userDetails } = user;
 
-  const _handleSubmit = () => {
+  const _handleSubmit = async() => {
     // callback
     if (email.length > 2 && password.length > 2) {
-      dispatch(fetchSignIn({ email, password }));
+       dispatch(fetchSignIn({ email, password }));
     }
   }
 
@@ -68,7 +67,7 @@ function Index() {
 
     </div>
 
-    <form className="space-y-4">
+    <div className="space-y-4">
         <label htmlFor="email" className="block">Email</label>
         <input
             className="w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -98,7 +97,7 @@ function Index() {
             />
                 
         </div>
-    </form>
+    </div>
 
     <div className="flex flex-col space-y-2 mt-5">
         <Link to="/store/signup" className='flex justify-center'>

@@ -89,10 +89,9 @@ export default function Navbar({ isOpen2, setIsOpen2 }) {
         switchChain()
         setIs(false)
         }, 2000);
-    } else if (!isConnected) {
-      setIs(false)
-      window.localStorage.removeItem("wc@2:core:0.3//keychain")
-
+    } else{
+    window.localStorage.removeItem("wc@2:core:0.3//keychain")
+      
     }
   }, [isConnected, accountAddress, account, chain, is])
 

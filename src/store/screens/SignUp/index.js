@@ -78,7 +78,7 @@ function Index() {
   return (
 <div className="w-full flex items-center justify-center h-full mt-8">
   <div className="w-full max-w-md">
-    <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" >
+    <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" >
       <div className="flex items-center justify-between">
         <button onClick={() => navigate('/store')} className="text-3xl text-gray-700">
           <i className="fas fa-arrow-circle-left"></i>
@@ -170,7 +170,7 @@ function Index() {
             Already have an account ?
           </Link>
         </div>
-    </form>
+    </div>
   </div>
 </div>
 

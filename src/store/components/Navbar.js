@@ -77,7 +77,7 @@ const Navbar = ({ click }) => {
 
   return (
 
-<nav className="flex flex-wrap items-center justify-start md:justify-between w-full bg-yellow-300 h-auto lg:h-[66px] ">
+<nav className="flex flex-wrap items-center justify-start md:justify-between w-full bg-yellow-300 h-auto lg:h-[66px] mt-[66px] ">
   {/* Descomentar */}
   {/* <div className="navbar__logo">
     <Link to="/store">
