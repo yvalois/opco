@@ -28,7 +28,7 @@ export default function Layout() {
       <SideBar isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
 
-    <div className="flex-grow lg:w-[calc(100%-236px)] lg:ml-[236px]"
+    <div className="flex-grow lg:w-[calc(100%-236px)] lg:ml-[236px] mt-16 "
       style={{
         backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url(https://culturacafeina.com/wp-content/uploads/2020/06/D%C3%B3nde-comprar-buen-caf%C3%A9.jpg)",
         backgroundRepeat: "repeat",

@@ -107,7 +107,7 @@ export default function Navbar({ isOpen2, setIsOpen2 }) {
 
   return (
 
-    <section className="bg-gray-200 p-0 m-0 fixed top-0 w-screen z-10">
+    <section className="bg-gray-200 p-0 m-0 fixed top-0 w-full z-10">
       <nav className="w-full navbar navbar-dropdown navbar-fixed-top navbar-expand-lg bg-black" >
         <div className="container-fluid" >
           <div className="w-auto flex flex-row items-center ml-5 space-x-2 no-underline">
