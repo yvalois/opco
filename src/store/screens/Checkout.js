@@ -419,12 +419,12 @@ const Checkout = () => {
                   className="font-semibold text-md w-full focus:outline-none rounded-lg pl-2"
                 >
                   <option value={Api.TOKEN_NAME}>{Api.TOKEN_NAME}</option>
-                  <option value="BUSD">BUSD</option>
+                  <option value="BUSD">BUSD </option>
                 </select>
               </label>
               <label className="w-full flex flex-col border-2 border-black bg-gray-500   p-2 rounded-3xl">
                 <span className="text-white text-md uppercase">SubTotal</span>
-                <div className="font-semibold text-white text-white">
+                <div className="font-semibold text-white ">
                   <div style={{ fontWeight: "600" }}>
                     {token === Api.TOKEN_NAME ? `OPCO: ${getCartSubTotalToken()}` : `BUSD: ${getCartSubTotal()}`}
                   </div>

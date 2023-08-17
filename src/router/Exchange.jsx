@@ -577,7 +577,7 @@ export default function Exchange() {
             </div>
 
             <div className='w-full h-[20%] flex flex-col justify-center items-start  font-bold  text-[clamp(15px, 0.8vw, 40px)]  mt-2.5'>
-              Tus OPCO's: {blockchain.exchangeBalance === null ? 0 : blockchain.exchangeBalance?.toFixed(2)}
+              OPCO's para compras: {blockchain.exchangeBalance === null ? 0 : blockchain.exchangeBalance?.toFixed(2)}
             </div>
 
             <div className='w-full flex justify-center items-center'>
