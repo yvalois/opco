@@ -9,6 +9,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useWeb3Modal } from '@web3modal/react'
 import { useAccount, useConnect, useDisconnect, useSignMessage, } from 'wagmi'
 import { getEthersProvider, getEthersSigner } from '../utils/ethers.js'
+import { ConnectKitButton } from "connectkit";
 
 
 export default function Venta() {
@@ -100,11 +101,6 @@ export default function Venta() {
 
 
 
-    const abrir = () => {
-        if (!isConnected) {
-            open()
-        }
-    }
 
 
     return (<>
@@ -169,13 +165,18 @@ export default function Venta() {
 
         </div>) :
             <div className='w-full h-full flex justify-center items-center'>
-                <button
-                    onClick={() => abrir()}
-                    className=" w-[200px] h-auto text-lg px-4 py-2 text-white bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full hover:from-orange-500 hover:to-yellow-400 transition-all duration-200 flex items-center justify-center space-x-2"
-                >
-                    {(isConnected && accountAddress === null) ? 'conectando...' : 'Conectar'}
+                <ConnectKitButton.Custom>
+                    {({ isConnected, show, truncatedAddress, ensName }) => {
+                        return (
+                            <button
+                                onClick={show}
+                                className=" w-[200px] h-auto text-lg px-4 py-2 text-white bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full hover:from-orange-500 hover:to-yellow-400 transition-all duration-200 flex items-center justify-center space-x-2"
+                            >
+                                {(isConnected && accountAddress === null) ? 'conectando...' : 'Conectar'}
 
-                </button>
+                            </button>);
+                    }}
+                </ConnectKitButton.Custom>
             </div>}
 
     </>

@@ -7,9 +7,10 @@ import ErrorMsg from '../ErrorMsg';
 import { fetchP2p } from '../../redux/p2p/p2pActions';
 import LoaderFullScreen from '../loaderFullScreen';
 import { useWeb3Modal } from '@web3modal/react'
-import { useAccount, useConnect, useDisconnect, useSignMessage,  } from 'wagmi'
-import {getEthersProvider,getEthersSigner } from '../../utils/ethers.js'
+import { useAccount, useConnect, useDisconnect, useSignMessage, } from 'wagmi'
+import { getEthersProvider, getEthersSigner } from '../../utils/ethers.js'
 import { useSelector } from 'react-redux';
+import { ConnectKitButton } from "connectkit";
 
 export const P2pNewOfferModal = ({ offerModal, setOfferModal, tokenBalance, contractP2p, accountAddress, tokenContract }) => {
     const dispatch = useDispatch();
@@ -19,7 +20,7 @@ export const P2pNewOfferModal = ({ offerModal, setOfferModal, tokenBalance, cont
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
-    const[is, setIs] = useState(false)
+    const [is, setIs] = useState(false)
     const blockchain = useSelector(state => state.blockchain);
     const [checkApproved, setCheckApproved] = useState(false);
     const [approvedTokens, setApprovedTokens] = useState(0);
@@ -33,23 +34,18 @@ export const P2pNewOfferModal = ({ offerModal, setOfferModal, tokenBalance, cont
 
     const { isOpen, open, close, setDefaultChain } = useWeb3Modal()
     const { address, isConnecting, isDisconnected, isConnected } = useAccount()
-  
-    const {connect, connectors,  isLoading, pendingConnector} = useConnect()
-    const { disconnect } = useDisconnect()
-  
-    const getSign = async()=>{
-      const signer = await getEthersSigner(56)
-      const provider =  getEthersProvider(56)
-      dispatch(fetchBlockchain(address, signer, provider))               
-  }
-  
 
-  
-    const abrir =()=>{
-      if(!isConnected){
-          open()
-      }
+    const { connect, connectors, isLoading, pendingConnector } = useConnect()
+    const { disconnect } = useDisconnect()
+
+    const getSign = async () => {
+        const signer = await getEthersSigner(56)
+        const provider = getEthersProvider(56)
+        dispatch(fetchBlockchain(address, signer, provider))
     }
+
+
+
 
     const approve = async () => {
         setLoading(true);
@@ -195,10 +191,15 @@ export const P2pNewOfferModal = ({ offerModal, setOfferModal, tokenBalance, cont
                                     </button>
                                 }
                                 {accountAddress &&
-                                    <button className=' h-auto rounded-md bg-gray-700 px-4 py-2 text-whitew-full sm:w-auto'
-                                    onClick={abrir}
-                                    >                          {(isConnected && accountAddress === null) ? 'conectando...' : 'Conectar'}
-</button>
+                                    <ConnectKitButton.Custom>
+                                        {({ isConnected, show, truncatedAddress, ensName }) => {
+                                            return (
+                                                <button className=' h-auto rounded-md bg-gray-700 px-4 py-2 text-whitew-full sm:w-auto'
+                                                    onClick={show}
+                                                >                          {(isConnected && accountAddress === null) ? 'conectando...' : 'Conectar'}
+                                                </button>);
+                                        }}
+                                    </ConnectKitButton.Custom>
                                 }
                             </div>
                         </div>

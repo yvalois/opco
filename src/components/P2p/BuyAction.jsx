@@ -10,6 +10,7 @@ import { useWeb3Modal } from '@web3modal/react'
 import { useAccount, useConnect, useDisconnect, useSignMessage, } from 'wagmi'
 import { getEthersProvider, getEthersSigner } from '../../utils/ethers'
 import { useSelector } from 'react-redux';
+import { ConnectKitButton } from "connectkit";
 
 
 export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalance, setBuyModal, buyModal, accountAddress, busdContract, usdtContract, p2pContract }) => {
@@ -41,16 +42,6 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
         const provider = getEthersProvider(56)
         dispatch(fetchBlockchain(address, signer, provider))
     }
-
-
-
-    const abrir = () => {
-        if (!isConnected) {
-            open()
-        }
-    }
-
-
 
     const [tokenInput, setTokenInput] = useState(0)
     const [BusdInput, setBusdInput] = useState(0)
@@ -339,10 +330,16 @@ export const BuyAction = ({ id, amount, minAmount, price, busdBalance, usdtBalan
                                     }
 
                                     {!accountAddress &&
-                                        <button className='btn btn-dark ml-2'
-                                            onClick={abrir}
-                                        >                          {(isConnected && accountAddress === null) ? 'conectando...' : 'Conectar'}
-                                        </button>
+                                        <ConnectKitButton.Custom>
+                                            {({ isConnected, show, truncatedAddress, ensName }) => {
+                                                return (
+                                                    <button className='btn btn-dark ml-2'
+                                                        onClick={show}
+                                                    >                          {(isConnected && accountAddress === null) ? 'conectando...' : 'Conectar'}
+                                                    </button>
+                                                );
+                                            }}
+                                        </ConnectKitButton.Custom>
                                     }
                                 </div>
                             </div>

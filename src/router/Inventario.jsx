@@ -13,6 +13,7 @@ import { useWeb3Modal } from '@web3modal/react'
 import { useAccount, useConnect, useDisconnect, useSignMessage, } from 'wagmi'
 import { getEthersProvider, getEthersSigner } from '../utils/ethers.js'
 
+import { ConnectKitButton } from "connectkit";
 
 export default function Inventario() {
 
@@ -89,11 +90,6 @@ export default function Inventario() {
 
 
 
-  const abrir = () => {
-    if (!isConnected) {
-      open()
-    }
-  }
 
 
 
@@ -190,11 +186,17 @@ export default function Inventario() {
 
     </div>) :
       <div className='w-full h-full flex justify-center items-center'>
+      <ConnectKitButton.Custom>
+                    {({ isConnected, show, truncatedAddress, ensName }) => {
+                      return (
         <button
-          onClick={() => abrir()}
+          onClick={show}
           className=" w-[200px] h-auto text-lg px-4 py-2 text-white bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full hover:from-orange-500 hover:to-yellow-400 transition-all duration-200 flex items-center justify-center space-x-2"
         >                          {(isConnected && accountAddress === null) ? 'conectando...' : 'Conectar'}
         </button>
+        );
+                    }}
+                  </ConnectKitButton.Custom>
       </div>}
 
 

@@ -15,8 +15,9 @@ import SellModal from '../components/marketNft/SellModal';
 import { AiFillStar } from 'react-icons/ai';
 import { fetchBlockchain } from '../redux/blockchain/blockchainAction';
 import { useWeb3Modal } from '@web3modal/react'
-import { useAccount, useConnect, useDisconnect, useSignMessage,  } from 'wagmi'
-import {getEthersProvider,getEthersSigner } from '../utils/ethers.js'
+import { useAccount, useConnect, useDisconnect, useSignMessage, } from 'wagmi'
+import { getEthersProvider, getEthersSigner } from '../utils/ethers.js'
+import { ConnectKitButton } from "connectkit";
 
 export default function NftOpco() {
     const { password } = useParams();
@@ -30,12 +31,12 @@ export default function NftOpco() {
     const [sellModal, setSellModal] = useState(false);
     const [selectedNft, setSelectedNft] = useState();
     const [approved, setApproved] = useState(false);
-    const[is, setIs] = useState(false)
-    const {accountAddress} = useSelector(state => state.blockchain);
+    const [is, setIs] = useState(false)
+    const { accountAddress } = useSelector(state => state.blockchain);
     const blockchain = useSelector(state => state.blockchain);
 
 
-    const dispatch = useDispatch(); 
+    const dispatch = useDispatch();
 
     //const [nftOwned, setNftOwned] = useState([]);
 
@@ -124,29 +125,25 @@ export default function NftOpco() {
     }
 
 
-   
 
-  
+
+
 
     const { isOpen, open, close, setDefaultChain } = useWeb3Modal()
     const { address, isConnecting, isDisconnected, isConnected } = useAccount()
-  
-    const {connect, connectors,  isLoading, pendingConnector} = useConnect()
-    const { disconnect } = useDisconnect()
-  
-    const getSign = async()=>{
-      const signer = await getEthersSigner(56)
-      const provider =  getEthersProvider(56)
-      dispatch(fetchBlockchain(address, signer, provider))               
-  }
-  
 
-    const abrir =()=>{
-      if(!isConnected){
-        open()
-      }
+    const { connect, connectors, isLoading, pendingConnector } = useConnect()
+    const { disconnect } = useDisconnect()
+
+    const getSign = async () => {
+        const signer = await getEthersSigner(56)
+        const provider = getEthersProvider(56)
+        dispatch(fetchBlockchain(address, signer, provider))
     }
-    
+
+
+
+
 
 
     return (
@@ -220,16 +217,21 @@ export default function NftOpco() {
                                 </div>
                             ))}
                         </div>
-                        :!accountAddress ?
-                        <div className='w-full h-full flex justify-center items-center z-[-10]'>
-                            <button
-                                onClick={() => abrir()}
-                                className=" w-[200px] h-auto text-lg px-4 py-2 text-white bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full hover:from-orange-500 hover:to-yellow-400 transition-all duration-200 flex items-center justify-center space-x-2"
-                            >                          
-                            {(isConnected && accountAddress === null) ? 'conectando...' : 'Conectar'}
-                            </button>
-                        </div>
-                        :null
+                        : !accountAddress ?
+                            <div className='w-full h-full flex justify-center items-center z-[-10]'>
+                                <ConnectKitButton.Custom>
+                                    {({ isConnected, show, truncatedAddress, ensName }) => {
+                                        return (
+                                            <button
+                                                onClick={show}
+                                                className=" w-[200px] h-auto text-lg px-4 py-2 text-white bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full hover:from-orange-500 hover:to-yellow-400 transition-all duration-200 flex items-center justify-center space-x-2"
+                                            >
+                                                {(isConnected && accountAddress === null) ? 'conectando...' : 'Conectar'}
+                                            </button>);
+                                    }}
+                                </ConnectKitButton.Custom>
+                            </div>
+                            : null
                     }
 
 

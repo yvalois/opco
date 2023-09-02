@@ -17,6 +17,10 @@ import { contract } from '../redux/blockchain/blockchainRouter';
 import { useWeb3Modal } from '@web3modal/react'
 import { useAccount, useConnect, useDisconnect, useSignMessage, } from 'wagmi'
 import { getEthersProvider, getEthersSigner } from '../utils/ethers.js'
+import { ConnectKitButton } from "connectkit";
+
+
+
 const fee = 0.01;
 
 
@@ -46,7 +50,7 @@ export default function Exchange() {
   const [yoAreOwner, setYoAreOwner] = useState(false);
   const [referalCount, setReferalCount] = useState(0);
   const [is, setIs] = useState(false)
-  const {accountAddress, priceSetterContract} = useSelector(state => state.blockchain);
+  const { accountAddress, priceSetterContract } = useSelector(state => state.blockchain);
   const blockchain = useSelector(state => state.blockchain);
 
 
@@ -167,7 +171,7 @@ export default function Exchange() {
   const setNewPrice = async () => {
     const nuevoPrecioTowei = ethers.utils.parseEther(nuevoPrecio.toString())
     try {
-       await priceSetterContract.newPrice(nuevoPrecioTowei)
+      await priceSetterContract.newPrice(nuevoPrecioTowei)
     } catch (e) {
       console.log(e);
     }
@@ -269,11 +273,6 @@ export default function Exchange() {
   }
 
 
-  const abrir = () => {
-    if (!isConnected) {
-      open()
-    }
-  }
 
 
 
@@ -583,11 +582,16 @@ export default function Exchange() {
             <div className='w-full flex justify-center items-center'>
 
               {accountAddress === null ?
-                <button className='mt-5 text-md font-semibold bg-black text-white w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
+                <ConnectKitButton.Custom>
+                  {({ isConnected, show, truncatedAddress, ensName }) => {
+                    return (
+                      <button className='mt-5 text-md font-semibold bg-black text-white w-[30%] h-12 transition-colors duration-500 ease-in rounded-full mb-2.5 hover:bg-
                  hover:text-black'
-                  onClick={() => abrir()}
-                >                          {(isConnected && accountAddress === null) ? 'conectando...' : 'conectar'}
-                </button>
+                        onClick={show}
+                      >                          {(isConnected && accountAddress === null) ? 'conectando...' : 'conectar'}
+                      </button>);
+                  }}
+                </ConnectKitButton.Custom>
                 :
                 <>
                   {aoexToBusd ?
