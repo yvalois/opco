@@ -44,12 +44,59 @@ const AdminOrdersDetail = () => {
     setLoading(true);
   };
 
+  const orders2 =
+    {
+      _id:1,
+      orderNumber: 1,
+      finalStatus: 'success',
+      total:100,
+      orderNumber: 100,
+      createdAt:'23-4-2021',
+      ownerName: 'Josefo',
+      orderEmail: 'josefo@noseque.com',
+      ownerPhone: 3156105428,
+      products:[
+        {
+          name:"",
+          count:12,
+          option:"ground",
+          price:12,
+          productId:'6300f34b70a136001290979c',
+        },
+        {
+          name:"",
+          count:12,
+          option:"ground",
+          price:12,
+          productId:'6300f34b70a136001290979c',
+        },
+        {
+          name:"",
+          count:12,
+          option:"ground",
+          price:12,
+          productId:'6300f34b70a136001290979c',
+        },
+        {
+          name:"",
+          count:12,
+          option:"ground",
+          price:12,
+          productId:'6300f34b70a136001290979c',
+        },
+      ],
+      total: 1000,
+      tokenUsed:"BUSD",
+      txHash:"skadhiaosdo23jo12j3op1",
+      delivery: "si",
+      finalStatus:"cancelled"
 
+    }
   return (
     <div className="orders-detail">
  
       <div>
-        {loading ? (
+        {!loading ? (
           <h3>Loading...</h3>
         ) : (
           <div className="order-detail-format">

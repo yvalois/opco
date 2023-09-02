@@ -33,6 +33,7 @@ export function walletClientToSigner(walletClient) {
   }
   const provider = new providers.Web3Provider(transport, network)
   const signer = provider.getSigner(account.address)
+
   return signer
 }
  

@@ -103,8 +103,6 @@ export default function Staking() {
 
   }
 
-
-
   const claimReward = async (poolId, index) => {
     setIsLoading(true);
     try {
@@ -127,7 +125,6 @@ export default function Staking() {
       setIsLoading(false);
     }
   }
-
 
   const unstake = async (poolId, index) => {
     setIsLoading(true);
@@ -272,7 +269,7 @@ export default function Staking() {
                             <img src={logo} alt="logo" className="w-20 h-20" />
 
                             <div className="font-bold">
-                              {getAPr(pool.poolId)}%
+                              {getAPr(pool.poolId)}%  
                               <p>APR</p>
                             </div>
                           </div>

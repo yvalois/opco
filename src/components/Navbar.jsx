@@ -21,7 +21,7 @@ import { useWeb3Modal } from '@web3modal/react'
 import { useAccount, useConnect, useDisconnect, useSignMessage, useNetwork, useSwitchNetwork } from 'wagmi'
 import { getEthersProvider, getEthersSigner } from '../utils/ethers.js'
 import { getPublicClient, getWalletClient } from '@wagmi/core'
-
+import { ConnectKitButton } from "connectkit";
 export default function Navbar({ isOpen2, setIsOpen2 }) {
 
   const blockchain = useSelector(state => state.blockchain);
@@ -48,12 +48,12 @@ export default function Navbar({ isOpen2, setIsOpen2 }) {
       dispatch(getMarket());
     }
   }, [marketloaded]);
-
   const disconnectBlockchain = () => {
     dispatch(disconnectBlockchainAction())
     dispatch(logOutAction());
     dispatch(disconnectMinterAction());
     disconnect()
+    setIs(false)
   }
 
 
@@ -76,30 +76,27 @@ export default function Navbar({ isOpen2, setIsOpen2 }) {
   const switchChain = async () => {
     const walletClient = await getWalletClient(chain?.id)
     await walletClient?.switchChain({ id: 56 })
-
   }
+
   useEffect(() => {
     if (isConnected && accountAddress === null && is === false && chain?.unsupported !== undefined && chain.unsupported === false) {
       setTimeout(() => {
-      getSign();
-      setIs(true)
+        getSign();
+        setIs(true)
       }, 2000);
     } else if (isConnected && accountAddress === null && chain?.unsupported !== undefined && chain.unsupported === true) {
       setTimeout(() => {
         switchChain()
         setIs(false)
-        }, 2000);
-    } else{
-    window.localStorage.removeItem("wc@2:core:0.3//keychain")
-      
-    }
-  }, [isConnected, accountAddress, account, chain, is])
+      }, 2000);
+    } else {
+      window.localStorage.removeItem("wc@2:core:0.3//keychain")
+      setIs(false)
 
-  const abrir = () => {
-    if (!isConnected) {
-      open()
     }
-  }
+  }, [isConnected, accountAddress, account, chain, is,address])
+
+
 
 
 
@@ -166,13 +163,19 @@ export default function Navbar({ isOpen2, setIsOpen2 }) {
             <div className="flex ml-2">
               <div className="flex items-center">
                 {accountAddress === null ? (
-                  <button
-                    className="text-black text-sm flex items-center justify-center rounded-lg py-1 px-3 cursor-pointer  border-black bg-yellow-300 min-w-60  shadow-text"
-                    onClick={
-                      abrir
-                    }>
-                    {(isConnected && accountAddress === null) ? 'conectando...' : 'Conectar'}
-                  </button>
+                  <ConnectKitButton.Custom>
+                    {({ isConnected, show, truncatedAddress, ensName }) => {
+                      return (
+                        <button
+                          className="text-black text-sm flex items-center justify-center rounded-lg py-1 px-3 cursor-pointer  border-black bg-yellow-300 min-w-60  shadow-text"
+                          onClick={
+                            show
+                          }>
+                          {(isConnected && accountAddress === null) ? 'conectando...' : 'Conectar'}
+                        </button>
+                      );
+                    }}
+                  </ConnectKitButton.Custom>
                 ) : (
                   <>
                     <div className="connection flex items-center space-x-2">+

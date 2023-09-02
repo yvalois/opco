@@ -2,7 +2,7 @@ import { applyMiddleware, compose, createStore, combineReducers } from "redux";
 import thunk from "redux-thunk";
 
 import  blockchainReducer  from "./blockchain/blockchainReducer";
-import dataReducer from "./blockchain/dataReducer";
+import dataReducer from "./blockchain/dataReducer"; 
 import timerReducer from "./timerapi/timerReducer";
 import minterReducer from "./blockchain/minterReducer";
 import apiReducer from "./api/apiReducer";

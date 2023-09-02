@@ -19,5 +19,13 @@ module.exports = function override(config) {
             Buffer: ['buffer', 'Buffer']
         })
     ])
+    // solucion Module not found: Error: Can't resolve 'process/browser' in
+    config.module.rules.unshift({
+        test: /\.m?js$/,
+        resolve: {
+          fullySpecified: false, // disable the behavior
+        },
+      });
+
     return config;
 }

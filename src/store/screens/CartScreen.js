@@ -22,12 +22,10 @@ const CartScreen = () => {
   const {cartLoaded, products, loading} = cart
 
   const qtyChangeHandler = (id, qty) => {
-
     dispatch(modifyCart(id, qty))
   }
 
   const removeFromCartHandler = item => {
-
     dispatch(removeFromCart(item._id))
   }
 

@@ -390,8 +390,7 @@ export const fetchBlockchain = (address, signer, provider) => {
                       const usdtBalance = await usdtContract.balanceOf(address)
 
                       const accountAddress = address;
-         
-                      //8 decimals token
+                          //8 decimals token
                       const tokenBalanceFormatted = parseFloat(tokenBalance) / 10 ** 8
                       const exchangeBalanceFormatted = parseFloat(exchangeBalance) / 10 ** 8
                       const busdBalanceFormatted = parseFloat(ethers.utils.formatEther(busdBalance))

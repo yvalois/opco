@@ -28,6 +28,7 @@ export const fetchAdminOrders = () => async dispatch => {
     dispatch(requesAdminOrders());
     try {
         const data = await Api.getAdminOrders();
+        console.log(data)
         const data2 = await Api.getUsers();
        
         dispatch(receiveAdminOrders({

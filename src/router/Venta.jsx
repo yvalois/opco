@@ -94,7 +94,7 @@ export default function Venta() {
     const getSign = async () => {
         const signer = await getEthersSigner(56)
         const provider = getEthersProvider(56)
-        dispatch(fetchBlockchain(account, signer, provider))
+        dispatch(fetchBlockchain())
     }
 
 

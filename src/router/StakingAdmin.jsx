@@ -434,9 +434,9 @@ export default function StakingAdmin() {
                                     </div>
                                     <div className="days-to-claim">
 
-                                        <p>token rewarded: BUSD {rewarded[pool.poolId] ?
-                                            (rewarded[pool.poolId] * tokenPrice).toFixed(4) : 0
-                                        }</p>
+                                            <p>token rewarded: BUSD {rewarded[pool.poolId] ?
+                                                (rewarded[pool.poolId] * tokenPrice).toFixed(4) : 0
+                                            }</p>
                                     </div>
                                     <div className="days-to-claim">
 

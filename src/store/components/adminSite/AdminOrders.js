@@ -1,12 +1,13 @@
 import "./AdminOrders.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { fetchAdminOrders } from "../../../redux/store/actions/adminOrdersAction";
 const AdminOrders = () => {
   const navigate = useNavigate();
   const adminOrders = useSelector(state => state.adminOrders);
   const { orderLoaded, orders } = adminOrders;
-
+  const dispatch = useDispatch();
   const handleDetails = (id) => {
     navigate(`/store/admin/oders/${id}`);
   }
@@ -16,6 +17,33 @@ const AdminOrders = () => {
     return num.toString().padStart(5, "0");
   }
 
+  
+  const orders2 =[
+    {
+      _id:1,
+      orderNumber: 1,
+      finalStatus: 'success',
+      total:100,
+    },
+    {
+      _id:1,
+      orderNumber: 1,
+      finalStatus: 'pending',
+      total:100,
+    },
+    {
+      _id:1,
+      orderNumber: 1,
+      finalStatus: 'pending',
+      total:100,
+    },
+    {
+      _id:1,
+      orderNumber: 1,
+      finalStatus: 'success',
+      total:100,
+    },
+  ]
   return (
     <div className="admin-order-container">
       <div className="title-adminsite">
@@ -59,7 +87,7 @@ const AdminOrders = () => {
             </div>
 
           </>
-          : <div> Loadibg...</div>}
+          : <div> Loading...</div>}
       </div>
     </div>
   );

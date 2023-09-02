@@ -101,7 +101,7 @@ const Adminproducts = () => {
         <h2>Products</h2>
       </div>
       <div className="admin-products-option">
-        <div className="admin-products-new">
+        <div className="admin-products-new">  
           <h3>New Products</h3>
           <div className="admin-products-detail">
 
@@ -130,7 +130,7 @@ const Adminproducts = () => {
                     value={newProduct.countInStock}
                     onChange={(e) => setNewProduct({ ...newProduct, countInStock: e.target.value })}
                   />
-                </div >
+                </div>
 
               </div>
               <div className="body-products-detail">

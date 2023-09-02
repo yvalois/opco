@@ -98,7 +98,8 @@ function Index() {
             type="text"
             placeholder="First Name"
             value={name}
-            onChange={e => setName(e.target.value)}
+            onChange={e => setName(e.target.value)
+            }
           />
         </div>
         <div className="w-full md:w-1/2 px-3">

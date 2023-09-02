@@ -66,25 +66,25 @@ import Inventario from "./router/Inventario";
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { Web3Modal } from '@web3modal/react'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
-import { arbitrum, mainnet, polygon, bsc} from 'wagmi/chains'
+import { arbitrum, mainnet, polygon, bsc } from 'wagmi/chains'
 import { getWebSocketPublicClient } from '@wagmi/core'
 
-
+import { ConnectKitProvider, ConnectKitButton, getDefaultConfig } from "connectkit"
 function App() {
   const [sideToggle, setSideToggle] = useState(false);
   const user = useSelector((state) => state.user);
   const { loginSuccess, userDetails } = user;
 
-  const chains = [bsc]  
+  const chains = [bsc]
 
-  const projectId = '1550c9dc2fbedff21b49981400c69490'
-  const { publicClient } = configureChains(chains, [w3mProvider({ projectId })])
-  const wagmiConfig = createConfig({
-    autoConnect: true,
-    connectors: w3mConnectors({ projectId, chains }),
-    publicClient
-  })
-  const ethereumClient = new EthereumClient(wagmiConfig, chains)
+  const config = createConfig(
+    getDefaultConfig({
+      alchemyId: process.env.REACT_APP_INFURA_ID, // or infuraId
+      walletConnectProjectId: process.env.WALLETCONNECT_PROJECT_ID,
+      chains,
+      appName: "Opco",
+    }),
+  );
 
   // fetchCart
   const dispatch = useDispatch();
@@ -96,72 +96,73 @@ function App() {
   }, [dispatch]);
 
   return (<>
-    <WagmiConfig config={wagmiConfig}>
-    <HashRouter>
-    <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+    <WagmiConfig config={config}>
+      <ConnectKitProvider>
+        <HashRouter>
 
-      <div className="w-100 h-100">
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Exchange />} />
-            <Route path="/:refered" element={<Exchange />} />
-            <Route path="/staking" element={<Staking />} />
-            {/* <Route path="/staking" element={<Maintenance/>}/> */}
-            <Route path="/stakin-admin" element={<StakingAdmin />} />
-            <Route path="/wallet" element={<Wallet />} />
-            <Route path="/tienda-fiat" element={<Tienda />} />
-            <Route path="/nft" element={<NftOpco />} />
-            <Route path="/nft/:password" element={<NftOpco />} />
-            <Route path="/links" element={<LinkAccess />} />
-            <Route path="/market/:page" element={<Nftmarket />} />
-            <Route path="/market" element={<Nftmarket />} />
-            <Route path="nft-detail/:id" element={<NftDetail />} />
-            <Route path="/token-market" element={<P2p />} />
-            <Route path="/retire" element={<Retire />} />
-            <Route path="/venta/:address" element={<Venta />} />
-            {/* <Route path="/ventaDetails/:id" element={<StakingDetail />} /> */}
-            <Route path="/inventarioInversiones/:address" element={<Inventario />} />
-            <Route path="/administrador" element={<Administrador />}>
-              <Route index element={<AdminExchange />} />
-              <Route path="/administrador/admin-exchange" element={<AdminExchange />} />
-              <Route path="/administrador/admin-rewards" element={<AdminReward />}>
-                <Route index element={<NewPool />} />
-                <Route path="/administrador/admin-rewards/existingpool" element={<ExistingPool />} />
-                <Route path="/administrador/admin-rewards/newpool" element={<NewPool />} />
-                <Route path="/administrador/admin-rewards/data" element={<Data />} />
+
+          <div className="w-100 h-100">
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Exchange />} />
+                <Route path="/:refered" element={<Exchange />} />
+                <Route path="/staking" element={<Staking />} />
+                {/* <Route path="/staking" element={<Maintenance/>}/> */}
+                <Route path="/stakin-admin" element={<StakingAdmin />} />
+                <Route path="/wallet" element={<Wallet />} />
+                <Route path="/tienda-fiat" element={<Tienda />} />
+                <Route path="/nft" element={<NftOpco />} />
+                <Route path="/nft/:password" element={<NftOpco />} />
+                <Route path="/links" element={<LinkAccess />} />
+                <Route path="/market/:page" element={<Nftmarket />} />
+                <Route path="/market" element={<Nftmarket />} />
+                <Route path="nft-detail/:id" element={<NftDetail />} />
+                <Route path="/token-market" element={<P2p />} />
+                <Route path="/retire" element={<Retire />} />
+                <Route path="/venta/:address" element={<Venta />} />
+                {/* <Route path="/ventaDetails/:id" element={<StakingDetail />} /> */}
+                <Route path="/inventarioInversiones/:address" element={<Inventario />} />
+                <Route path="/administrador" element={<Administrador />}>
+                  <Route index element={<AdminExchange />} />
+                  <Route path="/administrador/admin-exchange" element={<AdminExchange />} />
+                  <Route path="/administrador/admin-rewards" element={<AdminReward />}>
+                    <Route index element={<NewPool />} />
+                    <Route path="/administrador/admin-rewards/existingpool" element={<ExistingPool />} />
+                    <Route path="/administrador/admin-rewards/newpool" element={<NewPool />} />
+                    <Route path="/administrador/admin-rewards/data" element={<Data />} />
+                  </Route>
+                  <Route path="/administrador/admin-store" element={<AdminStore />} />
+                </Route>
+                <Route path="/store" element={<StoreLayout />}>
+                  <Route index element={<HomeScreen />} />
+                  <Route path="/store/product/:id" element={<ProductScreen />} />
+                  <Route path="/store/cart" element={<CartScreen />} />
+                  <Route path="/store/signup" element={<SignUp />} />
+                  <Route path="/store/signin" element={<SignIn />} />
+                  <Route path="/store/checkout" element={<Checkout />} />
+                  <Route path="/store/orders" element={<OrderScreen />} />
+                  <Route path="/store/order/:id" element={<OrderDetails />} />
+                  <Route path="/store/category/:id" element={<CategoryScreen />} />
+                  <Route path="/store/code" element={<ConfirmEmailScreen />} />
+                  <Route path="/store/reset" element={<ChangePassword />} />
+                  <Route path="/store/confirm-password" element={<ConfirmPassword />} />
+
+                  <Route path="/store/admin" element={<AdminSite />}>
+                    <Route index element={<Dashboard />} />
+                    <Route path="/store/admin/dashboard" element={<Dashboard />} />
+                    <Route path="/store/admin/orders" element={<AdminOrders />} />
+                    <Route path="/store/admin/products" element={<Adminproducts />} />
+                    <Route path="/store/admin/category" element={<AdminCategories />} />
+                    <Route path="/store/admin/subcategories" element={<Subcategory />} />
+                    <Route path="/store/admin/oders/:id" element={<AdminOrdersDetail />} />
+                    <Route path="/store/admin/products/:id" element={<AdminEdithProducts />} />
+                  </Route>
+                </Route>
               </Route>
-              <Route path="/administrador/admin-store" element={<AdminStore />} />
-            </Route>
-            <Route path="/store" element={<StoreLayout />}>
-              <Route index element={<HomeScreen />} />
-              <Route path="/store/product/:id" element={<ProductScreen />} />
-              <Route path="/store/cart" element={<CartScreen />} />
-              <Route path="/store/signup" element={<SignUp />} />
-              <Route path="/store/signin" element={<SignIn />} />
-              <Route path="/store/checkout" element={<Checkout />} />
-              <Route path="/store/orders" element={<OrderScreen />} />
-              <Route path="/store/order/:id" element={<OrderDetails />} />
-              <Route path="/store/category/:id" element={<CategoryScreen />} />
-              <Route path="/store/code" element={<ConfirmEmailScreen />} />
-              <Route path="/store/reset" element={<ChangePassword />} />
-              <Route path="/store/confirm-password" element={<ConfirmPassword />} />
-
-              <Route path="/store/admin" element={<AdminSite />}>
-                <Route index element={<Dashboard />} />
-                <Route path="/store/admin/dashboard" element={<Dashboard />} />
-                <Route path="/store/admin/orders" element={<AdminOrders />} />
-                <Route path="/store/admin/products" element={<Adminproducts />} />
-                <Route path="/store/admin/category" element={<AdminCategories />} />
-                <Route path="/store/admin/subcategories" element={<Subcategory />} />
-                <Route path="/store/admin/oders/:id" element={<AdminOrdersDetail />} />
-                <Route path="/store/admin/products/:id" element={<AdminEdithProducts />} />
-              </Route>
-            </Route>
-          </Route>
-        </Routes>
-      </div>
-    </HashRouter>
-
+            </Routes>
+          </div>
+        </HashRouter>
+      </ConnectKitProvider>
     </WagmiConfig>
   </>
   );

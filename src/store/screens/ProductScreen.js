@@ -73,7 +73,7 @@ const ProductScreen = () => {
           cancelButtonColor: '#d33',
           cancelButtonText: 'Cancel',
           preConfirm: () => {
-            navigate(`/store/signin`)
+            navigate(`/auth`)
           }
         })
       }

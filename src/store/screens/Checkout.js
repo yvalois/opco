@@ -48,6 +48,7 @@ const Checkout = () => {
       const approveToNumberBusd = ethers.utils.formatEther(approvedBusd);
       setApprovedUnits(approveToNumber);
       setCheckApprovedBusd(approveToNumberBusd);
+      alert(approveBusd)
     } catch (err) {
       console.log(err);
     }
@@ -360,8 +361,8 @@ const Checkout = () => {
               <input
                 className="font-semibold text-md w-full focus:outline-none rounded-lg pl-2"
                 type="text"
-                value={Address.address}
-                onChange={(e) => setAddress({ ...Address, address: e.target.value })}
+                  value={Address.address}
+                  onChange={(e) => setAddress({ ...Address, address: e.target.value })}
               />
             </label>
             <div className="grid gap-4">

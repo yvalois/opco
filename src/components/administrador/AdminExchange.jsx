@@ -10,21 +10,18 @@ export default function AdminExchange() {
     const timestampToDate = (timestamp) => {
         return moment.unix(timestamp).format("DD MMM, YYYY");
     }
-
     const sliceAddress = (address) => {
-        return address.slice(0, 4) + "...." + address.slice(address.length - 4);
-    }
-
-    const sliceAddressPhone = (address) => {
-        return address.slice(0, 2) + ".." + address.slice(address.length - 2);
+        return address.slice(0, 4) + "..." + address.slice(address.length - 4);
     }
 
     const { tokenContract, busdContract, accountAddress, exchangeContract } = useSelector(state => state.blockchain);
     const dispatch = useDispatch();
+
     const [busdBalance, setBusdBalance] = useState(0);
     const [tokenBalance, setTokenBalance] = useState(0);
     const [tokenAmount, setTokenAmount] = useState(0);
     const [busdAmount, setBusdAmount] = useState(0);
+
     const [data, setData] = useState([]);
     const [totalBusd, setTotalBusd] = useState(0);
 
@@ -43,6 +40,7 @@ export default function AdminExchange() {
 
     const Data = async () => {
         const fetchData = await exchangeContract.getSaledata();
+        console.log(fetchData);
         setData(fetchData.filter(data => data.claimed === false));
     }
 
@@ -87,7 +85,7 @@ export default function AdminExchange() {
     return (
         <div>
             <div className="Admin-exchange-tittle">
-                Adminstrador Exchange <p  className='text-sm md:text-[16px]'>{router.EXCHANGE_ADDRESS}</p>
+                Adminstrador Exchange {router.EXCHANGE_ADDRESS}
             </div>
             <div>
                 <div className='border  my-2'>
@@ -126,13 +124,9 @@ export default function AdminExchange() {
             <div>
                 {accountAddress && data.map((data, index) => (
                     <div className='border d-flex justify-content-around my-2' key={index}>
-                    <div className='col hidden md:block'>
-                    <div className='col'>Wallet {sliceAddress(data.owner)} </div>
-                    </div>
-                        <div className='col md:hidden'>Wallet {sliceAddressPhone(data.owner)} </div>
-
-                        <div className='col'>OPCO {parseFloat(data.opcoAmount / 10 ** 8).toFixed(2)} </div>
-                        <div className='col'>BUSD: {parseFloat(ethers.utils.formatEther(data.busdAmount)).toFixed(2)}</div>
+                        <div className='col'>Wallet {sliceAddress(data.owner)} </div>
+                        <div className='col'>OPCO {parseFloat(data.opcoAmount / 10 ** 8)} </div>
+                        <div className='col'>BUSD: {ethers.utils.formatEther(data.busdAmount)}</div>
                         <div className='col'>{timestampToDate(parseInt(data.unlockTime))}</div>
                     </div>
                 ))}
