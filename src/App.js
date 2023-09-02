@@ -79,10 +79,10 @@ function App() {
 
   const config = createConfig(
     getDefaultConfig({
-      alchemyId: process.env.REACT_APP_INFURA_ID, // or infuraId
-      walletConnectProjectId: process.env.WALLETCONNECT_PROJECT_ID,
-      chains,
       appName: "Opco",
+      alchemyId: "w7kzTXEt3ekrK-w3OLtfgycyyVOkQJGT", // or infuraId
+      walletConnectProjectId: "1550c9dc2fbedff21b49981400c69490",
+      chains,
     }),
   );
 
