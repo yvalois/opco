@@ -85,7 +85,7 @@ function App() {
       chains,
     }),
   );
-
+  //para redespliegue
   // fetchCart
   const dispatch = useDispatch();
   useEffect(() => {
