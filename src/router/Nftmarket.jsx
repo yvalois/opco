@@ -10,6 +10,7 @@ import "../style/style_market.css";
 import { fetchMinter } from '../redux/blockchain/minterAction';
 import Loader from '../components/Loader';
 import logo from '../images/logo/logo.png';
+import { fetchBlockchain } from '../redux/blockchain/blockchainAction';
 
 
 
@@ -22,9 +23,13 @@ export default function Nftmarket() {
   const [searchFilter, setSearchFilter] = useState('');
   const [minToMax, setMinToMax] = useState(true);
   const [minIdTomaxId, setMinIdTomaxId] = useState(true);
+  const minter = useSelector(state => state.minter);
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const blockchain = useSelector(state => state.blockchain);
 
-  ;
   const { page } = useParams();
+  const { password } = useParams();
 
   const [tokenPrices, setTokenPrices] = useState(0);
   const [currentPage, setCurrentPage] = useState(page ? parseInt(page) : 1);
@@ -111,7 +116,7 @@ export default function Nftmarket() {
   const rarityHandler = (num) => {
     let rarityFilter = [];
 
-      rarityFilter.push(num);
+    rarityFilter.push(num);
 
     if (rarityFilter.length > 0) {
       setNftListFiltered(nftList.filter(nft => rarityFilter.includes(parseInt(nft.rarity))));
@@ -230,7 +235,27 @@ export default function Nftmarket() {
     }
   }
 
+  const mintNft = async () => {
+    setLoading(true);
+    try {
 
+      const contract = minter.mintContract;
+      const mint = await contract.safeMint(blockchain.accountAddress, password.toString());
+      contract.on('Transfer', (from, to, id) => {
+
+        dispatch(fetchMinter());
+        setLoading(false);
+      })
+
+    } catch (err) {
+      if (err.reason) {
+        console.log(err);
+        setErrorMsg(err.reason);
+        setError(true);
+      }
+      setLoading(false);
+    }
+  }
 
 
 
@@ -275,12 +300,12 @@ export default function Nftmarket() {
             <div className="flex items-center text-md m-2">
               <div className="relative inline-block">
                 <select className='appearance-none outline-none border-none rounded-lg  bg-gray-200 cursor-pointer transition-colors duration-200 hover:bg-[#e0e0e0]' id="rarity-sort" onChange={rarityHandler}>
-                  <option  value="">Rareza</option>
-                  <option onChange={()=> {rarityHandler(1)}}  value="1">1 </option>
-                  <option onChange={()=> {rarityHandler(2)}}  value="2">2 </option>
-                  <option onChange={()=> {rarityHandler(3)}} value="3">3 </option>
-                  <option onChange={()=> {rarityHandler(4)}} value="4">4 </option>
-                  <option onChange={()=> {rarityHandler(5)}} value="5">5 </option>
+                  <option value="">Rareza</option>
+                  <option onChange={() => { rarityHandler(1) }} value="1">1 </option>
+                  <option onChange={() => { rarityHandler(2) }} value="2">2 </option>
+                  <option onChange={() => { rarityHandler(3) }} value="3">3 </option>
+                  <option onChange={() => { rarityHandler(4) }} value="4">4 </option>
+                  <option onChange={() => { rarityHandler(5) }} value="5">5 </option>
                 </select>
               </div>
             </div>
@@ -294,14 +319,14 @@ export default function Nftmarket() {
       </nav>
 
       <div className='mt-[30px] mb-[30px] flex justify-center'>
-          <input
-            className=' w-4/12 rounded-xl text-md px-2 py-1 bg-gray-200 '
-            placeholder='nft-id'
-            type='text'
-            value={searchFilter}
-            onChange={(e) => setSearchFilter(e.target.value)}
-          />
-        </div>
+        <input
+          className=' w-4/12 rounded-xl text-md px-2 py-1 bg-gray-200 '
+          placeholder='nft-id'
+          type='text'
+          value={searchFilter}
+          onChange={(e) => setSearchFilter(e.target.value)}
+        />
+      </div>
 
       <div className="xxs:ml-2 lg:ml-8 w-full h-full flex flex-col justify-center items-center   ">
 
@@ -328,6 +353,8 @@ export default function Nftmarket() {
         </div>
 
       </div>
+
+
 
       <div className='w-full flex justify-center items-center'>
         <Pagination

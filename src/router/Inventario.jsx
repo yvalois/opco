@@ -25,7 +25,7 @@ export default function Inventario() {
   const [isOpenS, setIsOpenS] = useState(false);
   const [isOpenT, setIsOpenT] = useState(false);
   const [cartLoading, setCartLoading] = useState(false);
-  const[is, setIs] = useState(false)
+  const [is, setIs] = useState(false)
   const blockchain = useSelector(state => state.blockchain);
 
   const { address } = useParams();
@@ -76,8 +76,8 @@ export default function Inventario() {
 
 
 
-  const {  open, close, setDefaultChain } = useWeb3Modal()
-  const { address:account, isConnecting, isDisconnected, isConnected } = useAccount()
+  const { open, close, setDefaultChain } = useWeb3Modal()
+  const { address: account, isConnecting, isDisconnected, isConnected } = useAccount()
 
   const { connect, connectors, isLoading, pendingConnector } = useConnect()
   const { disconnect } = useDisconnect()
@@ -186,17 +186,17 @@ export default function Inventario() {
 
     </div>) :
       <div className='w-full h-full flex justify-center items-center'>
-      <ConnectKitButton.Custom>
-                    {({ isConnected, show, truncatedAddress, ensName }) => {
-                      return (
-        <button
-          onClick={show}
-          className=" w-[200px] h-auto text-lg px-4 py-2 text-white bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full hover:from-orange-500 hover:to-yellow-400 transition-all duration-200 flex items-center justify-center space-x-2"
-        >                          {(isConnected && accountAddress === null) ? 'conectando...' : 'Conectar'}
-        </button>
-        );
-                    }}
-                  </ConnectKitButton.Custom>
+        <ConnectKitButton.Custom>
+          {({ isConnected, show, truncatedAddress, ensName }) => {
+            return (
+              <button
+                onClick={show}
+                className=" w-[200px] h-auto text-lg px-4 py-2 text-white bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full hover:from-orange-500 hover:to-yellow-400 transition-all duration-200 flex items-center justify-center space-x-2"
+              >                          {(isConnected && accountAddress === null) ? 'conectando...' : 'Conectars'}
+              </button>
+            );
+          }}
+        </ConnectKitButton.Custom>
       </div>}
 
 

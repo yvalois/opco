@@ -170,13 +170,17 @@ export default function NftOpco() {
 
                     {/*Jugar con el bool pero queda como true*/}
                     {minter.mintContract ?
+                    <>
+                            <div className='w-full flex justify-center mt-2'>
+                                {password !== undefined && <button onClick={mintNft} className=" w-[200px] h-auto text-lg px-4 py-2 text-white bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full hover:from-orange-500 hover:to-yellow-400 transition-all duration-200 flex items-center justify-center space-x-2">Reclamar Nft</button>}
+                            </div> 
                         <div className=' w-full h-full grid  grid-rows-3 grid-cols-1 sm:grid-cols-2   md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5  '>
-                            {minter.nftBalance.map((nft, index) => (
+
+                            {/* {minter.nftBalance.map((nft, index) => (
                                 <div className="flex flex-col w-64 h-[400px] m-4 bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-500 hover:scale-105">
 
                                     <div className="h-2/3 w-full overflow-hidden">
-                                        {/* Descomentar primera borrar segunda */}
-                                        {/* <img className="h-full w-full object-cover" src={nft.image} alt="coffee" /> */}
+
                                         <img className="h-full w-full object-cover" src={coffee} alt="coffee" />
                                     </div>
 
@@ -215,8 +219,9 @@ export default function NftOpco() {
                                     </div>
 
                                 </div>
-                            ))}
+                            ))} */}
                         </div>
+                        </>
                         : !accountAddress ?
                             <div className='w-full h-full flex justify-center items-center z-[-10]'>
                                 <ConnectKitButton.Custom>
