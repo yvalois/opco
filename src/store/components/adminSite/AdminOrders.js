@@ -27,19 +27,19 @@ const AdminOrders = () => {
     },
     {
       _id:1,
-      orderNumber: 1,
+      orderNumber: 2,
       finalStatus: 'pending',
       total:100,
     },
     {
       _id:1,
-      orderNumber: 1,
+      orderNumber: 3,
       finalStatus: 'pending',
       total:100,
     },
     {
       _id:1,
-      orderNumber: 1,
+      orderNumber: 4,
       finalStatus: 'success',
       total:100,
     },
@@ -54,7 +54,7 @@ const AdminOrders = () => {
           <>
             <div>
               <h3>Not Confirmed</h3>
-              {orders.filter(order => order.finalStatus === "pending").map((order, index) => (
+              {orders.reverse().filter(order => order.finalStatus === "pending").map((order, index) => (
                 <div className="admin-order-view" key={index}>
                   <div><p>{index + 1}</p></div>
                   <div><p>  {fiveDigit(order.orderNumber)} </p></div>
