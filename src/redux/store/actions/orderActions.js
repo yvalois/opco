@@ -35,6 +35,7 @@ const orderSaved = payload => ({
 
 export const fetchOrder = () => async dispatch => {
     dispatch(requestOrder());
+    console.log(Api)
     try {
         const data = await Api.getOrders();
      
