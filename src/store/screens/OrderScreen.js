@@ -73,7 +73,7 @@ const OrderScreen = () => {
           <h2 className="text-3xl font-bold text-white">Mis Órdenes</h2>
         </div>
         <div className="flex flex-col items-center md:items-stretch space-y-4">
-          {!orderLoaded ? (
+          {orderLoaded ? (
             ordenes.length > 0 ? (
               ordenes.reverse().map((order, index) => (
                 <div

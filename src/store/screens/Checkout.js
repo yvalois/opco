@@ -48,7 +48,6 @@ const Checkout = () => {
       const approveToNumberBusd = ethers.utils.formatEther(approvedBusd);
       setApprovedUnits(approveToNumber);
       setCheckApprovedBusd(approveToNumberBusd);
-      alert(approveBusd)
     } catch (err) {
       console.log(err);
     }

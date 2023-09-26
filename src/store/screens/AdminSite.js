@@ -69,12 +69,21 @@ const AdminSite = () => {
       to="/store/admin/products"
       icon={AiOutlineShoppingCart}
       label="Products"
-    />, 
+    />,
+    <NavLinkComponent
+      to="/store/admin/orders"
+      icon={GoListUnordered}
+      label="Orders"
+    />, <NavLinkComponent
+      to="/store/admin/subcategories"
+      icon={MdCategory}
+      label="SubCategory"
+    />,
     <NavLinkComponent
       to="/store/admin/category"
       icon={BiCategoryAlt}
       label="Categories"
-    />, 
+    />,
     <NavLinkComponent
       to="/store/admin/subcategories"
       icon={MdCategory}
@@ -85,11 +94,11 @@ const AdminSite = () => {
   return (
     <div className="adminsite ">
       <div className={`${sideBarOpen ? "sideBar" : "not-display"} `}>
-      {routes.map((route, index) => (
-        <div key={index} className="w-full flex ">
-          {route}
-        </div>
-      ))}
+        {routes.map((route, index) => (
+          <div key={index} className="w-full flex ">
+            {route}
+          </div>
+        ))}
       </div>
       <div className="admin-screen">
 
