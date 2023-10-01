@@ -106,8 +106,8 @@ const getInfo =async()=>{
   const _porcentaje = (parseInt(await inversioneStakingContract.punishment()) / 10);
   setProcentaje(_porcentaje);
   const precio = await inversionesContract.getPrice(id); 
-  setPrecio((ethers.utils.formatUnits(await inversionesContract.getPrice(id), 18)) * (_porcentaje / 100) );
-  setprecioO((ethers.utils.formatUnits(await inversioneStakingContract.usdtToOpco(precio), 18)) * (_porcentaje / 100) );
+  setPrecio((ethers.utils.formatUnits(await inversionesContract.getPrice(id), 8)) * (_porcentaje / 100));
+  setprecioO((ethers.utils.formatUnits(await inversioneStakingContract.usdtToOpco(precio), 8)) * (_porcentaje / 100) );
 
 }
 

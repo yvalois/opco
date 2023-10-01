@@ -55,7 +55,7 @@ export default function Venta() {
             nombre: "Inversion #5",
             tipo: 5,
             price: 0,
-            image: "https://violet-disgusted-halibut-418.mypinata.cloud/ipfs/QmUncKwRVF1yXsckcTA3cQ6GgfMag1M8nQxgrKXMLWkbWH/3.png"
+            image: "https://violet-disgusted-halibut-418.mypinata.cloud/ipfs/QmUncKwRVF1yXsckcTA3cQ6GgfMag1M8nQxgrKXMLWkbWH/5.png"
         },
 
     ]
