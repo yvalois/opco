@@ -96,7 +96,7 @@ const AdminOrdersDetail = () => {
     <div className="orders-detail">
  
       <div>
-        {!loading ? (
+        {loading ? (
           <h3>Loading...</h3>
         ) : (
           <div className="order-detail-format">

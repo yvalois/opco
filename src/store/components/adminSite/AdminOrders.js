@@ -12,7 +12,6 @@ const AdminOrders = () => {
     navigate(`/store/admin/oders/${id}`);
   }
 
-
   const fiveDigit = (num) => {
     return num.toString().padStart(5, "0");
   }
@@ -26,19 +25,19 @@ const AdminOrders = () => {
       total:100,
     },
     {
-      _id:1,
+      _id:2,
       orderNumber: 2,
       finalStatus: 'pending',
       total:100,
     },
     {
-      _id:1,
+      _id:3,
       orderNumber: 3,
       finalStatus: 'pending',
       total:100,
     },
     {
-      _id:1,
+      _id:4,
       orderNumber: 4,
       finalStatus: 'success',
       total:100,
@@ -50,11 +49,11 @@ const AdminOrders = () => {
         <h2>Orders</h2>
       </div>
       <div className="admin-orders-options">
-        {orderLoaded ?
+        {!orderLoaded ?
           <>
             <div>
               <h3>Not Confirmed</h3>
-              {orders.reverse().filter(order => order.finalStatus === "pending").map((order, index) => (
+              {orders.slice().reverse().filter(order => order.finalStatus === "pending").map((order, index) => (
                 <div className="admin-order-view" key={index}>
                   <div><p>{index + 1}</p></div>
                   <div><p>  {fiveDigit(order.orderNumber)} </p></div>
@@ -69,7 +68,7 @@ const AdminOrders = () => {
             </div>
             <div>
               <h3>Confirmed Orders</h3>
-              {orders.filter(order => order.finalStatus !== "pending").map((order, index) => (
+              {orders.slice().reverse().filter(order => order.finalStatus !== "pending").map((order, index) => (
                 <div className="admin-order-view" key={index}>
                   <div><p>{index + 1}</p></div>
                   <div><p>{fiveDigit(order.orderNumber)}</p></div>
